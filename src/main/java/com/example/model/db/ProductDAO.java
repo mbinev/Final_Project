@@ -40,7 +40,6 @@ private static ProductDAO instance;
 	}
 	
 	public HashMap<String, ArrayList<Product>> getAllProducts() throws SQLException{
-		System.out.println(products);
 		if(products.isEmpty()){
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement st1 = null;

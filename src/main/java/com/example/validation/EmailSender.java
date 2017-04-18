@@ -1,15 +1,14 @@
 package com.example.validation;
 
 import java.util.Properties;
-//
-//import javax.mail.Message;
-//import javax.mail.MessagingException;
-//import javax.mail.PasswordAuthentication;
-//import javax.mail.Session;
-//import javax.mail.Transport;
-//import javax.mail.internet.AddressException;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeMessage;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class EmailSender {
 
@@ -25,30 +24,30 @@ public class EmailSender {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 
-//		Session session = Session.getInstance(props,
-//				new javax.mail.Authenticator() {
-//					protected PasswordAuthentication getPasswordAuthentication() {
-//						return new PasswordAuthentication(SENDER_EMAIL,
-//								SENDER_PASS);
-//					}
-//				});
-//
-//		try {
-//			Message message = new MimeMessage(session);
-//			message.setFrom(new InternetAddress("dominos.pizza.itt@gmail.com"));
-//			message.setRecipients(Message.RecipientType.TO,
-//					InternetAddress.parse(receiverEmail));
-//			message.setSubject(subjectText);
-//			message.setText(msgText);
-//
-//			Transport.send(message);
-//
-//		} catch (AddressException e) {
-//			e.printStackTrace();
-//			//TODO Handle the exception
-//		} catch (MessagingException e) {
-//			e.printStackTrace();
-//		}
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(SENDER_EMAIL,
+								SENDER_PASS);
+					}
+				});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("dominos.pizza.itt@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(receiverEmail));
+			message.setSubject(subjectText);
+			message.setText(msgText);
+
+			Transport.send(message);
+
+		} catch (AddressException e) {
+			e.printStackTrace();
+			//TODO Handle the exception
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 
 		// TODO
 		//Make the code expire somehow - CHECK

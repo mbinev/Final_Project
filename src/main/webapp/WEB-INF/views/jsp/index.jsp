@@ -1,134 +1,420 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-</head>
-<body>
-	<form action="login" method="post">
-		<div>
-			<input name="email" type="text" 
-			required="required" placeholder="Email" />
-		</div>
-		<div>
-			<input type="password" name="password" 
-			required="required" placeholder="Password" />
-		</div>
-		<div class="input signup">
-			<input type="submit" />
-		</div>
-	</form>
-	<br>
-	<form action="register" method="post">
-	<div>
-	<input name="first name" type="text" 
-			required="required" placeholder="First name" />
-	</div>
-	<div>
-	<input name="last name" type="text" 
-			required="required" placeholder="Last name" />
-	</div>
-	<div>
-	<input name="email" type="email" 
-			required="required" placeholder="email" />
-	</div>
-	<div>
-	<input name="password" type="password" 
-			required="required" placeholder="password" />
-	</div>
-	<div>
-	<input name="confirm password" type="password" 
-			required="required" placeholder="Confirm password" />
-	</div>
-	<div class="input register">
-			<input type="submit" />
-		</div>
-	</form>
-<script>
-window.fbAsyncInit = function() {
-    // FB JavaScript SDK configuration and setup
-    FB.init({
-      appId      : '288026188297036', // FB App ID
-      cookie     : true,  // enable cookies to allow the server to access the session
-      xfbml      : true,  // parse social plugins on this page
-      version    : 'v2.8' // use graph api version 2.8
-    });
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!-- 
+
+Grill Template 
+
+http://www.templatemo.com/free-website-templates/417-grill
+
+-->
+    <head>
+        <meta charset="utf-8">
+        <title>Grill Responsive Web Template</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/templatemo_style.css">
+        <link rel="stylesheet" href="css/templatemo_misc.css">
+        <link rel="stylesheet" href="css/flexslider.css">
+        <link rel="stylesheet" href="css/testimonails-slider.css">
+
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+                                    <a href="#">Home</a>
+                                    <a href="#">My account</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="cart-info">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    (<a href="contact-us.html">5 items</a>) in your cart (<a href="products">$45.80</a>)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="index.html"><img  src="images/logo.png" title="Grill Template" alt="Grill Website Template" ></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="about-us.html">About</a></li>
+                                        <li><a href="products">Products</a></li>
+                                        <li><a href="contact-us.html">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+
+            <div id="slider">
+                <div class="flexslider">
+                  <ul class="slides">
+                    <li>
+                        <div class="slider-caption">
+                            <h1>PIZZAAAAAAZZZ</h1>
+                            <p>Donec justo dui, semper vitae aliquam euzali, ornare pretium enim. Maecenas molestie diam
+                            <br><br>eget tellus luctus fermentum.</p>
+                            <a href="single-post.html">Shop Now</a>
+                        </div>
+                      <img src="images/slide1.jpg" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                            <h1>Ice-cream Menus</h1>
+                            <p>Nulla id iaculis ligula. Vivamus mattis quam eget urna tincidunt consequat. Nullam 
+                            <br><br>consectetur tempor neque vitae iaculis. Aliquam erat volutpat.</p>
+                            <a href="single-post.html">More Details</a>
+                        </div>
+                      <img src="images/slide2.jpg" alt="" />
+                    </li>
+                    <li>
+                        <div class="slider-caption">
+                            <h1>Healthy Drinks</h1>
+                            <p>Maecenas fermentum est ut elementum vulputate. Ut vel consequat urna. Ut aliquet 
+                            <br><br>ornare massa, quis dapibus quam condimentum id.</p>
+                            <a href="single-post.html">Get Ready</a>
+                        </div>
+                      <img src="images/slide3.jpg" alt="" />
+                    </li>
+                  </ul>
+                </div>
+            </div>
+
+
+            <div id="services">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Free Website Templates</h2>
+                                <img src="images/under-heading.png" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                                <h4>Make an order</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-bullhorn"></i>
+                                </div>
+                                <h4>Promotions</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-bell"></i>
+                                </div>
+                                <h4>Ready to Serve</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <div class="icon">
+                                    <i class="fa fa-heart"></i>
+                                </div>
+                                <h4>Satisfaction</h4>
+                                <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu  sagittis vel diam in, malesuada malesuada risus. Aenean a sem leoneski.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div id="latest-blog">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Latest blog posts</h2>
+                                <img src="images/under-heading.png" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="images/blogpost1.jpg" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                        <h4><a href="single-post.html">Summer Sandwich</a></h4>
+                                        <span>29 Sep 2084</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="images/blogpost2.jpg" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                        <h4><a href="single-post.html">New Great Taste</a></h4>
+                                        <span>23 Sep 2084</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="images/blogpost3.jpg" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                        <h4><a href="single-post.html">Spicy Pizza</a></h4>
+                                        <span>14 Sep 2084</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="images/blogpost4.jpg" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                        <h4><a href="single-post.html">Healthy Food</a></h4>
+                                        <span>25 Aug 2084</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="images/blogpost5.jpg" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                        <h4><a href="single-post.html">Great Breakfast</a></h4>
+                                        <span>17 Aug 2084</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="images/blogpost6.jpg" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="content-show">
+                                        <h4><a href="single-post.html">Fresh Fruit Juice</a></h4>
+                                        <span>12 Aug 2084</span>
+                                    </div>
+                                    <div class="content-hide">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="testimonails">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>What Customers Say</h2>
+                                <img src="images/under-heading.png" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="testimonails-slider">
+                              <ul class="slides">
+                                <li>
+                                    <div class="testimonails-content">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                        <h6>Jennifer - <a href="#">Chief Designer</a></h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="testimonails-content">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                        <h6>Laureen - <a href="#">Marketing Executive</a></h6>
+                                    </div> 
+                                </li>
+                                <li>
+                                    <div class="testimonails-content">
+                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                        <h6>Tanya - <a href="#">Creative Director</a></h6>
+                                    </div>
+                                </li>
+                              </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="subscribe-form">
+                                    <span>Get in touch with us</span>
+                                    <form method="get" class="subscribeForm">
+                                        <input id="subscribe" type="text" />
+                                        <input type="submit" id="submitButton" />
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    <ul>
+                                        <li><a href="#" class="fa fa-facebook"></a></li>
+                                        <li><a href="#" class="fa fa-twitter"></a></li>
+                                        <li><a href="#" class="fa fa-rss"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="about">
+                                    <h4 class="footer-title">About Grill</h4>
+                                    <p>Grill is free HTML5 template by <span class="blue">template</span><span class="green">mo</span> and it is a free responsive bootstrap layout that can be applied for any purpose.
+                                    <br><br>Credit goes to <a rel="nofollow" href="http://unsplash.com">Unsplash</a> for photos used in this template. Nam commodo erat quis ligula placerat viverra.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Shop Categories</h4>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>New Grill Menu</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Healthy Fresh Juices</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Spicy Delicious Meals</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Simple Italian Pizzas</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Pure Good Yogurts</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i>Ice-cream for kids</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="recent-posts">
+                                    <h4 class="footer-title">Recent posts</h4>
+                                    <div class="recent-post">
+                                        <div class="recent-post-thumb">
+                                            <img src="images/recent-post1.jpg" alt="">
+                                        </div>
+                                        <div class="recent-post-info">
+                                            <h6><a href="#">Delicious and Healthy Menus</a></h6>
+                                            <span>24/12/2084</span>
+                                        </div>
+                                    </div>
+                                    <div class="recent-post">
+                                        <div class="recent-post-thumb">
+                                            <img src="images/recent-post2.jpg" alt="">
+                                        </div>
+                                        <div class="recent-post-info">
+                                            <h6><a href="#">Simple and effective meals</a></h6>
+                                            <span>18/12/2084</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">More info</h4>
+                                    <p>Sed dignissim, diam id molestie faucibus, purus nisl pretium quam, in pulvinar velit massa id elit.</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>010-020-0340</li>
+                                        <li><i class="fa fa-globe"></i>123 Dagon Studio, Yakin Street, Digital Estate</li>
+                                        <li><i class="fa fa-envelope"></i><a href="#">info@company.com</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>
+                        	<span>Copyright © 2084 <a href="#">Your Company Name</a> 
+                            | Design: <a rel="nofollow" href="http://www.templatemo.com" target="_parent"><span class="blue">template</span><span class="green">mo</span></a></span>
+                        </p>
+                    </div>
+                    
+                </div>
+            </footer>
+
     
-    // Check whether the user already logged in
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            //display user data
-            getFbUserData();
-        }
-    });
-};
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script src="js/vendor/jquery.gmap3.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
 
-// Load the JavaScript SDK asynchronously
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
-// Facebook login with JavaScript SDK
-function fbLogin() {
-    FB.login(function (response) {
-        if (response.authResponse) {
-            // Get and display the user profile data
-            getFbUserData();
-        } else {
-            document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
-        }
-    }, {scope: 'email'});
-}
-
-// Fetch the user profile data from facebook
-function getFbUserData(){
-    FB.api('/me', {locale: 'en_US', fields: 'first_name,last_name,email,link,gender,locale,picture'},
-    function (response) {
-        document.getElementById('fbLink').setAttribute("onclick","fbLogout()");
-        document.getElementById('fbLink').innerHTML = 'Logout from Facebook';
-        document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.first_name + '!';
-        document.getElementById('userData').innerHTML = '<p><b>FB ID:</b> '+response.id+'</p><p><b>Name:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Gender:</b> '+response.gender+'</p><p><b>Locale:</b> '+response.locale+'</p><p><b>Picture:</b> <img src="'+response.picture.data.url+'"/></p><p><b>FB Profile:</b> <a target="_blank" href="'+response.link+'">click to view profile</a></p>';
-       
-        // Save user data
-        saveUserData(response);
-    });
-}
-
-// Logout from facebook
-function fbLogout() {
-    FB.logout(function() {
-        document.getElementById('fbLink').setAttribute("onclick","fbLogin()");
-        document.getElementById('fbLink').innerHTML = '<img src="fblogin.png"/>';
-        document.getElementById('userData').innerHTML = '';
-        document.getElementById('status').innerHTML = 'You have successfully logout from Facebook.';
-    });
-}
-//Save user data to the database
-function saveUserData(userData){
-	console.log(userData);
-    $.post('loginWithFacebook', { 
-    	oauth_provider:'facebook', 
-    	first_name: userData.first_name,  
-    	last_name:	userData.last_name,
-    	email: userData.email
-    } , function(data){ return true; });
-}
-
-</script>
-<!-- Display login status -->
-<div id="status"></div>
-
-<!-- Facebook login or logout button -->
-<a href="javascript:void(0);" onclick="fbLogin()" id="fbLink"><img src="fconnect.png"/></a>
-
-<!-- Display user profile data -->
-<div id="userData"></div>
-</body>
+    </body>
 </html>
