@@ -62,9 +62,9 @@ http://www.templatemo.com/free-website-templates/417-grill
                             <div class="col-md-6">
                                 <div class="main-menu">
                                     <ul>
-                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="index.jsp">Home</a></li>
                                         <li><a href="about-us.html">About</a></li>
-                                        <li><a href="products">Products</a></li>
+                                        <li><a href="catalog">Products</a></li>
                                         <li><a href="contact-us.html">Contact</a></li>
                                     </ul>
                                 </div>
