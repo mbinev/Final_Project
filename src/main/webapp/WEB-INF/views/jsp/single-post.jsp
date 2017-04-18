@@ -35,55 +35,8 @@ http://www.templatemo.com/free-website-templates/417-grill
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-            <header>
-                <div id="top-header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="home-account">
-                                    <a href="#">Home</a>
-                                    <a href="#">My account</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="cart-info">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    (<a href="#">5 items</a>) in your cart (<a href="#">$45.80</a>)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="main-header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="logo">
-                                    <a href="index.html"><img src="images/logo.png" title="Grill Template" alt="Grill Website Template" ></a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="main-menu">
-                                    <ul>
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="about-us.html">About</a></li>
-                                        <li><a href="category">Products</a></li>
-                                        <li><a href="contact-us.html">Contact</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="search-box">  
-                                    <form name="search_form" method="get" class="search_form">
-                                        <input id="search" type="text" />
-                                        <input type="submit" id="search-button" />
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            
+            <jsp:include page="header.jsp" />
 
             <div id="heading">
                 <div class="container">
@@ -124,8 +77,8 @@ http://www.templatemo.com/free-website-templates/417-grill
                                                         <span class="subtitle">${product.price}</span>
                                                     </div>
                                                     <c:if test="${product.category eq 'Pizzaz'}">
-                                                    	<form action="productServlet" method="post">
-		                                                    <c:forEach var="subproduct" items="${sessionScope.subproducts}">
+                                                    	<form action="products" method="post">
+		                                                    <c:forEach var="subproduct" items="${subproducts}">
 		                                                    <c:set var="contains" value="false" />
 		                                                    <c:forEach var="sub" items="${product.subproducts}">
 		                                                    	<c:if test="${sub eq subproduct.name }">

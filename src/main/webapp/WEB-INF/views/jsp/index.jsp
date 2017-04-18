@@ -32,48 +32,8 @@ http://www.templatemo.com/free-website-templates/417-grill
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-            <header>
-                <div id="top-header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="home-account">
-                                    <a href="#">Home</a>
-                                    <a href="#">My account</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="cart-info">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    (<a href="contact-us.html">5 items</a>) in your cart (<a href="products">$45.80</a>)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="main-header">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="logo">
-                                    <a href="index.html"><img  src="images/logo.png" title="Grill Template" alt="Grill Website Template" ></a>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="main-menu">
-                                    <ul>
-                                        <li><a href="index.jsp">Home</a></li>
-                                        <li><a href="about-us.html">About</a></li>
-                                        <li><a href="catalog">Products</a></li>
-                                        <li><a href="contact-us.html">Contact</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                           
-                        </div>
-                    </div>
-                </div>
-            </header>
+            
+            <jsp:include page="header.jsp" />
             
 
             <div id="slider">
