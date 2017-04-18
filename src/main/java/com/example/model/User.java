@@ -4,18 +4,31 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.xml.bind.DatatypeConverter;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 public class User {
 
 	private long userId;
+	@Valid @NotBlank @Size(min=2, max=30) 
 	private String firstName;
+	@Valid @NotBlank @Size(min=2, max=30) 
 	private String lastName;
+	@Valid @NotBlank @Pattern(regexp="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")
 	private String email;
+	@Valid @NotBlank @Pattern(regexp="(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}")
 	private String password;
 	private String avatarLink;
 	private boolean isVerified;
 	private LocalDateTime registrationTime;
+	
+	public User() {
+		
+	}
 	
 	public User(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;

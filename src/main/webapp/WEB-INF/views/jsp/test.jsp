@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 		</div>
 	</form>
 	<br>
-	<form action="register" method="post">
+	<form:form method="post" action="register" modelattribute="user">
 	<div>
 	<input name="first name" type="text" 
 			required="required" placeholder="First name" />
@@ -46,7 +47,7 @@
 	<div class="input register">
 			<input type="submit" />
 		</div>
-	</form>
+	</form:form>
 <script>
 window.fbAsyncInit = function() {
     // FB JavaScript SDK configuration and setup
