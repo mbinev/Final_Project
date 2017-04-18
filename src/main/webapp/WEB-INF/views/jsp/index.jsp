@@ -32,6 +32,7 @@ http://www.templatemo.com/free-website-templates/417-grill
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
+<<<<<<< HEAD
             <header>
                 <div id="top-header">
                     <div class="container">
@@ -74,6 +75,10 @@ http://www.templatemo.com/free-website-templates/417-grill
                     </div>
                 </div>
             </header>
+=======
+            
+            <jsp:include page="header.jsp" />
+>>>>>>> 30568900bee392609e4ad7ab453c7d8f769a73b0
             
 
             <div id="slider">

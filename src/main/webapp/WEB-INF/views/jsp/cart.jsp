@@ -22,6 +22,7 @@
 	<!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
+<<<<<<< HEAD
 
 	<header>
 		<div id="top-header">
@@ -113,6 +114,49 @@
 									<p>Quis aute iure reprehenderit in voluptate velit esse
 										cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit
 										amet.</p>
+=======
+			
+            
+            <jsp:include page="header.jsp" />
+            
+            <div id="heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-content">
+                                <h2>Cart</h2>
+                                <span>Home / <a href="cart.html">Cart</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<div class="container">
+	<table id="cart" class="table table-hover table-condensed">
+    				<thead>
+						<tr>
+							<th style="width:50%">Product</th>
+							<th style="width:10%">Price</th>
+							<th style="width:8%">Quantity</th>
+							<th style="width:22%" class="text-center">Subtotal</th>
+							<th style="width:10%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:set var="total" value="${0}"/>
+							<c:forEach var="product" items="${sessionScope.products}">
+							    <c:set var="total" value="${total + product.price}" />
+							</c:forEach>
+						<c:forEach var="product" items="${sessionScope.products}">
+						<tr>
+							<td data-th="Product">
+								<div class="row">
+									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
+									<div class="col-sm-10">
+										<h4 class="nomargin"> ${product.name} </h4>
+										<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+									</div>
+>>>>>>> 30568900bee392609e4ad7ab453c7d8f769a73b0
 								</div>
 							</div>
 						</td>
