@@ -17,7 +17,7 @@ public class MyController {
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String sayHi(Model viewModel) {
-		return "test";
+		return "index";
 	}
 	
 //	@RequestMapping(value="/mindex", method=RequestMethod.GET)

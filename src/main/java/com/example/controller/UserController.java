@@ -115,6 +115,15 @@ public class UserController {
 				return "error500";
 		}
 	}
+	
+	@RequestMapping(value="/facebookLogin",method = RequestMethod.POST)
+	public String loginWithFacebook(HttpServletRequest req) {
+		String firstName = req.getParameter("first_name");
+		String lastName = req.getParameter("last_name");
+		String email = req.getParameter("email");
+		//TODO redirect user to a page, where he can enter password, and than add him to the database
+		return "";
+	}
 
 	private boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
