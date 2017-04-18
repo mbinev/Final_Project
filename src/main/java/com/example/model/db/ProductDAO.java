@@ -48,6 +48,7 @@ private static ProductDAO instance;
 			
 			try {
 				String sql1 = "SELECT DISTINCT category FROM products";
+				System.out.println(con);
 				st1 = con.prepareStatement(sql1);
 				ResultSet rs1 = st1.executeQuery();
 				while(rs1.next()){

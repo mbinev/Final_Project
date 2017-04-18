@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Title: MyProject
+Implementation-Title: Pizza
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: ￐ﾢ￐ﾵ￐ﾴ￐ﾸ
 Implementation-Vendor-Id: com.example

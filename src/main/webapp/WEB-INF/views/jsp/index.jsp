@@ -64,7 +64,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     <ul>
                                         <li><a href="index">Home</a></li>
                                         <li><a href="about-us.html">About</a></li>
-                                        <li><a href="products">Products</a></li>
+                                        <li><a href="catalog">Products</a></li>
                                         <li><a href="contact-us.html">Contact</a></li>
                                     </ul>
                                 </div>

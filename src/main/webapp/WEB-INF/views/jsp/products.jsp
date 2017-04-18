@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,6 +20,7 @@ http://www.templatemo.com/free-website-templates/417-grill
         <title>Products - Grill Template</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -59,7 +62,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="logo">
-                                    <a href="index.html"><img src="images/logo.png" title="Grill Template" alt="Grill Website Template" ></a>
+                                    <a href="index.html"><img src="img/logo.png" title="Grill Template" alt="Grill Website Template" ></a>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -67,7 +70,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     <ul>
                                         <li><a href="index.html">Home</a></li>
                                         <li><a href="about-us.html">About</a></li>
-                                        <li><a href="products">Products</a></li>
+                                        <li><a href="cataloge">Products</a></li>
                                         <li><a href="contact-us.html">Contact</a></li>
                                     </ul>
                                 </div>
@@ -109,7 +112,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                         <div class="col-md-12">
                             <div id="product-heading">
                                 <h2>Hungry ?</h2>
-                                <img src="images/under-heading.png" alt="" >
+                                <img src="img/under-heading.png" alt="" >
                             </div>
                         </div>
                     </div>
@@ -118,27 +121,28 @@ http://www.templatemo.com/free-website-templates/417-grill
        						 <div id="somediv"></div>
                             <ul id="filters" class="clearfix">
                                 <li><span class="filter" data-filter="all">All</span></li>
-                        <c:forEach var="category" items="${sessionScope.categories}"> 	
+                        <c:forEach var="category" items="${categories}"> 	
                                 <li><span class="filter" data-filter=".${category}">${category}</span></li>
 						</c:forEach>
                             </ul>
                         </div>
                     </div>
                     <div class="row" id="Container">
-                   <c:forEach var="product" items="${sessionScope.products}"> 	
+                    <h1></h1>
+                   <c:forEach var="product" items="${products}"> 	
                         <div class="col-md col-sm mix ${product.category}">       
                             <div class="portfolio-wrapper">                
                                 <div class="portfolio-thumb">
-                                    <img src="images/product1.jpg" alt="" />
+                                    <img src="img/product1.jpg" alt="" />
                                     <div class="hover">
                                         <div class="hover-iner">
-                                            <a class="fancybox" href="images/product2_big.jpg"><img src="images/open-icon.png" alt="" /></a>
+                                            <a class="fancybox" href="img/product2_big.jpg"><img src="img/open-icon.png" alt="" /></a>
                                             <span>${product.sub}</span>
                                         </div>
                                     </div>
                                 </div>  
                                 <div class="label-text">
-                                    <h3><a href="productServlet?product=${product.name}&category=${product.category}">${product.name}</a></h3>
+                                    <h3><a href="products?product=${product.name}&category=${product.category}">${product.name}</a></h3>
                                     <span class="text-category">${product.price}</span>
                                 </div>
                             </div>          
@@ -217,7 +221,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     <h4 class="footer-title">Recent posts</h4>
                                     <div class="recent-post">
                                         <div class="recent-post-thumb">
-                                            <img src="images/recent-post1.jpg" alt="">
+                                            <img src="img/recent-post1.jpg" alt="">
                                         </div>
                                         <div class="recent-post-info">
                                             <h6><a href="#">Delicious and Healthy Menus</a></h6>
@@ -226,7 +230,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     </div>
                                     <div class="recent-post">
                                         <div class="recent-post-thumb">
-                                            <img src="images/recent-post2.jpg" alt="">
+                                            <img src="img/recent-post2.jpg" alt="">
                                         </div>
                                         <div class="recent-post-info">
                                             <h6><a href="#">Simple and effective meals</a></h6>

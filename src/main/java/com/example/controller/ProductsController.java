@@ -22,8 +22,8 @@ import com.example.model.db.ProductDAO;
 @SessionAttributes("product")
 public class ProductsController {
 
-	@RequestMapping(value="/products",method = RequestMethod.GET)
-	public String products(Model model, HttpServletRequest request) {
+	@RequestMapping(value="/catalog",method = RequestMethod.GET)
+	public String products(Model model) {
 		List<String> categories = null;
 		List<Product> products = new ArrayList<>();
 		try {
@@ -42,24 +42,57 @@ public class ProductsController {
 		return "products";
 	}
 	
-	@RequestMapping(value="/products/{product_id}",method = RequestMethod.GET)
-	public String products(Model model, @PathVariable("product_id") Integer productId) {
-//		Product product = ...get product by id from somewhere 
-//		model.addAttribute("product", product);
-		System.out.println(productId);
-		
-		return "product";
+	@RequestMapping(value="/products",method = RequestMethod.GET)
+	public String products(HttpServletRequest request, Model model) {
+		String productName = (String) request.getParameter("product");
+		String category = (String) request.getParameter("category");
+		System.out.println(productName);
+		System.out.println("category" + request.getParameter("category"));
+		Product pro = null;
+		try {
+			ArrayList<Product> products = ProductDAO.getInstance().getAllProducts().get(category);
+			for (Product p : products) {
+				if(p.getName().equals(productName)){
+					pro = p;
+					break;
+				}
+			}
+			request.getSession().setAttribute("product", pro);
+			ArrayList<Product> allProducts = new ArrayList<>();
+			for (ArrayList<Product> arr : ProductDAO.getInstance().getAllProducts().values()) {
+				allProducts.addAll(arr);
+			}
+			request.getSession().setAttribute("subproducts", allProducts);
+		} catch (SQLException e) {
+			System.out.println("fsafa");
+		}
+		return "single-post";
 	}
 	
 	@RequestMapping(value="/products",method = RequestMethod.POST)
-	public String products(@ModelAttribute Product p) {
-		
-		//add the new product somewhere
-		
-		System.out.println(p.getName());
-		
-		// redirect to home page
-		return "redirect:index.html";
+	public String products(Model model, HttpServletRequest request) {
+		String[] subproducts = request.getParameterValues("subproduct");
+		ArrayList<String> pro = new ArrayList<>();
+		for (String string : subproducts) {
+			pro.add(string);
+		}
+		ArrayList<Product> allProducts = new ArrayList<>();
+		ArrayList<Product> products = new ArrayList<>();
+		try {
+			for (ArrayList<Product> arr : ProductDAO.getInstance().getAllProducts().values()) {
+				allProducts.addAll(arr);
+			}
+			for (Product product : allProducts) {
+				if(pro.contains(product.getName()) || pro.contains("Extra "+product.getName())){
+					products.add(product);
+				}
+			}
+			request.getSession().setAttribute("products", products);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "cart";
 	}
 	
 }
