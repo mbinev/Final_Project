@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,8 @@ import com.example.model.User;
 import com.example.model.db.UserDAO;
 import com.example.validation.EmailSender;
 import com.example.validation.Form;
+
+
 
 
 @Controller
@@ -71,6 +74,45 @@ public class UserController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return "error500";
+		}
+	}
+	
+	@RequestMapping(value="/login",method = RequestMethod.POST)
+	public String loginUser(HttpServletRequest req, HttpSession session){
+		try{
+			String email = req.getParameter("email");
+			String password = req.getParameter("password");
+			Form form = new Form();
+			User user = UserDAO.getInstance().findByEmail(email);
+			
+			if(user != null && !user.getIsVerified()) {
+				LocalDateTime expireTime = user.getRegistrationTime().plusHours(1);
+				LocalDateTime now = LocalDateTime.now();
+				if(now.isAfter(expireTime)) {
+					user.setIsVerified();
+				} else {
+					//redirect to fail page
+				}
+			}
+			
+			boolean validLogin = UserDAO.getInstance().validLogin(user, email, password);	
+			System.out.println(validLogin);
+			
+			if(validLogin) {
+				session.setAttribute("user", user);
+				session.setAttribute("logged", true);
+				session.setMaxInactiveInterval(15*60); // 15 minutes
+				return "index";
+			} else {
+				//stay on the same page, keep the correct data
+				form.addError(form.new Error("email", "Invalid email or password"));
+				session.setAttribute("form", form);
+				return "login";
+			}
+		} catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.getStackTrace();
+				return "error500";
 		}
 	}
 
