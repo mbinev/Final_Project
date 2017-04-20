@@ -47,7 +47,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                     <li>
                         <div class="slider-caption">
                             <h1>Check out our Menu</h1>
-                            <a href="products">Browse</a>
+                            <a href="catalog">Browse</a>
                         </div>
                       <img src="img/slide2.jpg" alt="" />
                     </li>

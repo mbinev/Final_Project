@@ -124,6 +124,13 @@ public class UserController {
 		//TODO redirect user to a page, where he can enter password, and than add him to the database
 		return "";
 	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.POST)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "index";
+		
+}
 
 	private boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
