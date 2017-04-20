@@ -3,7 +3,6 @@
 	<name>Pizza</name>
 	<comment></comment>
 	<projects>
-		<project>GameEngine</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
