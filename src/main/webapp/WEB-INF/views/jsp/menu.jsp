@@ -32,7 +32,15 @@
    }
    </script>
 <body>
-	<c:if test="${sessionScope.categories != null}">
+		<c:if test="${sessionScope.logged}">
+    		<c:import url="headerLogged.jsp"/>
+		</c:if>
+		<c:if test="${!sessionScope.logged}">
+    		<c:import url="headerNotLogged.jsp"/>
+		</c:if>
+		<c:if test="${sessionScope.categories != null}">
+		
+		
 			<c:forEach var="categories" items="${sessionScope.categories}"> 	
 				<input type="button" onClick="choose('${categories}'); menu()" value= "${ categories}"/>
        			 <div id="somediv"></div>

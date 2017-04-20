@@ -10,6 +10,7 @@ Grill Template
 http://www.templatemo.com/free-website-templates/417-grill
 
 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <head>
         <meta charset="utf-8">
         <title>Contact - Grill Template</title>
@@ -34,7 +35,12 @@ http://www.templatemo.com/free-website-templates/417-grill
         <![endif]-->
 
             
-            <jsp:include page="header.jsp" />
+            <c:if test="${sessionScope.logged}">
+    		<c:import url="headerLogged.jsp"/>
+			</c:if>
+			<c:if test="${!sessionScope.logged}">
+    		<c:import url="headerNotLogged.jsp"/>
+			</c:if>
 
 
             <div id="heading">

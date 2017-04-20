@@ -10,6 +10,7 @@ Grill Template
 http://www.templatemo.com/free-website-templates/417-grill
 
 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <head>
         <meta charset="utf-8">
         <title>Pizza time</title>
@@ -32,7 +33,12 @@ http://www.templatemo.com/free-website-templates/417-grill
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
         
-            <jsp:include page="header.jsp" />
+           <c:if test="${sessionScope.logged}">
+    		<c:import url="headerLogged.jsp"/>
+		</c:if>
+		<c:if test="${!sessionScope.logged}">
+    		<c:import url="headerNotLogged.jsp"/>
+		</c:if>
 
             <div id="slider">
                 <div class="flexslider">
