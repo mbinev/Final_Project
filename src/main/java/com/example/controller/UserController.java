@@ -62,7 +62,7 @@ public class UserController {
 							"Dominos pizza verification", "Please click on the following link: ");
 					//TODO add link
 					UserDAO.getInstance().addUser(u);
-					return "index";
+					return "confirm-registration";
 				} else {
 					//TODO stay on same page, keep the right data and ask the user to fill the form again
 					return "register";
@@ -91,7 +91,10 @@ public class UserController {
 				if(now.isAfter(expireTime)) {
 					user.setIsVerified();
 				} else {
-					//redirect to fail page
+					EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com",
+							"Dominos pizza verification", "Please click on the following link: ");
+					//TODO add link
+					return "confirm-register";
 				}
 			}
 			
