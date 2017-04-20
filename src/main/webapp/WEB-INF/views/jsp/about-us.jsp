@@ -12,7 +12,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 -->
     <head>
         <meta charset="utf-8">
-        <title>About - Grill Template</title>
+        <title>About</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         
@@ -42,7 +42,6 @@ http://www.templatemo.com/free-website-templates/417-grill
                         <div class="col-md-12">
                             <div class="heading-content">
                                 <h2>About Us</h2>
-                                <span>Home / <a href="about-us.html">About us</a></span>
                             </div>
                         </div>
                     </div>
@@ -63,12 +62,12 @@ http://www.templatemo.com/free-website-templates/417-grill
                     
                     <div class="row">
                         <div class="col-md-6">
-                        	<h3>Our Company</h3>
-                            <p>Nulla sodales ut tellus blandit accumsan. Aliquam erat volutpat. Morbi quis vestibulum erat. Nam malesuada lobortis tempus. Fusce fermentum libero fringilla odio pharetra malesuada. Suspendisse potenti. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam ultrices lectus quis consequat fringilla. Mauris non ex et purus sollicitudin tempus vitae quis nisi.</p>
+                        	<h3>Our Project</h3>
+                            <p>Hope you enjoied enjoyed our final project for <a href="http://ittalents.bg/home"> IT Tallents </a></p>
                         </div>
                         <div class="col-md-6">
-                        	<h3>Team Management</h3>
-                            <p>Suspendisse quis consectetur nisi, vitae consequat sem. In et quam id libero venenatis venenatis. Morbi vitae justo vulputate, auctor augue eu, pulvinar augue. Vestibulum placerat sem eu posuere laoreet. Ut ac ex nec urna maximus tristique interdum eget ipsum. Duis at pharetra neque, ut condimentum ex. Nunc tincidunt magna nec aliquam rhoncus. Morbi a posuere nunc.</p>
+                        	<h3>Team</h3>
+                            <p>Martin Binev and Teodora Nakova</p>
                         </div>
                     </div>
                     
@@ -82,8 +81,8 @@ http://www.templatemo.com/free-website-templates/417-grill
                                 </div>
                                 <div class="overlay">
                                     <div class="timeline-caption">
-                                        <a href="#"><h4>Breakfast</h4></a>
-                                        <p>7:30 AM</p>
+                                        <a href="#"><h4>Deserts</h4></a>
+                                        <p>Browse</p>
                                      </div>
                                  </div>
                              </div>
@@ -95,47 +94,8 @@ http://www.templatemo.com/free-website-templates/417-grill
                                 </div>
                                 <div class="overlay">
                                     <div class="timeline-caption">
-                                        <a href="#"><h4>Lunch</h4></a>
-                                        <p>11:20 AM</p>
-                                     </div>
-                                 </div>
-                             </div>
-                        </div>
-                        <div class="col-md-2 col-sm-4">
-                            <div class="timeline-thumb">
-                                <div class="thumb">
-                                    <img src="images/timeline3.jpg" alt="">
-                                </div>
-                                <div class="overlay">
-                                    <div class="timeline-caption">
-                                        <a href="#"><h4>Lunch</h4></a>
-                                        <p>1:00 PM</p>
-                                     </div>
-                                 </div>
-                             </div>
-                        </div>
-                        <div class="col-md-2 col-sm-4">
-                            <div class="timeline-thumb">
-                                <div class="thumb">
-                                    <img src="images/timeline4.jpg" alt="">
-                                </div>
-                                <div class="overlay">
-                                    <div class="timeline-caption">
-                                        <a href="#"><h4>Dinner</h4></a>
-                                        <p>6:30 PM</p>
-                                     </div>
-                                 </div>
-                             </div>
-                        </div>
-                        <div class="col-md-2 col-sm-4">
-                            <div class="timeline-thumb">
-                                <div class="thumb">
-                                    <img src="images/timeline5.jpg" alt="">
-                                </div>
-                                <div class="overlay">
-                                    <div class="timeline-caption">
-                                        <a href="#"><h4>Dinner</h4></a>
-                                        <p>8:20 PM</p>
+                                        <a href="#"><h4>Pizza</h4></a>
+                                        <p>Browse</p>
                                      </div>
                                  </div>
                              </div>
@@ -147,157 +107,15 @@ http://www.templatemo.com/free-website-templates/417-grill
                                 </div>
                                 <div class="overlay">
                                     <div class="timeline-caption">
-                                        <a href="#"><h4>Dinner</h4></a>
-                                        <p>9:10 PM</p>
+                                        <a href="#"><h4>Drinks</h4></a>
+                                        <p>Browse</p>
                                      </div>
                                  </div>
                              </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            <div id="our-team">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="heading-section">
-                                <h2>Our Team</h2>
-                                <img src="images/under-heading.png" alt="" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="authors">
-                            <div class="col-md-3 col-sm-6">
-                                <div class="team-thumb">
-                                    <div class="author">
-                                        <img src="images/author1.jpg" alt="Tracy - templatemo">
-                                    </div>
-                                    <div class="overlay">
-                                        <div class="author-caption">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                            </ul>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="author-details">
-                                     <h2>Tracy</h2>
-                                     <span>Designer</span>
-                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="team-thumb">
-                                    <div class="author">
-                                        <img src="images/author2.jpg" alt="Mary - templatemo">
-                                    </div>
-                                    <div class="overlay">
-                                        <div class="author-caption">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                            </ul>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="author-details">
-                                     <h2>Mary</h2>
-                                     <span>Developer</span>
-                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="team-thumb">
-                                    <div class="author">
-                                        <img src="images/author3.jpg" alt="Julia - templatemo">
-                                    </div>
-                                    <div class="overlay">
-                                        <div class="author-caption">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                            </ul>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="author-details">
-                                     <h2>Julia</h2>
-                                     <span>Director</span>
-                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="team-thumb">
-                                    <div class="author">
-                                        <img src="images/author4.jpg" alt="Linda - templatemo">
-                                    </div>
-                                    <div class="overlay">
-                                        <div class="author-caption">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                            </ul>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="author-details">
-                                     <h2>Linda</h2>
-                                     <span>Manager</span>
-                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
-            <div id="testimonails">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="heading-section">
-                                <h2>Testimonials and Awards</h2>
-                                <img src="images/under-heading.png" alt="" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <div class="testimonails-slider">
-                              <ul class="slides">
-                                <li>
-                                    <div class="testimonails-content">
-                                        <p>Nam nec risus feugiat dui ultrices dignissim. Morbi ex purus, commodo a tristique eu, mollis a nisi. Pellentesque in enim sit amet tellus ornare fringilla eget eu arcu. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                        <h6>Jennifer - <a href="#">Chief Designer</a></h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="testimonails-content">
-                                        <p>Fusce fermentum libero fringilla odio pharetra malesuada. Suspendisse potenti. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam ultrices lectus quis consequat fringilla. Mauris non ex et purus sollicitudin.</p>
-                                        <h6>Laureen - <a href="#">Marketing Executive</a></h6>
-                                    </div> 
-                                </li>
-                                <li>
-                                    <div class="testimonails-content">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                        <h6>Tanya - <a href="#">Creative Director</a></h6>
-                                    </div>
-                                </li>
-                              </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> 
 
 
 
@@ -327,50 +145,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                         </div>
                     </div>
                     <div class="main-footer">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="about">
-                                    <h4 class="footer-title">About Grill</h4>
-                                    <p>Grill is free HTML5 template by <span class="blue">template</span><span class="green">mo</span> and it is a free responsive bootstrap layout that can be applied for any purpose.
-                                    <br><br>Credit goes to <a rel="nofollow" href="http://unsplash.com">Unsplash</a> for photos used in this template. Nam commodo erat quis ligula placerat viverra.</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="shop-list">
-                                    <h4 class="footer-title">Shop Categories</h4>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i>New Grill Menu</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i>Healthy Fresh Juices</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i>Spicy Delicious Meals</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i>Simple Italian Pizzas</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i>Pure Good Yogurts</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i>Ice-cream for kids</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="recent-posts">
-                                    <h4 class="footer-title">Recent posts</h4>
-                                    <div class="recent-post">
-                                        <div class="recent-post-thumb">
-                                            <img src="images/recent-post1.jpg" alt="">
-                                        </div>
-                                        <div class="recent-post-info">
-                                            <h6><a href="#">Delicious and Healthy Menus</a></h6>
-                                            <span>24/12/2084</span>
-                                        </div>
-                                    </div>
-                                    <div class="recent-post">
-                                        <div class="recent-post-thumb">
-                                            <img src="images/recent-post2.jpg" alt="">
-                                        </div>
-                                        <div class="recent-post-info">
-                                            <h6><a href="#">Simple and effective meals</a></h6>
-                                            <span>18/12/2084</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="row">       
                             <div class="col-md-3">
                                 <div class="more-info">
                                     <h4 class="footer-title">More info</h4>
