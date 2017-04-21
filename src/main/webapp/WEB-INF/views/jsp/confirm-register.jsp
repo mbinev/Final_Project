@@ -34,7 +34,7 @@ http://www.templatemo.com/free-website-templates/417-grill
         <![endif]-->
 
 		
-    	<c:import url="headerNotLogged.jsp"/>
+    		<c:import url="header.jsp"/>	
 		
 
  	

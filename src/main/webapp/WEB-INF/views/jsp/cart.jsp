@@ -92,7 +92,7 @@
 						</div></td>
 				</tr>
 				<tr>
-					<td><a href="category" class="btn btn-warning"><i
+					<td><a href="catalog" class="btn btn-warning"><i
 							class="fa fa-angle-left"></i> Continue Shopping</a></td>
 					<td colspan="2" class="hidden-xs"></td>
 					<td class="hidden-xs text-center total_price_basket"><strong>TOTAL:

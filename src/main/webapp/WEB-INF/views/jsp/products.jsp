@@ -38,12 +38,8 @@ http://www.templatemo.com/free-website-templates/417-grill
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-            <c:if test="${sessionScope.logged}">
-    		<c:import url="headerLogged.jsp"/>
-			</c:if>
-			<c:if test="${!sessionScope.logged}">
-    		<c:import url="headerNotLogged.jsp"/>
-			</c:if>
+            
+    		<c:import url="header.jsp"/>	
 
 
             <div id="heading">

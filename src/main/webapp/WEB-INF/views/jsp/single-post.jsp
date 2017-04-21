@@ -36,12 +36,8 @@ http://www.templatemo.com/free-website-templates/417-grill
         <![endif]-->
 
             
-           <c:if test="${sessionScope.logged}">
-    		<c:import url="headerLogged.jsp"/>
-			</c:if>
-			<c:if test="${!sessionScope.logged}">
-    		<c:import url="headerNotLogged.jsp"/>
-			</c:if>
+           
+    		<c:import url="header.jsp"/>	
 
             <div id="heading">
                 <div class="container">
