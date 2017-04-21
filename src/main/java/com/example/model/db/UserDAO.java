@@ -82,7 +82,18 @@ public class UserDAO implements IDao {
 		return user;
 	}
 	
+	public void updateAvatarLink(User user, String avatarLink) throws SQLException {
+		long userId = user.getUserId();
+		String sql = "UPDATE users SET avatar = ? WHERE user_id = ?";
+		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
+		st.setString(1, avatarLink);
+		st.setLong(2, userId);
+		System.out.println(sql);
+		st.executeUpdate();
+	}
+	
 	public synchronized boolean isEmailFree(String email) throws SQLException{
+		//TODO fix that
 		String sql = "SELECT email FROM users WHERE email='"+email+"'";
 		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
 		ResultSet rs = st.executeQuery();
