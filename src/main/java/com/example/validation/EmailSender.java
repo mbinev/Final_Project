@@ -40,6 +40,7 @@ public class EmailSender {
 			message.setSubject(subjectText);
 			message.setText(msgText);
 
+			//the problem is here
 			Transport.send(message);
 
 		} catch (AddressException e) {
