@@ -22,8 +22,8 @@
 	<!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-        
-    <c:import url="headerLogged.jsp"/>
+
+	<c:import url="header.jsp" />
 	<div id="heading">
 		<div class="container">
 			<div class="row">
@@ -49,10 +49,10 @@
 			</thead>
 			<tbody>
 				<c:set var="total" value="${0}" />
-							<c:forEach var="product" items="${products}">
-							    <c:set var="total" value="${total + product.price}" />
-							</c:forEach>
-							<c:forEach var="product" items="${products}">
+				<c:forEach var="product" items="${products}">
+					<c:set var="total" value="${total + product.price}" />
+				</c:forEach>
+				<c:forEach var="product" items="${products}">
 					<tr>
 						<td data-th="Product">
 							<div class="row">
@@ -97,9 +97,19 @@
 					<td colspan="2" class="hidden-xs"></td>
 					<td class="hidden-xs text-center total_price_basket"><strong>TOTAL:
 							0</strong></td>
-					<td><a href="index.html" class="btn btn-success btn-block">Checkout
-							<i class="fa fa-angle-right"></i>
-					</a></td>
+
+					<c:if test="${!sessionScope.logged}">
+						<td><a href="#" class="btn btn-success btn-block"
+							onClick="alert('Please login!')">Checkout <i
+								class="fa fa-angle-right"></i>
+						</a></td>
+					</c:if>
+
+					<c:if test="${sessionScope.logged}">
+						<td><a href="index" class="btn btn-success btn-block">Checkout
+								<i class="fa fa-angle-right"></i>
+						</a></td>
+					</c:if>
 				</tr>
 			</tfoot>
 		</table>
