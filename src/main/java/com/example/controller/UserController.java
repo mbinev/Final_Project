@@ -61,8 +61,8 @@ public class UserController {
 					EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com",
 							"Dominos pizza verification", "Please click on the following link: ");
 					//TODO add link
-					UserDAO.getInstance().addUser(u);
-					return "confirm-registration";
+					UserDAO.unconfirmedUsers.put(email, u);
+					return "confirm-register";
 				} else {
 					//TODO stay on same page, keep the right data and ask the user to fill the form again
 					return "register";
@@ -83,14 +83,17 @@ public class UserController {
 			String email = req.getParameter("email");
 			String password = req.getParameter("password");
 			Form form = new Form();
-			User user = UserDAO.getInstance().findByEmail(email);
-			
-			if(user != null && !user.getIsVerified()) {
+			User user = null;
+			if(UserDAO.unconfirmedUsers.containsKey(email)) {
+				user = UserDAO.unconfirmedUsers.get(email);
 				LocalDateTime expireTime = user.getRegistrationTime().plusHours(1);
 				LocalDateTime now = LocalDateTime.now();
-				if(now.isAfter(expireTime)) {
+				if(now.isBefore(expireTime)) {
 					user.setIsVerified();
+					UserDAO.getInstance().addUser(user);
+					UserDAO.unconfirmedUsers.remove(email);
 				} else {
+					user.setRegistrationTime();
 					EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com",
 							"Dominos pizza verification", "Please click on the following link: ");
 					//TODO add link
@@ -98,6 +101,7 @@ public class UserController {
 				}
 			}
 			
+			user = UserDAO.getInstance().findByEmail(email);
 			boolean validLogin = UserDAO.getInstance().validLogin(user, email, password);	
 			System.out.println(validLogin);
 			

@@ -16,7 +16,7 @@ import com.example.model.User;
 public class UserDAO implements IDao {
 
 	private static UserDAO instance;
-	public static HashMap<String, User> registeredUsers = new HashMap<String, User>();
+	public static HashMap<String, User> unconfirmedUsers = new HashMap<String, User>();
 	
 	private UserDAO() {
 	}
@@ -40,7 +40,7 @@ public class UserDAO implements IDao {
 		ResultSet rs = st.getGeneratedKeys();
 		rs.next();
 		u.setUserId(rs.getLong(1));
-		registeredUsers.put(u.getEmail(), u);
+		unconfirmedUsers.put(u.getEmail(), u);
 	}
 	
 	public synchronized User getUser(long primary) throws SQLException{

@@ -39,6 +39,15 @@ public class User {
 		this.isVerified = false;
 	} 
 	
+	public User(String firstName, String lastName, String email, String password, LocalDateTime regTime, boolean isVerified) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.registrationTime = regTime;
+		this.isVerified = isVerified;
+	} 
+	
 	public long getUserId() {
 		return userId;
 	}
@@ -68,7 +77,7 @@ public class User {
 	}
 	
 	public LocalDateTime getRegistrationTime() {
-		return registrationTime;
+		return this.registrationTime;
 	}
 	
 	public void setUserId(long userId) {
@@ -81,6 +90,10 @@ public class User {
 	
 	public void setIsVerified() {
 		this.isVerified = true;
+	}
+	
+	public void setRegistrationTime() {
+		this.registrationTime = LocalDateTime.now();
 	}
 	
 	public static String hashPassword(String password) throws NoSuchAlgorithmException{
