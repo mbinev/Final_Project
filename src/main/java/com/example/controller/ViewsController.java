@@ -22,4 +22,16 @@ public class ViewsController {
         return "about-us";
     }
 	
+	@RequestMapping(value = "/addresses", method = RequestMethod.GET)
+    public String addressesView(){
+        return "addresses";
+    }
+	
+
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String showProfile() {
+		return "profile";
+		
+	}
+	
 }

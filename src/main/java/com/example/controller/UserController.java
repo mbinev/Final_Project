@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -141,10 +142,23 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="/profile", method=RequestMethod.GET)
-	public String showProfile() {
-		return "profile";
-		
+	@RequestMapping(value="/addAddress", method=RequestMethod.POST)
+	public String addAddress(HttpServletRequest req, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		long userId = user.getUserId();
+		String name = req.getParameter("name");
+		String street = req.getParameter("street");
+		String addressNumber = req.getParameter("address number");
+		int postcode = Integer.parseInt(req.getParameter("postcode"));
+		String phone = req.getParameter("phone");
+		String bell = req.getParameter("bell");
+		int floor = Integer.parseInt(req.getParameter("floor"));
+		int buildingNumber = Integer.parseInt(req.getParameter("building number"));
+		int apartamentNumber = Integer.parseInt(req.getParameter("apartament number"));
+		String entrance = req.getParameter("entrance");
+		//validate maybe?
+		//add to data base
+		return "addresses";
 	}
 
 	private boolean validateEmail(String email) {

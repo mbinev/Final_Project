@@ -44,8 +44,8 @@
 												<button type="submit" class="btn-link">Profile</button>
 											</form>
 										</div>
-										<div class="logout">
-											<form action="logout" method="post">
+										<div class="addresses">
+											<form action="addresses" method="get">
 												<button type="submit" class="btn-link">Addresses</button>
 											</form>
 										</div>
