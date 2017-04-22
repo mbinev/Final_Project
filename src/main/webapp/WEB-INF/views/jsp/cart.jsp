@@ -49,10 +49,13 @@
 			</thead>
 			<tbody>
 				<c:set var="total" value="${0}" />
-				<c:forEach var="product" items="${products}">
+				<c:forEach var="order" items="${sessionScope.products}">
+					<c:set var="product" value="${order.product}" scope="page"/>
 					<c:set var="total" value="${total + product.price}" />
 				</c:forEach>
-				<c:forEach var="product" items="${products}">
+				<c:forEach var="order" items="${sessionScope.products}">
+					<c:set var="desc" value="${order.description}" scope="page"/>
+					<c:set var="product" value="${order.product}" scope="page"/>
 					<tr>
 						<td data-th="Product">
 							<div class="row">
@@ -62,9 +65,7 @@
 								</div>
 								<div class="col-sm-10">
 									<h4 class="nomargin">${product.name}</h4>
-									<p>Quis aute iure reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit
-										amet.</p>
+									<p>${desc}</p>
 								</div>
 							</div>
 						</td>
@@ -78,7 +79,9 @@
 							<button class="btn btn-info btn-sm">
 								<i class="fa fa-refresh"></i>
 							</button>
-							<button class="btn btn-danger btn-sm trash">
+						<input class="order" type = "hidden" name = "jsfForm:hiddenField"  
+   value = "${order}" />
+							<button class="btn btn-danger btn-sm trash" onclick=>
 								<i class="fa fa-trash-o"></i>
 							</button>
 						</td>
@@ -116,6 +119,11 @@
 	</div>
 	<script>
 		$('.trash').on('click', function() {
+			var obj=$(this).closest('tr').find('.order').val();
+			$.post("deleteOrderObj",
+				    {
+				        name: obj
+				    });
 			$(this).closest('tr').remove();
 			var total = 0;
 			$('.all').each(function() {
