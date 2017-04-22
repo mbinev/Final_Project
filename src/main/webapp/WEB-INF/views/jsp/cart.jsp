@@ -17,6 +17,29 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	
+<style type="text/css">
+.prettyline {
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+.modal-backdrop {
+    /* bug fix - no overlay */    
+    display: none;    
+}
+.modal-cart {
+ border: 1px solid black;
+ border-radius:8px;
+  background:#fff;
+  padding:20px;
+}
+</style>
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -103,20 +126,76 @@
 
 					<c:if test="${!sessionScope.logged}">
 						<td><a href="#" class="btn btn-success btn-block"
-							onClick="alert('Please login!')">Checkout <i
+							onClick="alert('Please login!')" >Checkout <i
 								class="fa fa-angle-right"></i>
 						</a></td>
 					</c:if>
 
 					<c:if test="${sessionScope.logged}">
-						<td><a href="index" class="btn btn-success btn-block">Checkout
+						<td><a href="index" class="btn btn-success btn-block" data-toggle="modal" data-target=".bs-modal-sm">Checkout
 								<i class="fa fa-angle-right"></i>
 						</a></td>
 					</c:if>
+					
 				</tr>
 			</tfoot>
 		</table>
 	</div>
+	<div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-cart">
+        <br>
+        <div class="bs-example bs-example-tabs">
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#delivery" data-toggle="tab">Deliver to me!</a></li>
+              <li class=""><a href="#pickIt" data-toggle="tab">Pick from shop!</a></li>
+            </ul>
+        </div>
+      <div class="modal-body">
+        <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="delivery">
+            <form class="form-horizontal">
+            <fieldset>
+            <select class="selectpicker">
+			  <option>Home</option>
+			  <option>Work</option>
+			  <option>Batcave</option>
+			</select>
+
+            <!-- Button -->
+            <div class="control-group">
+              <label class="control-label" for="order"></label>
+              <div class="controls">
+                <button id="order" name="order" class="btn btn-success">Order</button>
+              </div>
+            </div>
+            </fieldset>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="pickIt">
+            <form class="form-horizontal">
+            <select class="selectpicker">
+			  <option>Serdica</option>
+			  <option>Mladost 3</option>
+			  <option>Borovo</option>
+			</select>
+            <!-- Button -->
+            <div class="control-group">
+              <label class="control-label" for="order"></label>
+              <div class="controls">
+                <button id="order" name="order" class="btn btn-success">Order</button>
+              </div>
+            </div>
+            </form>
+      </div>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<script>
 		$('.trash').on('click', function() {
 			var obj=$(this).closest('tr').find('.order').val();
