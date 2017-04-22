@@ -74,12 +74,12 @@ http://www.templatemo.com/free-website-templates/417-grill
 				<div class="col-md-2 col-sm-4">
 					<div class="timeline-thumb">
 						<div class="thumb">
-						<c:if test="${sessionScope.filename == null}">
-						<img src="images/avatar.jpg" alt="">
-						</c:if>
-						<c:if test="${sessionScope.filename != null}">
-						<img src="image/${filename}">
-						</c:if>
+							<c:if test="${sessionScope.filename == null}">
+								<img src="images/avatar.jpg" alt="">
+							</c:if>
+							<c:if test="${sessionScope.filename != null}">
+								<img src="image/${filename}">
+							</c:if>
 						</div>
 						<div class="overlay">
 							<div class="timeline-caption">
@@ -89,6 +89,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 					</div>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-md-6">
 					<form method="post" enctype="multipart/form-data">
@@ -97,12 +98,57 @@ http://www.templatemo.com/free-website-templates/417-grill
 					</form>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<p>
-						Manage your addresses in the address section.
-					</p>
-				</div>
+			
+			<div class="container">
+			<br>
+				<c:if test="${empty sessionScope.addresses || sessionScope.addresses == null}">
+					<h4>You have no added addresses. Go to address section to add an address.</h4>
+				</c:if>
+
+				<c:if test="${sessionScope.addresses != null && not empty sessionScope.addresses}">
+					<div id="myModal" class="modal hide fade" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true"></button>
+							<h3 id="myModalLabel">Delete</h3>
+						</div>
+						<div class="modal-body">
+							<p></p>
+						</div>
+					</div>
+					<table class="table table-striped table-hover table-users">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>City</th>
+								<th>Phone</th>
+								<th>Street</th>
+								<th>Address number</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<c:forEach items="${sessionScope.addresses}" var="address">
+									<td>${address.name}</td>
+									<td>${address.city}</td>
+									<td>${address.phone}</td>
+									<td>${address.street}</td>
+									<td>${address.addressNumber}</td>
+
+									<td><a class="btn mini blue-stripe" href="#">Edit</a></td>
+
+									<td>
+										<button class="btn btn-danger btn-sm trash"
+											onclick="deleteAddress(this,'${address.addressId}');">
+											<i class="fa fa-trash-o"></i>
+										</button>
+									</td>
+								</c:forEach>
+							</tr>
+						</tbody>
+					</table>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -113,8 +159,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 		<div class="container">
 			<div class="top-footer">
 				<div class="row">
-					<div class="col-md-9">
-					</div>
+					<div class="col-md-9"></div>
 				</div>
 			</div>
 			<div class="main-footer">
@@ -122,9 +167,9 @@ http://www.templatemo.com/free-website-templates/417-grill
 					<div class="col-md-3">
 						<div class="more-info">
 							<h4 class="footer-title">More info</h4>
-								<li><i class="fa fa-phone"></i>010-020-0340</li>
-								<li><i class="fa fa-globe"></i>Sofia, Bulgaia</li>
-								<li><i class="fa fa-envelope"></i><a href="#">info@company.com</a></li>
+							<li><i class="fa fa-phone"></i>010-020-0340</li>
+							<li><i class="fa fa-globe"></i>Sofia, Bulgaia</li>
+							<li><i class="fa fa-envelope"></i><a href="#">info@company.com</a></li>
 							</ul>
 						</div>
 					</div>

@@ -32,18 +32,19 @@ public class ViewsController {
     }
 	
 	@RequestMapping(value = "/addresses", method = RequestMethod.GET)
-	public String getAddresses(HttpSession session) throws SQLException {
-		User user = (User) session.getAttribute("user");
-		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
-		session.setAttribute("addresses", list);
+	public String showAddresses() {
 		return "addresses";
 	}
 	
 
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
-	public String showProfile() {
-		return "profile";
+		public String showProfile(HttpSession session) throws SQLException {
+			User user = (User) session.getAttribute("user");
+			ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
+			session.setAttribute("addresses", list);
+			return "profile";
+		}
 		
 	}
 	
-}
+

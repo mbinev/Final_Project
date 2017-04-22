@@ -50,7 +50,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 			<div class="row">
 				<div class="col-md-12">
 					<div class="heading-content">
-						<h2>Your addresses</h2>
+						<h2>Manage addresses</h2>
 					</div>
 				</div>
 			</div>
@@ -124,56 +124,6 @@ http://www.templatemo.com/free-website-templates/417-grill
 		</div>
 	</div>
 
-
-	<div class="container">
-		<c:if test="${sessionScope.addresses == null}">
-			<h4>You have no added addresses. Please fill the form.</h4>
-		</c:if>
-
-		<c:if test="${sessionScope.addresses != null}">
-			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true"></button>
-					<h3 id="myModalLabel">Delete</h3>
-				</div>
-				<div class="modal-body">
-					<p></p>
-				</div>
-			</div>
-			<table class="table table-striped table-hover table-users">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>City</th>
-						<th>Phone</th>
-						<th>Street</th>
-						<th>Address number</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<c:forEach items="${sessionScope.addresses}" var="address">
-							<td>${address.name}</td>
-							<td>${address.city}</td>
-							<td>${address.phone}</td>
-							<td>${address.street}</td>
-							<td>${address.addressNumber}</td>
-
-							<td><a class="btn mini blue-stripe" href="#">Edit</a></td>
-							
-							<td>	
-								<button class="btn btn-danger btn-sm trash" onclick="deleteAddress(this,'${address.addressId}');">
-									<i class="fa fa-trash-o"></i>
-								</button>
-							</td>	
-						</c:forEach>
-					</tr>
-				</tbody>
-			</table>
-		</c:if>
-	</div>
 
 	<footer>
 		<div class="container">
