@@ -162,7 +162,7 @@ public class UserController {
 				Integer.parseInt(req.getParameter("apartament number"));
 		String entrance = req.getParameter("entrance").equals("") ? "" : req.getParameter("entrance"); 
 		
-		//TODO validate 
+		//TODO validate and add city
 		
 		//add to data base
 		User user = (User) session.getAttribute("user");

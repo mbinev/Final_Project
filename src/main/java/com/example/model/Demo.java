@@ -4,8 +4,11 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import com.example.model.db.AddressDAO;
 
 public class Demo {
 
@@ -22,5 +25,12 @@ public class Demo {
 		
 //		User user = new User("Ivan", "Zahariev", "ivanzahariev@abv.bg", "Ivancho123");
 //		UserDAO.getInstance().addUser(user);
+		
+		
+//		
+		ArrayList<Address> list = (ArrayList<Address>) AddressDAO.getInstance().getUserAddresses(3);
+		for(Address a : list) {
+			System.out.println(a.getPhone());
+		}
 	}
 }

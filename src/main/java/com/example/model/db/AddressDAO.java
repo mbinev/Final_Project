@@ -1,8 +1,11 @@
 package com.example.model.db;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.example.model.Address;
 import com.example.model.User;
@@ -36,6 +39,43 @@ public class AddressDAO implements IDao{
 		st.setLong(11, user.getUserId());
 		st.execute();
 	}
+	
+	public ArrayList<Address> getUserAddresses(long userID) throws SQLException {
+		ArrayList<Address> list = new ArrayList<>();
+		//String sql = "SELECT ? FROM ? WHERE user_id=?;";
+		String sql = "SELECT name, street, address_number, post_code, mobile_number, bell, floor, building_number, apartment_number, entrace, user_id FROM addresses WHERE user_id=3;";
+		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
+//		StringBuilder appendColumns = new StringBuilder();
+//		String [] columns = getColumns();
+//		for (int i = 0; i < columns.length; i++) {
+//			if(i == columns.length - 1) {
+//				appendColumns.append(columns[i]);
+//				break;
+//			}
+//			appendColumns.append(columns[i] +", ");
+//		}
+//		String newColumns = appendColumns.toString();
+//		System.out.println(newColumns);
+//		st.setString(1, "name, street, address_number, post_code, mobile_number, bell, floor, building_number, apartment_number, entrace, user_id");
+//		st.setString(2, "addresses");
+//		st.setLong(3, userID);
+//		System.out.println(st.toString());
+		ResultSet rs = st.executeQuery();
+		while(rs.next()) {
+			Address address = new Address(rs.getString("name"),
+					rs.getString("street"), 
+					rs.getString("address_number"), 
+					rs.getString("post_code"), 
+					rs.getString("mobile_number"), 
+					rs.getInt("floor"));
+			address.setBell(rs.getString("bell"));
+			address.setBuildingNumber(rs.getInt("building_number"));
+			address.setApartmentNumber(rs.getInt("apartment_number"));
+			address.setEntrance(rs.getString("entrace"));
+			list.add(address);
+		}
+		return list;
+	}
 
 	@Override
 	public String getTableName() {
@@ -46,7 +86,7 @@ public class AddressDAO implements IDao{
 	public String[] getColumns() {
 		return new String[] {
 				"name", "street", "address_number", "post_code", "mobile_number", "bell", "floor", "building_number", "apartment_number", "entrace", "user_id"};
-		        // to bell - varchar
+		        
 	}
 
 	@Override
