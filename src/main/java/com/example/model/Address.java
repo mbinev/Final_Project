@@ -2,7 +2,7 @@ package com.example.model;
 
 public class Address {
 
-	private int addressId;
+	private long addressId;
 	private String name; 
 	private String street;
 	private String addressNumber; 
@@ -25,7 +25,7 @@ public class Address {
 		this.floor = floor;
 	}
 	
-	public void setAddressId(int addressId) {
+	public void setAddressId(long addressId) {
 		this.addressId = addressId;
 	}
 	
@@ -57,7 +57,7 @@ public class Address {
 		this.userId = userId;
 	}
 
-	public int getAddressId() {
+	public long getAddressId() {
 		return addressId;
 	}
 	

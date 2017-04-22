@@ -184,6 +184,14 @@ public class UserController {
 		return "addresses";
 	}
 	
+	@RequestMapping(value="/deleteAddress", method=RequestMethod.POST)
+	public String deleteAddress(HttpSession session, HttpServletRequest request) throws SQLException {
+		int addressId = Integer.parseInt(request.getParameter("id"));
+		long id = addressId;
+		AddressDAO.getInstance().deleteAddress(id);
+		return "addresses";
+	}
+	
 
 	private boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(

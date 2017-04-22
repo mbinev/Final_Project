@@ -33,6 +33,8 @@ http://www.templatemo.com/free-website-templates/417-grill
 <link rel="stylesheet" href="css/testimonails-slider.css">
 
 <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -114,83 +116,62 @@ http://www.templatemo.com/free-website-templates/417-grill
 						</div>
 
 						<div class="send">
-							<button type="submit">Add address</button>
+							<button type="submit">Add</button>
 						</div>
 					</form>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
 
 	<div class="container">
-	    <c:if test="${sessionScope.addresses == null}">
-		<h4>You have no added addresses. Please fill the form bellow.</h4>
+		<c:if test="${sessionScope.addresses == null}">
+			<h4>You have no added addresses. Please fill the form.</h4>
 		</c:if>
-	
-	    <c:if test="${sessionScope.addresses != null}">
-		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true"></button>
-				<h3 id="myModalLabel">Delete</h3>
+
+		<c:if test="${sessionScope.addresses != null}">
+			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true"></button>
+					<h3 id="myModalLabel">Delete</h3>
+				</div>
+				<div class="modal-body">
+					<p></p>
+				</div>
 			</div>
-			<div class="modal-body">
-				<p></p>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-				<button data-dismiss="modal" class="btn red" id="btnYes">Confirm</button>
-			</div>
-		</div>
-		<table class="table table-striped table-hover table-users">
-			<thead>
-				<tr>
+			<table class="table table-striped table-hover table-users">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>City</th>
+						<th>Phone</th>
+						<th>Street</th>
+						<th>Address number</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<c:forEach items="${sessionScope.addresses}" var="address">
+							<td>${address.name}</td>
+							<td>${address.city}</td>
+							<td>${address.phone}</td>
+							<td>${address.street}</td>
+							<td>${address.addressNumber}</td>
 
-					<th>Name</th>
-					<th>City</th>
-					<th>Phone</th>
-					<th>Street</th>
-					<th>Address number</th>
-				</tr>
-			</thead>
-
-			<tbody>
-
-				<tr>
-
-					<td class="hidden-phone">johnny</td>
-					<td>john</td>
-					<td>doe</td>
-					<td class="hidden-phone">dsd@gmail.com</td>
-					
-					<td><span class="label label-danger">Activo</span></td>
-
-					<td><a class="btn mini blue-stripe"
-						href="#">Edit</a></td>
-
-					<td><a href="#" class="confirm-delete btn mini red-stripe"
-						role="button" data-title="johnny" data-id="1">Delete</a></td>
-				</tr>
-				<tr>
-
-					<td class="hidden-phone">kitty</td>
-					<td>jane</td>
-					<td>doe</td>
-					<td class="hidden-phone">dasasasd@gmail.com</td>
-
-					<td><span class="label label-danger">Activo</span></td>
-
-					<td><a class="btn mini blue-stripe"
-						href="{site_url()}admin/editFront/2">Edit</a></td>
-
-					<td><a href="#" class="confirm-delete btn mini red-stripe"
-						role="button" data-title="kitty" data-id="2">Delete</a></td>
-				</tr>
-			</tbody>
-		</table>
+							<td><a class="btn mini blue-stripe" href="#">Edit</a></td>
+							
+							<td>	
+								<button class="btn btn-danger btn-sm trash" onclick="deleteAddress(this,'${address.addressId}');">
+									<i class="fa fa-trash-o"></i>
+								</button>
+							</td>	
+						</c:forEach>
+					</tr>
+				</tbody>
+			</table>
 		</c:if>
 	</div>
 
@@ -227,6 +208,26 @@ http://www.templatemo.com/free-website-templates/417-grill
 	<script src="js/vendor/jquery.gmap3.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
+
+	<script type="text/javascript">
+	
+	function deleteAddress(btn, id) {
+		
+		if (!confirm('Are you sure?')) {
+			return;
+		}
+		
+		$.post("deleteAddress", {
+			id : id
+		}).then(function() {
+			//window.location.reload();
+		});
+		var $tr = $(btn).closest('tr');
+		$tr.hide(300, function() {
+			$tr.remove();
+		});
+	}
+	</script>
 
 </body>
 </html>
