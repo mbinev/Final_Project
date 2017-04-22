@@ -76,54 +76,40 @@ http://www.templatemo.com/free-website-templates/417-grill
 					<form action="addAddress" method="post" class="send-message">
 						<div class="row">
 							<div class="name col-md-4">
-							Name your address
-								<input type="text" name="name" id="name"
-									 required />
+								Name your address <input type="text" name="name" id="name"
+									required />
 							</div>
 							<div class="street col-md-4">
-							Street
-								<input type="text" name="street" id="street"
-									 required />
+								Street <input type="text" name="street" id="street" required />
 							</div>
 							<div class="subject col-md-4">
-							Address number(eg. 2A)
-								<input type="text" name="address number" id="address number"
-									 required />
+								Address number(eg. 2A) <input type="text" name="address number"
+									id="address number" required />
 							</div>
 							<div class="postcode col-md-4">
-							Postcode
-								<input type="text" name="postcode" id="postcode"
-									 required />
+								Postcode <input type="text" name="postcode" id="postcode"
+									required />
 							</div>
 							<div class="phone col-md-4">
-							Phone(eg. 0878661551)
-								<input type="text" name="phone" id="phone" max="10"
-									 required />
+								Phone(eg. 0878661551) <input type="text" name="phone" id="phone"
+									max="10" required />
 							</div>
 							<div class="bell col-md-4">
-							Bell(eg. Ivanovi)
-								<input type="text" name="bell" id="bell"
-									 />
+								Bell(eg. Ivanovi) <input type="text" name="bell" id="bell" />
 							</div>
 							<div class="floor col-md-4">
-							Floor
-								<input type="number" name="floor" id="floor"
-									required/>
+								Floor <input type="number" name="floor" id="floor" required />
 							</div>
 							<div class="building number col-md-4">
-							Building number
-								<input type="number" name="building number" id="building number"
-									/>
+								Building number <input type="number" name="building number"
+									id="building number" />
 							</div>
 							<div class="apartament number col-md-4">
-							Apartament number
-								<input type="number" name="apartament number" id="apartament number"
-									 />
+								Apartament number <input type="number" name="apartament number"
+									id="apartament number" />
 							</div>
 							<div class="entrance col-md-4">
-							Entrance
-								<input type="text" name="entrance" id="entrance"
-									 />
+								Entrance <input type="text" name="entrance" id="entrance" />
 							</div>
 						</div>
 
@@ -138,6 +124,75 @@ http://www.templatemo.com/free-website-templates/417-grill
 	</div>
 
 
+	<div class="container">
+	    <c:if test="${sessionScope.addresses == null}">
+		<h4>You have no added addresses. Please fill the form bellow.</h4>
+		</c:if>
+	
+	    <c:if test="${sessionScope.addresses != null}">
+		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true"></button>
+				<h3 id="myModalLabel">Delete</h3>
+			</div>
+			<div class="modal-body">
+				<p></p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				<button data-dismiss="modal" class="btn red" id="btnYes">Confirm</button>
+			</div>
+		</div>
+		<table class="table table-striped table-hover table-users">
+			<thead>
+				<tr>
+
+					<th>Name</th>
+					<th>City</th>
+					<th>Phone</th>
+					<th>Street</th>
+					<th>Address number</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr>
+
+					<td class="hidden-phone">johnny</td>
+					<td>john</td>
+					<td>doe</td>
+					<td class="hidden-phone">dsd@gmail.com</td>
+					
+					<td><span class="label label-danger">Activo</span></td>
+
+					<td><a class="btn mini blue-stripe"
+						href="#">Edit</a></td>
+
+					<td><a href="#" class="confirm-delete btn mini red-stripe"
+						role="button" data-title="johnny" data-id="1">Delete</a></td>
+				</tr>
+				<tr>
+
+					<td class="hidden-phone">kitty</td>
+					<td>jane</td>
+					<td>doe</td>
+					<td class="hidden-phone">dasasasd@gmail.com</td>
+
+					<td><span class="label label-danger">Activo</span></td>
+
+					<td><a class="btn mini blue-stripe"
+						href="{site_url()}admin/editFront/2">Edit</a></td>
+
+					<td><a href="#" class="confirm-delete btn mini red-stripe"
+						role="button" data-title="kitty" data-id="2">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		</c:if>
+	</div>
 
 	<footer>
 		<div class="container">

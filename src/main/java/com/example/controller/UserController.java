@@ -175,6 +175,15 @@ public class UserController {
 		AddressDAO.getInstance().addNewAddress(user, address);
 		return "addresses";
 	}
+	
+	@RequestMapping(value="/getAddresses", method=RequestMethod.GET)
+	public String getAddresses(HttpSession session) throws SQLException {
+		User user = (User) session.getAttribute("user");
+		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
+		session.setAttribute("addresses", list);
+		return "addresses";
+	}
+	
 
 	private boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(
