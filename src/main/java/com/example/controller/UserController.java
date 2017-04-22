@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.model.Address;
 import com.example.model.Product;
 import com.example.model.User;
+import com.example.model.db.AddressDAO;
 import com.example.model.db.UserDAO;
 import com.example.validation.EmailSender;
 import com.example.validation.Form;
@@ -143,21 +145,34 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/addAddress", method=RequestMethod.POST)
-	public String addAddress(HttpServletRequest req, HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		long userId = user.getUserId();
-		String name = req.getParameter("name");
+	public String addAddress(HttpServletRequest req, HttpSession session) throws SQLException {
+		//req
+		String name = req.getParameter("name"); 
 		String street = req.getParameter("street");
 		String addressNumber = req.getParameter("address number");
-		int postcode = Integer.parseInt(req.getParameter("postcode"));
+		String postcode = req.getParameter("postcode");
 		String phone = req.getParameter("phone");
-		String bell = req.getParameter("bell");
 		int floor = Integer.parseInt(req.getParameter("floor"));
-		int buildingNumber = Integer.parseInt(req.getParameter("building number"));
-		int apartamentNumber = Integer.parseInt(req.getParameter("apartament number"));
-		String entrance = req.getParameter("entrance");
-		//validate maybe?
+		
+		// not req
+		String bell = req.getParameter("bell").equals("") ? "" : req.getParameter("bell"); 
+		int buildingNumber = req.getParameter("building number").equals("") ? 
+				-1 : Integer.parseInt(req.getParameter("building number")); 
+		int apartamentNumber = req.getParameter("apartament number").equals("") ? -1 :
+				Integer.parseInt(req.getParameter("apartament number"));
+		String entrance = req.getParameter("entrance").equals("") ? "" : req.getParameter("entrance"); 
+		
+		//TODO validate 
+		
 		//add to data base
+		User user = (User) session.getAttribute("user");
+		long userId = user.getUserId();
+		Address address = new Address(name, street, addressNumber, postcode, phone, floor);
+		address.setBell(bell);
+		address.setBuildingNumber(buildingNumber);
+		address.setApartmentNumber(apartamentNumber);
+		address.setEntrance(entrance);
+		AddressDAO.getInstance().addNewAddress(user, address);
 		return "addresses";
 	}
 

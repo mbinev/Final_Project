@@ -3,9 +3,9 @@ package com.example.model;
 public class Address {
 
 	private int addressId;
-	private String neighbourhood; 
+	private String name; 
 	private String street;
-	private String streetNumber; 
+	private String addressNumber; 
 	private String postcode;
 	private String city;
 	private String phone; 
@@ -16,9 +16,10 @@ public class Address {
 	private String entrance;
 	private int userId;
 	
-	public Address(String street, String streetNumber, String postcode, String phone, int floor) {
+	public Address(String name, String street, String addressNumber, String postcode, String phone, int floor) {
+		this.name = name;
 		this.street = street;
-		this.streetNumber = streetNumber;
+		this.addressNumber = addressNumber;
 		this.postcode = postcode;
 		this.phone = phone;
 		this.floor = floor;
@@ -29,7 +30,7 @@ public class Address {
 	}
 	
 	public void setNeighbourhood(String neighbourhood) {
-		this.neighbourhood = neighbourhood;
+		this.name = neighbourhood;
 	}
 	
 	public void setCity(String city) {
@@ -60,14 +61,14 @@ public class Address {
 		return addressId;
 	}
 	
-	public String getNeighbourhood() {
-		return neighbourhood;
+	public String getName() {
+		return name;
 	}
 	public String getStreet() {
 		return street;
 	}
-	public String getStreetNumber() {
-		return streetNumber;
+	public String getaddressNumber() {
+		return addressNumber;
 	}
 	public String getPostcode() {
 		return postcode;

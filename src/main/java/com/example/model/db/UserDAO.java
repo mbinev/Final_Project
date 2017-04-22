@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import javax.xml.bind.DatatypeConverter;
 
+import com.example.model.Address;
 import com.example.model.User;
 
 public class UserDAO implements IDao {
@@ -91,6 +92,7 @@ public class UserDAO implements IDao {
 		System.out.println(sql);
 		st.executeUpdate();
 	}
+	
 	
 	public synchronized boolean isEmailFree(String email) throws SQLException{
 		//TODO fix that

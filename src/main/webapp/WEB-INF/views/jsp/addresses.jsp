@@ -86,13 +86,13 @@ http://www.templatemo.com/free-website-templates/417-grill
 									 required />
 							</div>
 							<div class="subject col-md-4">
-							Adress number(eg. 2A)
+							Address number(eg. 2A)
 								<input type="text" name="address number" id="address number"
 									 required />
 							</div>
 							<div class="postcode col-md-4">
 							Postcode
-								<input type="number" name="postcode" id="postcode" min="4"
+								<input type="text" name="postcode" id="postcode"
 									 required />
 							</div>
 							<div class="phone col-md-4">
@@ -108,7 +108,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 							<div class="floor col-md-4">
 							Floor
 								<input type="number" name="floor" id="floor"
-									/>
+									required/>
 							</div>
 							<div class="building number col-md-4">
 							Building number
