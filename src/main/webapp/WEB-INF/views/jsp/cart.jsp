@@ -76,7 +76,7 @@
 						<td data-th="Subtotal" class="all text-center"
 							id="total_price_${product.productId}">${product.price}</td>
 						<td class="actions" data-th="">
-							<button class="btn btn-info btn-sm">
+							<button class="btn btn-info btn-sm refresh">
 								<i class="fa fa-refresh"></i>
 							</button>
 						<input class="order" type = "hidden" name = "jsfForm:hiddenField"  
@@ -125,11 +125,15 @@
 				        name: obj
 				    });
 			$(this).closest('tr').remove();
+			var count = 0;
 			var total = 0;
 			$('.all').each(function() {
 				total += Number($(this).text());
+				count += 1;
 			});
 			$('.total_price_basket').text('TOTAL: ' + total);
+			$("#productCount").text(count + ' items')
+			$("#totalPrices").text('$ ' + total);
 			return false;
 		});
 

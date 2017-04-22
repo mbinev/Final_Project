@@ -24,6 +24,8 @@ public class MyController {
 	public String sayHi(Model viewModel, HttpSession session) {
 		ArrayList<OrderObj> products = new ArrayList<>();
 		session.setAttribute("products", products);
+		session.setAttribute("totalPrice", 0.0);
+		session.setAttribute("productsNumber", 0);
 		session.setMaxInactiveInterval(15*60);
 		return "index";
 	}
