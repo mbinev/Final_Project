@@ -39,11 +39,6 @@ public class UploadController {
 	@RequestMapping(value="/image/{fileName}", method=RequestMethod.GET)
 	@ResponseBody
 	public void prepareForUpload(@PathVariable("fileName") String fileName, HttpServletResponse resp, Model model) throws IOException {
-		if(vzemiToqImage == null) {
-			File file = new File("/img/avatar.jpg");
-			Files.copy(file.toPath(),  resp.getOutputStream());
-			return;
-		}
 		File file = new File(FILE_LOCATION + vzemiToqImage);
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}

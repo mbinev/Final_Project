@@ -74,7 +74,12 @@ http://www.templatemo.com/free-website-templates/417-grill
 				<div class="col-md-2 col-sm-4">
 					<div class="timeline-thumb">
 						<div class="thumb">
-						    <img src="image/${filename}">
+						<c:if test="${sessionScope.filename == null}">
+						<img src="images/avatar.jpg" alt="">
+						</c:if>
+						<c:if test="${sessionScope.filename != null}">
+						<img src="image/${filename}">
+						</c:if>
 						</div>
 						<div class="overlay">
 							<div class="timeline-caption">
@@ -94,10 +99,8 @@ http://www.templatemo.com/free-website-templates/417-grill
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-					<h3>Our Project</h3>
 					<p>
-						Hope you enjoied enjoyed our final project for <a
-							href="http://ittalents.bg/home"> IT Tallents </a>
+						Manage your addresses in the address section.
 					</p>
 				</div>
 			</div>
@@ -111,23 +114,6 @@ http://www.templatemo.com/free-website-templates/417-grill
 			<div class="top-footer">
 				<div class="row">
 					<div class="col-md-9">
-						<div class="subscribe-form">
-							<span>Get in touch with us</span>
-							<form method="get" class="subscribeForm">
-								<input id="subscribe" type="text" /> <input type="submit"
-									id="submitButton" />
-							</form>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="social-bottom">
-							<span>Follow us:</span>
-							<ul>
-								<li><a href="#" class="fa fa-facebook"></a></li>
-								<li><a href="#" class="fa fa-twitter"></a></li>
-								<li><a href="#" class="fa fa-rss"></a></li>
-							</ul>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -136,12 +122,8 @@ http://www.templatemo.com/free-website-templates/417-grill
 					<div class="col-md-3">
 						<div class="more-info">
 							<h4 class="footer-title">More info</h4>
-							<p>Sed dignissim, diam id molestie faucibus, purus nisl
-								pretium quam, in pulvinar velit massa id elit.</p>
-							<ul>
 								<li><i class="fa fa-phone"></i>010-020-0340</li>
-								<li><i class="fa fa-globe"></i>123 Dagon Studio, Yakin
-									Street, Digital Estate</li>
+								<li><i class="fa fa-globe"></i>Sofia, Bulgaia</li>
 								<li><i class="fa fa-envelope"></i><a href="#">info@company.com</a></li>
 							</ul>
 						</div>
@@ -150,7 +132,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 			</div>
 			<div class="bottom-footer">
 				<p>
-					Copyright Â© 2084 <a href="#">Your Company Name</a>
+					Copyright Â© 2084 <a href="#">ITT Pizza</a>
 				</p>
 			</div>
 
