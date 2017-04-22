@@ -139,7 +139,13 @@ public class UserController {
 		session.invalidate();
 		return "index";
 		
-}
+	}
+	
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String showProfile() {
+		return "profile";
+		
+	}
 
 	private boolean validateEmail(String email) {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(

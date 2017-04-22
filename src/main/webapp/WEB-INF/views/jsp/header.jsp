@@ -39,8 +39,8 @@
 										&nbsp; <i class="fa fa-lg fa-user"></i>
 								</a>
 									<div class="dropdown-menu">
-										<div class="logout">
-											<form action="logout" method="post">
+										<div class="profile">
+											<form action="profile" method="get">
 												<button type="submit" class="btn-link">Profile</button>
 											</form>
 										</div>
@@ -92,7 +92,7 @@
 												class="small">New User? Sign-up..</a>
 										</form>
 										<form id="formRegister" class="form collapse container-fluid"
-											action="login" method="post">
+											action="register" method="post">
 											<br>
 											<div class="form-group">
 												<input class="form-control" name="email" id="inputEmail"
@@ -101,13 +101,13 @@
 											<div class="form-group">
 												<input class="form-control" name="first name"
 													id="inputFistName" type="text" placeholder="First Name"
-													pattern="^[a-z,A-Z,0-9,_]{6,15}$" data-valid-min="6"
+													data-valid-min="4"
 													title="First name" required="">
 											</div>
 											<div class="form-group">
 												<input class="form-control" name="last name"
 													id="inputlastName" type="text" placeholder="Last Name"
-													pattern="^[a-z,A-Z,0-9,_]{6,15}$" data-valid-min="6"
+													data-valid-min="4"
 													title="Last name" required="">
 											</div>
 											<div class="form-group">
