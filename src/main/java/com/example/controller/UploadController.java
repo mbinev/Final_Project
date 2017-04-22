@@ -34,11 +34,16 @@ public class UploadController {
 	
 	private String vzemiToqImage;
 
-	private static final String FILE_LOCATION = "C:\\Users\\Теди\\Desktop\\Pictures\\";
+	private static final String FILE_LOCATION = "C:\\Pictures\\";
 
 	@RequestMapping(value="/image/{fileName}", method=RequestMethod.GET)
 	@ResponseBody
 	public void prepareForUpload(@PathVariable("fileName") String fileName, HttpServletResponse resp, Model model) throws IOException {
+		if(vzemiToqImage == null) {
+			File file = new File("/img/avatar.jpg");
+			Files.copy(file.toPath(),  resp.getOutputStream());
+			return;
+		}
 		File file = new File(FILE_LOCATION + vzemiToqImage);
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}
@@ -46,12 +51,13 @@ public class UploadController {
 	@RequestMapping(value="/profile", method=RequestMethod.POST)
 	public String receiveUpload(@RequestParam("failche") MultipartFile multiPartFile, Model model, HttpSession session) throws IOException, SQLException{
 		User user = (User) session.getAttribute("user");
-		System.out.println(user);
+		String email = user.getEmail();
+		user = UserDAO.getInstance().findByEmail(email);
 		vzemiToqImage = new Random().nextInt(1000000) + multiPartFile.getOriginalFilename();
 		File fileOnDisk = new File(FILE_LOCATION + vzemiToqImage);
 		Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		UserDAO.getInstance().updateAvatarLink(user, FILE_LOCATION + vzemiToqImage);
-		//vzemiToqImage = multiPartFile.getOriginalFilename();
+		user.setAvatarLink(FILE_LOCATION + vzemiToqImage);
 		model.addAttribute("filename", multiPartFile.getOriginalFilename());
 		return "profile";
 	}

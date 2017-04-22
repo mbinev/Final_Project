@@ -74,7 +74,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 				<div class="col-md-2 col-sm-4">
 					<div class="timeline-thumb">
 						<div class="thumb">
-							<img src="images/avatar.jpg" alt="" height="150" width="100">
+						    <img src="image/${filename}">
 						</div>
 						<div class="overlay">
 							<div class="timeline-caption">
@@ -92,7 +92,6 @@ http://www.templatemo.com/free-website-templates/417-grill
 					</form>
 				</div>
 			</div>
-			<img src="image/${filename}">
 			<div class="row">
 				<div class="col-md-6">
 					<h3>Our Project</h3>
@@ -151,7 +150,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 			</div>
 			<div class="bottom-footer">
 				<p>
-					Copyright © 2084 <a href="#">Your Company Name</a>
+					Copyright Â© 2084 <a href="#">Your Company Name</a>
 				</p>
 			</div>
 
