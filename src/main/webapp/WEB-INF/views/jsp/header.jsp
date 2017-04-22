@@ -57,6 +57,12 @@
 									</div></li>
 							</ul>
 						</div>
+						<div class="col-md-6">
+                                <div class="cart-info">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    (<a href="cart" id="productCount">${sessionScope.productsNumber} items</a>) in your cart (<a href="cart" id="totalPrices">$ ${sessionScope.totalPrice}</a>)
+                                </div>
+                            </div>
 					</div>
 				</div>
 			</div>

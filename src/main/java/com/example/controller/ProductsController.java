@@ -104,8 +104,12 @@ public class ProductsController {
 		obj.setProduct(product);
 		p.add(obj);
 		System.out.println(description);
+		double price = (double) session.getAttribute("totalPrice");
+		price = price + product.getPrice();
+		session.setAttribute("totalPrice", price);
 		session.setAttribute("products", p);
 		session.setAttribute(product.toString(), description);
+		session.setAttribute("productsNumber", p.size());
 		return "cart";
 	}
 	
@@ -121,9 +125,15 @@ public class ProductsController {
 				break;
 			}
 		}
+		double price = (double) session.getAttribute("totalPrice");
+		System.out.println(price);
+		price = price - order.getProduct().getPrice();
+		System.out.println(price);
+		session.setAttribute("totalPrice", price);
 		if(p.remove(order)){
 			System.out.println("item was removed");
 		}
+		session.setAttribute("productsNumber", p.size());
 		
 	}
 	
