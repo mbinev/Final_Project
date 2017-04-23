@@ -125,18 +125,25 @@ http://www.templatemo.com/free-website-templates/417-grill
 								<th>Phone</th>
 								<th>Street</th>
 								<th>Address number</th>
+								<th>Edit</th>
+								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
 								<c:forEach items="${sessionScope.addresses}" var="address">
+								<tr>
 									<td>${address.name}</td>
 									<td>${address.city}</td>
 									<td>${address.phone}</td>
 									<td>${address.street}</td>
 									<td>${address.addressNumber}</td>
 
-									<td><a class="btn mini blue-stripe" href="#">Edit</a></td>
+									<td>
+										<a class="btn btn-info btn-sm refresh"
+										onclick="updateAddress(this,'${address.addressId}');">
+											<i class="fa fa-pencil-square-o"></i>
+										</a>
+									</td>
 
 									<td>
 										<button class="btn btn-danger btn-sm trash"
@@ -144,8 +151,8 @@ http://www.templatemo.com/free-website-templates/417-grill
 											<i class="fa fa-trash-o"></i>
 										</button>
 									</td>
+							       </tr>
 								</c:forEach>
-							</tr>
 						</tbody>
 					</table>
 				</c:if>
@@ -188,6 +195,36 @@ http://www.templatemo.com/free-website-templates/417-grill
 	<script src="js/vendor/jquery.gmap3.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
+	
+	<script type="text/javascript">
+	
+	function deleteAddress(btn, id) {
+		
+		if (!confirm('Are you sure?')) {
+			return;
+		}
+		
+		$.post("deleteAddress", {
+			id : id
+		}).then(function() {
+			//window.location.reload();
+		});
+		var $tr = $(btn).closest('tr');
+		$tr.hide(300, function() {
+			$tr.remove();
+		});
+	}
+	
+	function updateAddress(btn, id) {
+		
+		$.get("update", {
+			id : id
+		}).then(function() {
+			window.location.assign("addresses")
+			
+		});
+	}
+	</script>
 
 </body>
 </html>

@@ -210,7 +210,6 @@ http://www.templatemo.com/free-website-templates/417-grill
 										function changePrice() {
 											var price = parseFloat($('.price')
 													.data('base-price'));
-
 											$('.price-option').each(function(i, el) {
 												price += parseFloat($('option:selected',el).data('price'));
 											});

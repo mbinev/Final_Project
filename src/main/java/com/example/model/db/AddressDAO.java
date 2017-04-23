@@ -42,26 +42,20 @@ public class AddressDAO implements IDao {
 
 	public ArrayList<Address> getUserAddresses(long userID) throws SQLException {
 		ArrayList<Address> list = new ArrayList<>();
-		// String sql = "SELECT ? FROM ? WHERE user_id=?;";
-		String sql = "SELECT address_id, name, street, address_number, post_code, mobile_number, bell, floor, building_number, apartment_number, entrace, user_id FROM addresses WHERE user_id=3;";
+		String[] columns = getColumns();
+		StringBuilder appendColumns = new StringBuilder();
+		for (int i = 0; i < columns.length; i++) {
+			if (i == columns.length - 1) {
+				appendColumns.append(columns[i] + " ");
+				break;
+			}
+			appendColumns.append(columns[i] + ", ");
+		}
+		String newColumns = appendColumns.toString();
+		System.out.println(newColumns);
+		String sql = String.format("SELECT address_id, %s FROM %s WHERE user_id=?", newColumns, getTableName());
 		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
-		// StringBuilder appendColumns = new StringBuilder();
-		// String [] columns = getColumns();
-		// for (int i = 0; i < columns.length; i++) {
-		// if(i == columns.length - 1) {
-		// appendColumns.append(columns[i]);
-		// break;
-		// }
-		// appendColumns.append(columns[i] +", ");
-		// }
-		// String newColumns = appendColumns.toString();
-		// System.out.println(newColumns);
-		// st.setString(1, "name, street, address_number, post_code,
-		// mobile_number, bell, floor, building_number, apartment_number,
-		// entrace, user_id");
-		// st.setString(2, "addresses");
-		// st.setLong(3, userID);
-		// System.out.println(st.toString());
+		st.setLong(1, userID);
 		ResultSet rs = st.executeQuery();
 		while (rs.next()) {
 			Address address = new Address(rs.getString("name"), rs.getString("street"), rs.getString("address_number"),
@@ -77,13 +71,42 @@ public class AddressDAO implements IDao {
 	}
 
 	public void deleteAddress(long id) throws SQLException {
-		//String sql = "DELETE FROM ? WHERE ?=?";
-		String sql = "DELETE FROM addresses WHERE address_id = " + id;
+		String sql = String.format("DELETE FROM %s WHERE %s = ?", getTableName(), getPrimaryKeyName());
 		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
-//		st.setString(1, getTableName());
-//		st.setString(2, getPrimaryKeyName());
-//		st.setLong(3, id);
+		st.setLong(1, id);
 		st.executeUpdate();
+	}
+
+	public void updateAddress(Address address) throws SQLException {
+		String sql = String.format(
+				"UPDATE addresses SET name='%s'," + "street='%s'," + "address_number='%s'," + "post_code='%s',"
+						+ "mobile_number='%s'," + "bell='%s'," + "floor=%d," + "building_number=%d,"
+						+ "apartment_number=%d," + "entrace='%s' " + "WHERE address_id=%d",
+				address.getName(), address.getStreet(), address.getaddressNumber(), address.getPostcode(),
+				address.getPhone(), address.getBell(), address.getFloor(), address.getBuildingNumber(),
+				address.getApartmentNumber(), address.getEntrance(), address.getAddressId());
+		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
+		st.executeUpdate();
+	}
+
+	public Address getAddressById(long id) throws SQLException {
+		String sql = "SELECT name, street, address_number, post_code,"
+				+ "mobile_number, bell, floor, building_number, apartment_number, entrace, "
+				+ "user_id FROM addresses WHERE address_id = ?";
+		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
+		st.setLong(1, id);
+		ResultSet rs = st.executeQuery();
+		Address address = null;
+		while(rs.next()) {
+			address = new Address(rs.getString("name"), rs.getString("street"), rs.getString("address_number"),
+					rs.getString("post_code"), rs.getString("mobile_number"), rs.getInt("floor"));
+			address.setBell(rs.getString("bell"));
+			address.setBuildingNumber(rs.getInt("building_number"));
+			address.setApartmentNumber(rs.getInt("apartment_number"));
+			address.setEntrance(rs.getString("entrace"));
+			address.setAddressId(id);
+		}
+		return address;
 	}
 
 	@Override
@@ -95,7 +118,6 @@ public class AddressDAO implements IDao {
 	public String[] getColumns() {
 		return new String[] { "name", "street", "address_number", "post_code", "mobile_number", "bell", "floor",
 				"building_number", "apartment_number", "entrace", "user_id" };
-
 	}
 
 	@Override

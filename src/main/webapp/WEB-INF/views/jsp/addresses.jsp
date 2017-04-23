@@ -64,7 +64,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 				<div class="col-md-12">
 					<div class="heading-section">
 						<h2>
-							<c:out value="${sessionScope.user.firstName } - Adresses "></c:out>
+							<c:out value="Add a new address"></c:out>
 						</h2>
 						<img src="images/under-heading.png" alt="">
 					</div>
@@ -75,6 +75,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 
 			<div class="col-md-8">
 				<div class="message-form">
+				<c:if test="${sessionScope.address == null }">
 					<form action="addAddress" method="post" class="send-message">
 						<div class="row">
 							<div class="name col-md-4">
@@ -119,6 +120,58 @@ http://www.templatemo.com/free-website-templates/417-grill
 							<button type="submit">Add</button>
 						</div>
 					</form>
+				</c:if>
+				
+				<c:if test="${sessionScope.address != null }">
+					<form action="updateAddress" method="post" class="send-message">
+						<div class="row">
+							<div class="name col-md-4">
+								Name your address <input type="text" name="name" id="name"
+									value="${sessionScope.address.name }" required />
+							</div>
+							<div class="street col-md-4">
+								Street <input type="text" name="street" id="street" 
+								value="${sessionScope.address.street }" required />
+							</div>
+							<div class="subject col-md-4">
+								Address number(eg. 2A) <input type="text" name="address number"
+									id="address number" value="${sessionScope.address.addressNumber }" required />
+							</div>
+							<div class="postcode col-md-4">
+								Postcode <input type="text" name="postcode" id="postcode"
+									value="${sessionScope.address.postcode }" required />
+							</div>
+							<div class="phone col-md-4">
+								Phone(eg. 0878661551) <input type="text" name="phone" id="phone"
+									max="10" value="${sessionScope.address.phone }" required />
+							</div>
+							<div class="bell col-md-4">
+								Bell(eg. Ivanovi) <input type="text" name="bell" id="bell" 
+								value="${sessionScope.address.bell }"/>
+							</div>
+							<div class="floor col-md-4">
+								Floor <input type="number" name="floor" id="floor" required
+								value="${sessionScope.address.floor }" />
+							</div>
+							<div class="building number col-md-4">
+								Building number <input type="number" name="building number"
+									id="building number" value="${sessionScope.address.buildingNumber }"/>
+							</div>
+							<div class="apartament number col-md-4">
+								Apartament number <input type="number" name="apartament number"
+									id="apartament number" value="${sessionScope.address.apartmentNumber }"/>
+							</div>
+							<div class="entrance col-md-4">
+								Entrance <input type="text" name="entrance" id="entrance" 
+								value="${sessionScope.address.entrance }"/>
+							</div>
+						</div>
+
+						<div class="send">
+							<button type="submit">Update</button>
+						</div>
+					</form>
+				</c:if>
 				</div>
 			</div>
 		</div>
@@ -158,26 +211,6 @@ http://www.templatemo.com/free-website-templates/417-grill
 	<script src="js/vendor/jquery.gmap3.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
-
-	<script type="text/javascript">
-	
-	function deleteAddress(btn, id) {
-		
-		if (!confirm('Are you sure?')) {
-			return;
-		}
-		
-		$.post("deleteAddress", {
-			id : id
-		}).then(function() {
-			//window.location.reload();
-		});
-		var $tr = $(btn).closest('tr');
-		$tr.hide(300, function() {
-			$tr.remove();
-		});
-	}
-	</script>
 
 </body>
 </html>

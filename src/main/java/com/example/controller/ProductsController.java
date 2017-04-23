@@ -66,6 +66,7 @@ public class ProductsController {
 			request.getSession().setAttribute("sizes", ProductDAO.getInstance().getAllProducts().get("Sizes"));
 			request.getSession().setAttribute("toppings", ProductDAO.getInstance().getAllProducts().get("Toppings"));
 			request.getSession().setAttribute("product", pro);
+			System.out.println(request.getSession().getAttribute("sizes"));
 		} catch (SQLException e) {
 			System.out.println("fsafa");
 		}

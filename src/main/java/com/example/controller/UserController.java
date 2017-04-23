@@ -176,13 +176,13 @@ public class UserController {
 		return "addresses";
 	}
 	
-	@RequestMapping(value="/getAddresses", method=RequestMethod.GET)
-	public String getAddresses(HttpSession session) throws SQLException {
-		User user = (User) session.getAttribute("user");
-		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
-		session.setAttribute("addresses", list);
-		return "addresses";
-	}
+//	@RequestMapping(value="/getAddresses", method=RequestMethod.GET)
+//	public String getAddresses(HttpSession session) throws SQLException {
+//		User user = (User) session.getAttribute("user");
+//		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
+//		session.setAttribute("addresses", list);
+//		return "addresses";
+//	}
 	
 	@RequestMapping(value="/deleteAddress", method=RequestMethod.POST)
 	public String deleteAddress(HttpSession session, HttpServletRequest request) throws SQLException {
