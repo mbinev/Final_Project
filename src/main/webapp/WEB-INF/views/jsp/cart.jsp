@@ -181,14 +181,26 @@
 
 							<form class="form-horizontal">
 								<fieldset>
-									<select class="selectpicker">
-										<option>Home</option>
-										<option>Work</option>
-										<option>Batcave</option>
+									<select class="selectpicker" id="address-select">
+										<option>---</option>
+										<c:forEach var="address" items="${sessionScope.addresses}">										
+											<option value="${address.name}">${address.name}</option>
+										</c:forEach>
 									</select>
-
-
-
+									<c:forEach var="address" items="${sessionScope.addresses}">			
+											<h3 id="${address.name}" style="display: none" class="addressinfo">${address.name}<br>
+												<p></p>
+												<p><strong>Street:</strong> ${address.street}</p>
+												<p><strong>Address No:</strong> ${address.addressNumber}</p>
+												<p><strong>Phone Number:</strong> ${address.phone}</p>
+												<p><strong>Bell:</strong> ${address.bell}</p>
+												<p><strong>Floor:</strong> ${address.floor}</p>
+												<p><strong>Bulding No:</strong> ${address.buildingNumber}</p>
+												<p><strong>Apartment No:</strong> ${address.apartmentNumber}</p>
+												<p><strong>Entrace:</strong> ${address.entrance}</p>
+												<p><strong>Postcode:</strong> ${address.postcode}</p>
+											</h3>
+									</c:forEach>
 									<!-- Button -->
 									<div class="control-group">
 										<label class="control-label" for="order"></label>
@@ -226,6 +238,18 @@
 		</div>
 	</div>
 	<script>
+		$('#address-select').on('change', function () {
+		   var valueSelected = this.value;
+		   $('.addressinfo').each(function(i, obj) {
+			    if(this.id == valueSelected){
+		    	 	$("#"+this.id).show();
+			    }else{
+			    	$("#"+this.id).hide();
+			    }
+			});
+		 
+		});
+		
 		$('.trash').on('click', function() {
 			var obj = $(this).closest('tr').find('.order').val();
 			$.post("deleteOrderObj", {

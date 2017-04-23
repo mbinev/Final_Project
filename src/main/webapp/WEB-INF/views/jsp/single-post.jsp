@@ -140,17 +140,17 @@ http://www.templatemo.com/free-website-templates/417-grill
 											<h3>
 												<c:out value="${product.name}" />
 											</h3>
-											<p class="price" data-base-price="${product.price}">
-												<span>${product.price}</span>
-											</p>
+											<h3 class="price" data-base-price="${product.price}">
+												Price: <span>${product.price}</span>
+											</h3>
 										</div>
 										<c:if test="${product.category eq 'Pizzaz'}">
 											<form action="products" method="post">
 												<table>
 													<tr>
 														<th><div class="form-group">
-														  <label class="col-md-6 control-label" for="selectbasicTypeTour">Type tour</label>
-														  <div class="col-md-6">
+														 <label class="col-md-2 control-label" for="crust"> </label>
+														 <div class="col-md-12">
 														    <select id="crustSelect" name="crust" class="form-control price-option">
 														      <c:forEach var="crust" items="${crusts}">
 																	<option value="${crust}" data-price="${crust.price}">${crust}</option>
@@ -158,13 +158,16 @@ http://www.templatemo.com/free-website-templates/417-grill
 														    </select>
 														  </div>
 														</div></th>
-														<th><select
-															class="custom-select mb-2 mr-sm-2 mb-sm-0 price-option"
-															id="sizeSelect" name="size">
-																<c:forEach var="size" items="${sizes}">
+														<th><div class="form-group">
+														 <label class="col-md-2 control-label" for="size"> </label>
+														 <div class="col-md-12">
+														    <select id="sizeSelect" name="size" class="form-control price-option">
+														      <c:forEach var="size" items="${sizes}">
 																	<option value="${size}" data-price="${size.price}">${size}</option>
 																</c:forEach>
-														</select></th>
+														    </select>
+														  </div>
+														</div></th>
 													</tr>
 												</table>
 												<br>
@@ -199,8 +202,11 @@ http://www.templatemo.com/free-website-templates/417-grill
 										</c:if>
 
 										<c:if test="${product.category ne 'Pizzaz'}">
-											<c:set var="product" value="${product}" scope="session" />
-											<input type="submit" value="Submit">
+											<form action="products" method="post">
+												<input id="productPrice" type="hidden" name="productPrice" value="${product.price}">
+												<input type="submit" value="Submit">
+											</form>
+
 										</c:if>
 									</div>
 									<div class="divide-line">

@@ -90,7 +90,7 @@ public class ProductsController {
 		
 		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
 		System.out.println(product.getName());
-		String description = product.getName();
+		String description = new String();
 		for (String strg : product.getSubproducts()) {
 			if(!subproducts.contains(strg)){
 				description = description.concat(" -"+strg);
@@ -99,7 +99,9 @@ public class ProductsController {
 		}
 		
 		for (String strg : subproducts) {
-			description = description.concat(" +"+strg);
+			if(strg != null && !product.getSubproducts().contains(strg)){				
+				description = description.concat(" +"+strg);
+			}
 			System.out.println(strg);
 		}
 		OrderObj obj = new OrderObj();
