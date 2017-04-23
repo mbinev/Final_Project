@@ -36,7 +36,61 @@ http://www.templatemo.com/free-website-templates/417-grill
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <style type="text/css">
-
+.checkbox {
+  padding-left: 20px; }
+  .checkbox label {
+    display: inline-block;
+    position: relative;
+    padding-left: 5px; }
+    .checkbox label::before {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 0;
+      margin-left: -20px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+      background-color: #fff;
+      -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+      -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+      transition: border 0.15s ease-in-out, color 0.15s ease-in-out; }
+    .checkbox label::after {
+      display: inline-block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 0;
+      top: 0;
+      margin-left: -20px;
+      padding-left: 3px;
+      padding-top: 1px;
+      font-size: 11px;
+      color: #555555; }
+  .checkbox input[type="checkbox"] {
+    opacity: 0; }
+    .checkbox input[type="checkbox"]:focus + label::before {
+      outline: thin dotted;
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px; }
+    .checkbox input[type="checkbox"]:checked + label::after {
+      font-family: 'FontAwesome';
+      content: "\f00c"; }
+    .checkbox input[type="checkbox"]:disabled + label {
+      opacity: 0.65; }
+      .checkbox input[type="checkbox"]:disabled + label::before {
+        background-color: #eeeeee;
+        cursor: not-allowed; }
+  .checkbox.checkbox-circle label::before {
+    border-radius: 50%; }
+  .checkbox.checkbox-inline {
+    margin-top: 0; }
+.checkbox-warning input[type="checkbox"]:checked + label::before {
+  background-color: #f0ad4e;
+  border-color: #f0ad4e; }
+.checkbox-warning input[type="checkbox"]:checked + label::after {
+  color: #fff; }
 </style>
 </head>
 <body>
@@ -94,13 +148,16 @@ http://www.templatemo.com/free-website-templates/417-grill
 											<form action="products" method="post">
 												<table>
 													<tr>
-														<th><select
-															class="custom-select mb-2 mr-sm-2 mb-sm-0 price-option"
-															id="crustSelect" name="crust">
-																<c:forEach var="crust" items="${crusts}">
+														<th><div class="form-group">
+														  <label class="col-md-6 control-label" for="selectbasicTypeTour">Type tour</label>
+														  <div class="col-md-6">
+														    <select id="crustSelect" name="crust" class="form-control price-option">
+														      <c:forEach var="crust" items="${crusts}">
 																	<option value="${crust}" data-price="${crust.price}">${crust}</option>
 																</c:forEach>
-														</select></th>
+														    </select>
+														  </div>
+														</div></th>
 														<th><select
 															class="custom-select mb-2 mr-sm-2 mb-sm-0 price-option"
 															id="sizeSelect" name="size">
@@ -120,16 +177,16 @@ http://www.templatemo.com/free-website-templates/417-grill
 													</c:forEach>
 													<c:if test="${contains eq true }">
 														<div class="checkbox checkbox-warning ">
-									                        <input id="checkbox5" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}" checked>
-									                        <label for="checkbox5">
+									                        <input id="${topping.name}" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}" checked>
+									                        <label for="${topping.name}">
 									                            ${topping.name}
 									                        </label>
 									                    </div>
 													</c:if>
 													<c:if test="${contains eq false }">
 														<div class="checkbox checkbox-warning ">
-									                        <input id="checkbox5" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}">
-									                        <label for="checkbox5">
+									                        <input id="${topping.name}" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}">
+									                        <label for="${topping.name}">
 									                            ${topping.name}
 									                        </label>
 									                    </div>
