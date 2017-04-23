@@ -112,12 +112,12 @@
 								</div>
 							</div>
 						</td>
-						<td data-th="Price">${product.price}</td>
+						<td data-th="Price">${order.price}</td>
 						<td data-th="Quantity"><input data-id="${product.productId}"
-							data-price="${product.price}" value="1"
+							data-price="${order.price}" value="1"
 							class="count form-control text-center" type="number" /></td>
 						<td data-th="Subtotal" class="all text-center"
-							id="total_price_${product.productId}">${product.price}</td>
+							id="total_price_${product.productId}">${order.price}</td>
 						<td class="actions" data-th="">
 							<button class="btn btn-info btn-sm refresh">
 								<i class="fa fa-refresh"></i>

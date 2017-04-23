@@ -35,6 +35,9 @@ http://www.templatemo.com/free-website-templates/417-grill
 <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<style type="text/css">
+
+</style>
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -83,24 +86,26 @@ http://www.templatemo.com/free-website-templates/417-grill
 											<h3>
 												<c:out value="${product.name}" />
 											</h3>
-											<span class="subtitle">${product.price}</span>
+											<p class="price" data-base-price="${product.price}">
+												<span>${product.price}</span>
+											</p>
 										</div>
 										<c:if test="${product.category eq 'Pizzaz'}">
 											<form action="products" method="post">
 												<table>
 													<tr>
 														<th><select
-															class="custom-select mb-2 mr-sm-2 mb-sm-0"
+															class="custom-select mb-2 mr-sm-2 mb-sm-0 price-option"
 															id="crustSelect" name="crust">
 																<c:forEach var="crust" items="${crusts}">
-																	<option value="${crust}">${crust}</option>
+																	<option value="${crust}" data-price="${crust.price}">${crust}</option>
 																</c:forEach>
 														</select></th>
 														<th><select
-															class="custom-select mb-2 mr-sm-2 mb-sm-0"
+															class="custom-select mb-2 mr-sm-2 mb-sm-0 price-option"
 															id="sizeSelect" name="size">
 																<c:forEach var="size" items="${sizes}">
-																	<option value="${size}">${size}</option>
+																	<option value="${size}" data-price="${size.price}">${size}</option>
 																</c:forEach>
 														</select></th>
 													</tr>
@@ -114,25 +119,28 @@ http://www.templatemo.com/free-website-templates/417-grill
 														</c:if>
 													</c:forEach>
 													<c:if test="${contains eq true }">
-														<span class="button-checkbox">
-															<button type="button" class="btn" data-color="warning">${topping.name}</button>
-															<input type="checkbox" class="hidden" name="subproduct"
-															checked value="${topping.name}" />
-														</span>
+														<div class="checkbox checkbox-warning ">
+									                        <input id="checkbox5" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}" checked>
+									                        <label for="checkbox5">
+									                            ${topping.name}
+									                        </label>
+									                    </div>
 													</c:if>
 													<c:if test="${contains eq false }">
-														<span class="button-checkbox">
-															<button type="button" class="btn" data-color="warning">${topping.name}</button>
-															<input type="checkbox" class="hidden" name="subproduct"
-															value="${topping.name}" />
-														</span>
+														<div class="checkbox checkbox-warning ">
+									                        <input id="checkbox5" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}">
+									                        <label for="checkbox5">
+									                            ${topping.name}
+									                        </label>
+									                    </div>
 													</c:if>
 												</c:forEach>
+												<input id="productPrice" type="hidden" name="productPrice" value="${product.price}">
 												<c:set var="product" value="${product}" scope="session" />
 												<input type="submit" value="Submit">
 											</form>
 										</c:if>
-										
+
 										<c:if test="${product.category ne 'Pizzaz'}">
 											<c:set var="product" value="${product}" scope="session" />
 											<input type="submit" value="Submit">
@@ -142,114 +150,24 @@ http://www.templatemo.com/free-website-templates/417-grill
 										<img src="images/div-line.png" alt="" />
 									</div>
 									<script>
-										$(".extra").hide();
-										$(".topping").click(function() {
-											if ($(this).is(":checked")) {
-												$(".extra").show();
-											} else {
-												$(".extra").hide();
-											}
-										});
+										function changePrice() {
+											var price = parseFloat($('.price')
+													.data('base-price'));
 
-										$(function() {
-											$('.button-checkbox')
-													.each(
-															function() {
-
-																// Settings
-																var $widget = $(this), $button = $widget
-																		.find('button'), $checkbox = $widget
-																		.find('input:checkbox'), color = $button
-																		.data('color'), settings = {
-																	on : {
-																		icon : 'glyphicon glyphicon-check'
-																	},
-																	off : {
-																		icon : 'fa fa-square-o'
-																	}
-																};
-
-																// Event Handlers
-																$button
-																		.on(
-																				'click',
-																				function() {
-																					$checkbox
-																							.prop(
-																									'checked',
-																									!$checkbox
-																											.is(':checked'));
-																					$checkbox
-																							.triggerHandler('change');
-																					updateDisplay();
-																				});
-																$checkbox
-																		.on(
-																				'change',
-																				function() {
-																					updateDisplay();
-																				});
-
-																// Actions
-																function updateDisplay() {
-																	var isChecked = $checkbox
-																			.is(':checked');
-
-																	// Set the button's state
-																	$button
-																			.data(
-																					'state',
-																					(isChecked) ? "on"
-																							: "off");
-
-																	// Set the button's icon
-																	$button
-																			.find(
-																					'.state-icon')
-																			.removeClass()
-																			.addClass(
-																					'state-icon '
-																							+ settings[$button
-																									.data('state')].icon);
-
-																	// Update the button's color
-																	if (isChecked) {
-																		$button
-																				.removeClass(
-																						'btn-default')
-																				.addClass(
-																						'btn-'
-																								+ color
-																								+ ' active');
-																	} else {
-																		$button
-																				.removeClass(
-																						'btn-'
-																								+ color
-																								+ ' active')
-																				.addClass(
-																						'btn-default');
-																	}
-																}
-
-																// Initialization
-																function init() {
-
-																	updateDisplay();
-
-																	// Inject the icon if applicable
-																	if ($button
-																			.find('.state-icon').length == 0) {
-																		$button
-																				.prepend('<i class="state-icon '
-																						+ settings[$button
-																								.data('state')].icon
-																						+ '"></i> ');
-																	}
-																}
-																init();
-															});
-										});
+											$('.price-option').each(function(i, el) {
+												price += parseFloat($('option:selected',el).data('price'));
+											});
+											$('.product-content input:checkbox:checked').each(function(){
+										        price += parseFloat($(this).data('price'));
+										    });
+											$('.price span').text(
+													price.toFixed(2));
+											$("#productPrice").val(price);
+										};
+										$('.price-option').on("change", changePrice);
+										$('.checkbox').on("change", changePrice);
+										$(document).ready( changePrice());
+										
 									</script>
 
 

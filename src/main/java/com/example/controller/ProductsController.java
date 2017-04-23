@@ -75,6 +75,8 @@ public class ProductsController {
 	@RequestMapping(value="/products",method = RequestMethod.POST)
 	public String products(Model model, HttpServletRequest request, HttpSession session) {
 		String[] pro = request.getParameterValues("subproduct");
+		String productPrice = request.getParameter("productPrice");
+		System.out.println(productPrice);
 		Product product = (Product) session.getAttribute("product");
 		ArrayList<String> subproducts = new ArrayList<>();
 		subproducts.add(request.getParameter("size"));
@@ -102,10 +104,11 @@ public class ProductsController {
 		OrderObj obj = new OrderObj();
 		obj.setDescription(description);
 		obj.setProduct(product);
+		obj.setPrice(Double.parseDouble(productPrice));
 		p.add(obj);
 		System.out.println(description);
 		double price = (double) session.getAttribute("totalPrice");
-		price = price + product.getPrice();
+		price = price + Double.parseDouble(productPrice);
 		session.setAttribute("totalPrice", price);
 		session.setAttribute("products", p);
 		session.setAttribute(product.toString(), description);
@@ -127,7 +130,7 @@ public class ProductsController {
 		}
 		double price = (double) session.getAttribute("totalPrice");
 		System.out.println(price);
-		price = price - order.getProduct().getPrice();
+		price = price - order.getPrice();
 		System.out.println(price);
 		session.setAttribute("totalPrice", price);
 		if(p.remove(order)){

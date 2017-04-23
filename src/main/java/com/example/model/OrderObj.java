@@ -4,6 +4,7 @@ public class OrderObj {
 	private Product product;
 	private long userId;
 	private String description;
+	private double price;
 	
 	public Product getProduct() {
 		return product;
@@ -22,6 +23,14 @@ public class OrderObj {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+	
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	
 	
