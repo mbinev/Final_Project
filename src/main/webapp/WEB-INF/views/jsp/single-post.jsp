@@ -33,7 +33,8 @@ http://www.templatemo.com/free-website-templates/417-grill
 <link rel="stylesheet" href="css/testimonails-slider.css">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -88,20 +89,20 @@ http://www.templatemo.com/free-website-templates/417-grill
 											<form action="products" method="post">
 												<table>
 													<tr>
-														<th>
-															<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="crustSelect" name="crust">
-																	<c:forEach var="crust" items="${crusts}">
-																	    <option value="${crust}">${crust}</option>
-																	</c:forEach>
-															  </select>
-														</th>
-														<th>
-															<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="sizeSelect" name="size">
-																	<c:forEach var="size" items="${sizes}">
-																	    <option value="${size}">${size}</option>
-																	</c:forEach>
-															  </select>
-														</th>
+														<th><select
+															class="custom-select mb-2 mr-sm-2 mb-sm-0"
+															id="crustSelect" name="crust">
+																<c:forEach var="crust" items="${crusts}">
+																	<option value="${crust}">${crust}</option>
+																</c:forEach>
+														</select></th>
+														<th><select
+															class="custom-select mb-2 mr-sm-2 mb-sm-0"
+															id="sizeSelect" name="size">
+																<c:forEach var="size" items="${sizes}">
+																	<option value="${size}">${size}</option>
+																</c:forEach>
+														</select></th>
 													</tr>
 												</table>
 												<br>
@@ -114,104 +115,144 @@ http://www.templatemo.com/free-website-templates/417-grill
 													</c:forEach>
 													<c:if test="${contains eq true }">
 														<span class="button-checkbox">
-															        <button type="button" class="btn" data-color="warning">${topping.name}</button>
-															        <input type="checkbox" class="hidden" name="subproduct" checked value="${topping.name}" />
-															    </span>
+															<button type="button" class="btn" data-color="warning">${topping.name}</button>
+															<input type="checkbox" class="hidden" name="subproduct"
+															checked value="${topping.name}" />
+														</span>
 													</c:if>
 													<c:if test="${contains eq false }">
 														<span class="button-checkbox">
-															        <button type="button" class="btn" data-color="warning">${topping.name}</button>
-															        <input type="checkbox" class="hidden" name="subproduct" value="${topping.name}"/>
-															    </span>
+															<button type="button" class="btn" data-color="warning">${topping.name}</button>
+															<input type="checkbox" class="hidden" name="subproduct"
+															value="${topping.name}" />
+														</span>
 													</c:if>
 												</c:forEach>
-												<c:set var="product" value="${product}" scope="session"  />
+												<c:set var="product" value="${product}" scope="session" />
 												<input type="submit" value="Submit">
 											</form>
 										</c:if>
-
+										
+										<c:if test="${product.category ne 'Pizzaz'}">
+											<c:set var="product" value="${product}" scope="session" />
+											<input type="submit" value="Submit">
+										</c:if>
 									</div>
 									<div class="divide-line">
 										<img src="images/div-line.png" alt="" />
 									</div>
 									<script>
-									$(".extra").hide();
-									$(".topping").click(function() {
-									    if($(this).is(":checked")) {
-									        $(".extra").show();
-									    } else {
-									        $(".extra").hide();
-									    }
-									});
-									
-									$(function () {
-									    $('.button-checkbox').each(function () {
+										$(".extra").hide();
+										$(".topping").click(function() {
+											if ($(this).is(":checked")) {
+												$(".extra").show();
+											} else {
+												$(".extra").hide();
+											}
+										});
 
-									        // Settings
-									        var $widget = $(this),
-									            $button = $widget.find('button'),
-									            $checkbox = $widget.find('input:checkbox'),
-									            color = $button.data('color'),
-									            settings = {
-									                on: {
-									                    icon: 'glyphicon glyphicon-check'
-									                },
-									                off: {
-									                    icon: 'fa fa-square-o'
-									                }
-									            };
+										$(function() {
+											$('.button-checkbox')
+													.each(
+															function() {
 
-									        // Event Handlers
-									        $button.on('click', function () {
-									            $checkbox.prop('checked', !$checkbox.is(':checked'));
-									            $checkbox.triggerHandler('change');
-									            updateDisplay();
-									        });
-									        $checkbox.on('change', function () {
-									            updateDisplay();
-									        });
+																// Settings
+																var $widget = $(this), $button = $widget
+																		.find('button'), $checkbox = $widget
+																		.find('input:checkbox'), color = $button
+																		.data('color'), settings = {
+																	on : {
+																		icon : 'glyphicon glyphicon-check'
+																	},
+																	off : {
+																		icon : 'fa fa-square-o'
+																	}
+																};
 
-									        // Actions
-									        function updateDisplay() {
-									            var isChecked = $checkbox.is(':checked');
+																// Event Handlers
+																$button
+																		.on(
+																				'click',
+																				function() {
+																					$checkbox
+																							.prop(
+																									'checked',
+																									!$checkbox
+																											.is(':checked'));
+																					$checkbox
+																							.triggerHandler('change');
+																					updateDisplay();
+																				});
+																$checkbox
+																		.on(
+																				'change',
+																				function() {
+																					updateDisplay();
+																				});
 
-									            // Set the button's state
-									            $button.data('state', (isChecked) ? "on" : "off");
+																// Actions
+																function updateDisplay() {
+																	var isChecked = $checkbox
+																			.is(':checked');
 
-									            // Set the button's icon
-									            $button.find('.state-icon')
-									                .removeClass()
-									                .addClass('state-icon ' + settings[$button.data('state')].icon);
+																	// Set the button's state
+																	$button
+																			.data(
+																					'state',
+																					(isChecked) ? "on"
+																							: "off");
 
-									            // Update the button's color
-									            if (isChecked) {
-									                $button
-									                    .removeClass('btn-default')
-									                    .addClass('btn-' + color + ' active');
-									            }
-									            else {
-									                $button
-									                    .removeClass('btn-' + color + ' active')
-									                    .addClass('btn-default');
-									            }
-									        }
+																	// Set the button's icon
+																	$button
+																			.find(
+																					'.state-icon')
+																			.removeClass()
+																			.addClass(
+																					'state-icon '
+																							+ settings[$button
+																									.data('state')].icon);
 
-									        // Initialization
-									        function init() {
+																	// Update the button's color
+																	if (isChecked) {
+																		$button
+																				.removeClass(
+																						'btn-default')
+																				.addClass(
+																						'btn-'
+																								+ color
+																								+ ' active');
+																	} else {
+																		$button
+																				.removeClass(
+																						'btn-'
+																								+ color
+																								+ ' active')
+																				.addClass(
+																						'btn-default');
+																	}
+																}
 
-									            updateDisplay();
+																// Initialization
+																function init() {
 
-									            // Inject the icon if applicable
-									            if ($button.find('.state-icon').length == 0) {
-									                $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
-									            }
-									        }
-									        init();
-									    });
-									});
+																	updateDisplay();
+
+																	// Inject the icon if applicable
+																	if ($button
+																			.find('.state-icon').length == 0) {
+																		$button
+																				.prepend('<i class="state-icon '
+																						+ settings[$button
+																								.data('state')].icon
+																						+ '"></i> ');
+																	}
+																}
+																init();
+															});
+										});
 									</script>
 
-	
+
 									<footer>
 										<div class="container">
 											<div class="top-footer">
@@ -322,7 +363,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 
 										</div>
 									</footer>
-										
+
 
 									<script src="js/vendor/jquery-1.11.0.min.js"></script>
 									<script src="js/vendor/jquery.gmap3.min.js"></script>
