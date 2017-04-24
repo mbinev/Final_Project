@@ -3,7 +3,6 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<!-- 
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <head>
@@ -22,6 +21,9 @@
         <link rel="stylesheet" href="css/testimonails-slider.css">
 
         <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+        <style type="text/css">
+        #img { height: 600px; width: 1900px; overflow: hidden; }
+        </style>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -35,25 +37,24 @@
                     <li>
                         <div class="slider-caption">
                             <h1>WELCOME</h1>
-                            <a href="register">Register</a>
+                            <p>Have you tried our new Burger Pizza?</p>
+                            <a href="products?product=Burger%20Pizza&category=Pizzaz">Try it now!</a>
                         </div>
-                      <img src="img/slide1.jpg" alt="" />
+                      <img id="img" src="img/slider1.jpg" alt="" />
                     </li>
                     <li>
                         <div class="slider-caption">
                             <h1>Check out our Menu</h1>
                             <a href="catalog">Browse</a>
                         </div>
-                      <img src="img/slide2.jpg" alt="" />
+                      <img id="img" src="img/slider2.jpg" alt="" />
                     </li>
                     <li>
                         <div class="slider-caption">
-                            <h1>Healthy Drinks</h1>
-                            <p>Maecenas fermentum est ut elementum vulputate. Ut vel consequat urna. Ut aliquet 
-                            <br><br>ornare massa, quis dapibus quam condimentum id.</p>
-                            <a href="single-post.html">Get Ready</a>
+                            <h1>Come order in person</h1>
+                            <a href="contact-us">Get Ready</a>
                         </div>
-                      <img src="img/slide3.jpg" alt="" />
+                      <img id="img" src="img/slider3.jpg" alt="" />
                     </li>
                   </ul>
                 </div>
@@ -80,7 +81,7 @@
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
-                                        <h4><a href="products?product=Pepperoni%20Classic&category=Pizzaz">Favorite Pizza</a></h4>
+                                        <h4><a href="products?product=Pepperoni%20Classic&category=Pizzaz">Customers Favorite Pizza</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +93,7 @@
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
-                                        <h4><a href="products?product=Coca-cola%201.25l&category=Drinks">Favorite Drink</a></h4>
+                                        <h4><a href="products?product=Coca-cola%201.25l&category=Drinks">Customers Favorite Drink</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +105,7 @@
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
-                                        <h4><a href="products?product=Nirvana%20Cookie%20And%20Cream&category=Desserts">Favorite Dessert</a></h4>
+                                        <h4><a href="products?product=Nirvana%20Cookie%20And%20Cream&category=Desserts">Customers Favorite Dessert</a></h4>
                                     </div>
                                 </div>
                             </div>
