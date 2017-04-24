@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.example.model.Order;
+import com.example.model.OrderObj;
 import com.example.model.Product;
 
 public class OrderDAO implements IDao{
@@ -51,29 +53,50 @@ public class OrderDAO implements IDao{
 		return orders;
 	}
 	
-	public void makeOrder(Order order, ArrayList<Product> products) throws SQLException {
+	public void makeOrder(Order order, HashMap<String, ArrayList<Product>> products) throws SQLException {
 		Connection con = DBManager.getInstance().getConnection();
 		PreparedStatement st1 = null;
 		PreparedStatement st2 = null;
+		PreparedStatement st3 = null;
 		try {
 			con.setAutoCommit(false);
 			System.out.println("ok");
-			String sql1 = "INSERT INTO orders (user_id, date) VALUES (?, ?)";
+			String sql1 = "INSERT INTO orders (user_id, date, address_id) VALUES (?, ?, ?)";
 			st1 = con.prepareStatement(sql1);
 			st1.setLong(1, order.getUserId());
-			st1.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+			st1.setTimestamp(2, Timestamp.valueOf(order.getDate()));
+			st1.setLong(3, order.getAddressId());
 			st1.execute();
 			ResultSet rs = st1.getGeneratedKeys();
 			rs.next();
 			order.setOrderId(rs.getLong(1));
-			String sql2 = "INSERT INTO orders_has_products (order_id, product_id, owner_id) VALUES (?, ?, ?)";
+			String sql2 = "INSERT INTO orders_has_products (order_id, product_id) VALUES (?, ?)";
 			st2 = con.prepareStatement(sql2);
-			for (Product product : products) {
+			for (OrderObj obj : order.getProducts()) {
 				st2.setLong(1, order.getOrderId());
-				st2.setLong(2, product.getProductId());
-				st2.setLong(3, product.getOwnerId());
+				st2.setLong(2, obj.getProduct().getProductId());
 				st2.executeUpdate();
 			}
+			String sql3 = "INSERT INTO orders_has_products (order_id, product_id, owner_id) VALUES (?, ?, ?)";
+			st3 = con.prepareStatement(sql3);
+			System.out.println("after this -----------------------");
+			for (OrderObj obj : order.getProducts()) {
+				if(!obj.getSubproducts().isEmpty()){					
+					for (String subName : obj.getSubproducts()) {
+						for (ArrayList<Product> arr : products.values()) {
+							for (Product product : arr) {
+								if(product.getName().equals(subName)){
+									st3.setLong(1, order.getOrderId());
+									st3.setLong(2, product.getProductId());
+									st3.setLong(3, obj.getProduct().getProductId());
+									st3.executeUpdate();
+								}
+							}
+						}
+					}
+				}
+			}
+			
 			con.commit();
 		} catch (SQLException e) {
 			if (con != null) {
@@ -104,7 +127,7 @@ public class OrderDAO implements IDao{
 	@Override
 	public String[] getColumns() {
 		return new String[] {
-				"order_id", "user_id", "date"};
+				"order_id", "user_id", "date", "address_id"};
 	}
 
 	@Override

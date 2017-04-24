@@ -87,7 +87,7 @@ public class ProductsController {
 				subproducts.add(string);
 			}
 		}
-		
+		ArrayList<String> objSubs = new ArrayList<>();
 		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
 		System.out.println(product.getName());
 		String description = new String();
@@ -97,10 +97,13 @@ public class ProductsController {
 				subproducts.remove(strg);
 			}
 		}
-		
+		if(!subproducts.isEmpty()){
+			objSubs.addAll(subproducts);
+		}
 		for (String strg : subproducts) {
 			if(strg != null && !product.getSubproducts().contains(strg)){				
 				description = description.concat(" +"+strg);
+				objSubs.add(strg);
 			}
 			System.out.println(strg);
 		}
@@ -108,6 +111,7 @@ public class ProductsController {
 		obj.setDescription(description);
 		obj.setProduct(product);
 		obj.setPrice(Double.parseDouble(productPrice));
+		obj.setSubproducts(objSubs);
 		p.add(obj);
 		System.out.println(description);
 		double price = (double) session.getAttribute("totalPrice");

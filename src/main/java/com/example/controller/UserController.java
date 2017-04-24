@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -20,9 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.model.Address;
+import com.example.model.Order;
+import com.example.model.OrderObj;
 import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.db.AddressDAO;
+import com.example.model.db.OrderDAO;
+import com.example.model.db.ProductDAO;
 import com.example.model.db.UserDAO;
 import com.example.validation.EmailSender;
 import com.example.validation.Form;
@@ -214,6 +219,36 @@ public class UserController {
 		// characters, no whitespaces
 		Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
 		return matcher.find();
+	}
+	
+	@RequestMapping(value="/order",method = RequestMethod.POST)
+	public String deleteObj(HttpSession session, HttpServletRequest request) {
+		System.out.println("here------------------");
+		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
+		User user = (User) session.getAttribute("user");
+		ArrayList<Address> addresses =  (ArrayList<Address>) session.getAttribute("addresses");
+		String addressName = request.getParameter("address");
+		Address address = null;
+		for (Address adrs : addresses) {
+			if(adrs.getName().equals(addressName)){
+				address = adrs;
+				break;
+			}
+		}
+		Order order = new Order(user.getUserId(), LocalDateTime.now());
+		order.setAddressId(address.getAddressId());
+		System.out.println(products);
+		order.setProducts(products);
+		try {
+			OrderDAO.getInstance().makeOrder(order, ProductDAO.getInstance().getAllProducts());
+		} catch (SQLException e) {
+			System.out.println("Problem with making an order!");
+			e.printStackTrace();
+		}
+		session.setAttribute("productsNumber", 0);
+		session.setAttribute("totalPrice", 0.0);
+		session.setAttribute("products", new ArrayList<OrderObj>());
+		return "index";
 	}
 	
 //	@RequestMapping(value="form", method=RequestMethod.POST)

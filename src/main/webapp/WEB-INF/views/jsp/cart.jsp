@@ -151,10 +151,18 @@
 					</c:if>
 
 					<c:if test="${sessionScope.logged}">
+						<c:if test="${sessionScope.productsNumber ne 0}">
 						<td><a href="index" class="btn btn-success btn-block"
 							data-toggle="modal" data-target="#myModal" onclick="resize()">Checkout
 								<i class="fa fa-angle-right"></i>
 						</a></td>
+						</c:if>
+						<c:if test="${sessionScope.productsNumber eq 0}">
+							<td><a href="#" class="btn btn-success btn-block"
+								onClick="alert('You need to have products in your cart to make an order!')">Checkout <i
+									class="fa fa-angle-right"></i>
+							</a></td>
+						</c:if>
 					</c:if>
 
 				</tr>
@@ -179,10 +187,9 @@
 					<div id="myTabContent" class="tab-content">
 						<div class="tab-pane fade active in" id="delivery">
 
-							<form class="form-horizontal">
+							<form action="order" method="post">
 								<fieldset>
-									<select class="selectpicker" id="address-select">
-										<option>---</option>
+									<select class="selectpicker" id="address-select" name="address">
 										<c:forEach var="address" items="${sessionScope.addresses}">										
 											<option value="${address.name}">${address.name}</option>
 										</c:forEach>
@@ -205,7 +212,7 @@
 									<div class="control-group">
 										<label class="control-label" for="order"></label>
 										<div class="controls">
-											<button id="order" name="order" class="btn btn-success">Order</button>
+											<button id="order" type="order" class="btn btn-success">Order</button>
 										</div>
 									</div>
 								</fieldset>

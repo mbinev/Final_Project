@@ -2,12 +2,15 @@ package com.example.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Order {
 
 	private long orderId;
 	private long userId;
 	private LocalDateTime date;
+	private long addressId;
+	private ArrayList<OrderObj> products;
 	
 	public Order(long userId, LocalDateTime date) {
 		this.userId = userId;
@@ -30,5 +33,20 @@ public class Order {
 		return date;
 	}
 	
+	public long getAddressId() {
+		return addressId;
+	}
+	
+	public void setAddressId(long addressId) {
+		this.addressId = addressId;
+	}
+	
+	public ArrayList<OrderObj> getProducts() {
+		return products;
+	}
+	
+	public void setProducts(ArrayList<OrderObj> products) {
+		this.products = products;
+	}
 	
 }

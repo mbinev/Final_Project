@@ -28,6 +28,10 @@ public class Product {
 	public long getOwnerId() {
 		return ownerId;
 	}
+	
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
+	}
 
 	public String getName() {
 		return name;

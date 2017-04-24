@@ -1,10 +1,13 @@
 package com.example.model;
 
+import java.util.ArrayList;
+
 public class OrderObj {
 	private Product product;
 	private long userId;
 	private String description;
 	private double price;
+	private ArrayList<String> subproducts;
 	
 	public Product getProduct() {
 		return product;
@@ -31,6 +34,14 @@ public class OrderObj {
 	
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public ArrayList<String> getSubproducts() {
+		return subproducts;
+	}
+	
+	public void setSubproducts(ArrayList<String> subproducts) {
+		this.subproducts = subproducts;
 	}
 	
 	
