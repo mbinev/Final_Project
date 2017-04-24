@@ -9,21 +9,29 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.DatatypeConverter;
 
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class User {
 
 	private long userId;
-	@Valid @NotBlank @Size(min=2, max=30) 
+	
+	@NotEmpty @Size(min=2, max=30) 
 	private String firstName;
-	@Valid @NotBlank @Size(min=2, max=30) 
+	
+	@NotEmpty @Size(min=2, max=30) 
 	private String lastName;
-	@Valid @NotBlank @Pattern(regexp="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")
+	
+	@NotEmpty @Email @Pattern(regexp="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")
 	private String email;
-	@Valid @NotBlank @Pattern(regexp="(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}")
+	
+	@NotEmpty @Pattern(regexp="(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}")
 	private String password;
+	
 	private String avatarLink;
+	
 	private boolean isVerified;
+	
 	private LocalDateTime registrationTime;
 	
 	public User() {

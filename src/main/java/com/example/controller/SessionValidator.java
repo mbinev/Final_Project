@@ -16,9 +16,7 @@ public class SessionValidator extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		HttpSession session = request.getSession();
-		System.out.println("Tuk li si");
 		if (session.getAttribute("products") == null) {
-			System.out.println("Tuk li si 2");
 			ArrayList<OrderObj> products = new ArrayList<>();
 			session.setAttribute("products", products);
 			session.setAttribute("totalPrice", 0.0);

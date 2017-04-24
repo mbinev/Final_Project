@@ -74,52 +74,6 @@ http://www.templatemo.com/free-website-templates/417-grill
                     
                     <div class="space50"></div>
                     
-                    <div class="row">
-                        <div class="col-md-2 col-sm-4">
-                            <div class="timeline-thumb">
-                                <div class="thumb">
-                                    <img src="images/timeline1.jpg" alt="">
-                                </div>
-                                <div class="overlay">
-                                    <div class="timeline-caption">
-                                        <a href="#"><h4>Deserts</h4></a>
-                                        <p>Browse</p>
-                                     </div>
-                                 </div>
-                             </div>
-                        </div>
-                        <div class="col-md-2 col-sm-4">
-                            <div class="timeline-thumb">
-                                <div class="thumb">
-                                    <img src="images/timeline2.jpg" alt="">
-                                </div>
-                                <div class="overlay">
-                                    <div class="timeline-caption">
-                                        <a href="#"><h4>Pizza</h4></a>
-                                        <p>Browse</p>
-                                     </div>
-                                 </div>
-                             </div>
-                        </div>
-                        <div class="col-md-2 col-sm-4">
-                            <div class="timeline-thumb">
-                                <div class="thumb">
-                                    <img src="images/timeline6.jpg" alt="">
-                                </div>
-                                <div class="overlay">
-                                    <div class="timeline-caption">
-                                        <a href="#"><h4>Drinks</h4></a>
-                                        <p>Browse</p>
-                                     </div>
-                                 </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-
-
-
             <c:import url="footer.jsp" />
 
         <script src="js/vendor/jquery-1.11.0.min.js"></script>

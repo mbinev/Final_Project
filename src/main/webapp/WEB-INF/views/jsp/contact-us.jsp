@@ -13,7 +13,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <head>
         <meta charset="utf-8">
-        <title>Contact - Grill Template</title>
+        <title>Contact</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         
@@ -44,7 +44,6 @@ http://www.templatemo.com/free-website-templates/417-grill
                         <div class="col-md-12">
                             <div class="heading-content">
                                 <h2>Contact Us</h2>
-                                <span>Home / <a href="contact-us.html">Contact Us</a></span>
                             </div>
                         </div>
                     </div>

@@ -37,8 +37,21 @@ import com.example.validation.Form;
 @SessionAttributes("user")
 public class UserController {
 
+//	@RequestMapping(value="/tryRegister", method = RequestMethod.POST)
+//	public String checkPersonInfo(@Valid User user, BindingResult bindingResult) {
+//        System.out.println("tuk li sme ");
+//        System.out.println(user);
+//        System.out.println(bindingResult);
+//		if (bindingResult.hasErrors()) {
+//			return "index";
+//		}
+//
+//		return "confirm-register";
+//	}
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String registerUser(Model model, HttpServletRequest req) throws SQLException {
+		System.out.println("a tuk li sme ");
 		String firstName = req.getParameter("first name");
 		String lastName = req.getParameter("last name");
 		String password = req.getParameter("password");
@@ -73,11 +86,11 @@ public class UserController {
 			} else {
 				// TODO stay on same page, keep the right data and ask the user
 				// to fill the form again
-				return "register";
+				return "index";
 			}
 		} else {
 			form.addError(form.new Error("email", "This email is already registered"));
-			return "register";
+			return "index";
 		}
 
 	}
