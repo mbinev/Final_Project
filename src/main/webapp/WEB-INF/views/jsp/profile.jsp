@@ -151,7 +151,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 											<i class="fa fa-trash-o"></i>
 										</button>
 									</td>
-							       </tr>
+							     </tr>
 								</c:forEach>
 						</tbody>
 					</table>

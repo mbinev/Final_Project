@@ -49,10 +49,7 @@ public class ViewsController {
 	}
 
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
-		public String showProfile(HttpSession session) throws SQLException {
-			User user = (User) session.getAttribute("user");
-			ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
-			session.setAttribute("addresses", list);
+		public String showProfile() throws SQLException {
 			return "profile";
 		}
 		

@@ -18,6 +18,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.example.controller.SessionValidator;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.example")
@@ -68,6 +70,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
 		LocaleChangeInterceptor changeInterceptor = new LocaleChangeInterceptor();
 		changeInterceptor.setParamName("language");
 		registry.addInterceptor(changeInterceptor);
+		registry.addInterceptor(new SessionValidator());
 	}
 	
 }
