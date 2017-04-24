@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -107,7 +109,7 @@ public class ProductsController {
 		System.out.println(description);
 		double price = (double) session.getAttribute("totalPrice");
 		price = price + Double.parseDouble(productPrice);
-		session.setAttribute("totalPrice", price);
+		session.setAttribute("totalPrice", round(price, 2));
 		session.setAttribute("products", p);
 		session.setAttribute(product.toString(), description);
 		session.setAttribute("productsNumber", p.size());
@@ -135,7 +137,18 @@ public class ProductsController {
 			System.out.println("item was removed");
 		}
 		session.setAttribute("productsNumber", p.size());
+		if((int)session.getAttribute("productsNumber") == 0){
+			session.setAttribute("totalPrice", 0.0);
+		}
 
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 
 }

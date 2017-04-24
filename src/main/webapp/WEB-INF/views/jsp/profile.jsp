@@ -161,35 +161,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 	</div>
 
 
-
-	<footer>
-		<div class="container">
-			<div class="top-footer">
-				<div class="row">
-					<div class="col-md-9"></div>
-				</div>
-			</div>
-			<div class="main-footer">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="more-info">
-							<h4 class="footer-title">More info</h4>
-							<li><i class="fa fa-phone"></i>010-020-0340</li>
-							<li><i class="fa fa-globe"></i>Sofia, Bulgaia</li>
-							<li><i class="fa fa-envelope"></i><a href="#">info@company.com</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="bottom-footer">
-				<p>
-					Copyright Â© 2084 <a href="#">ITT Pizza</a>
-				</p>
-			</div>
-
-		</div>
-	</footer>
+	<c:import url="footer.jsp" />
 
 	<script src="js/vendor/jquery-1.11.0.min.js"></script>
 	<script src="js/vendor/jquery.gmap3.min.js"></script>

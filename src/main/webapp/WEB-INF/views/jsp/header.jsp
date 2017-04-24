@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html >
 <html>
 <head>
@@ -60,7 +61,8 @@
 						<div class="col-md-6">
                                 <div class="cart-info">
                                     <i class="fa fa-shopping-cart"></i>
-                                    (<a href="cart" id="productCount">${sessionScope.productsNumber} items</a>) in your cart (<a href="cart" id="totalPrices">$ ${sessionScope.totalPrice}</a>)
+                                    <fmt:formatNumber var="i" type="number" minFractionDigits="2" maxFractionDigits="2" value="${sessionScope.totalPrice}" />
+                                    (<a href="cart" id="productCount">${sessionScope.productsNumber} items</a>) in your cart (<a href="cart" id=""> <c:out value="${i}" /> </a>)
                                 </div>
                             </div>
 					</div>

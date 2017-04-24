@@ -57,6 +57,17 @@
 #map-canvas {
 	height: 300px;
 }
+body{
+    padding-bottom:200px;// You can adjust it 
+}
+.footer-main {
+     background: #81ccfb;
+     padding: 1em;
+     position: absolute;
+     left: 0;
+     right: 0;
+     bottom: 0;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -212,7 +223,7 @@
 									<div class="control-group">
 										<label class="control-label" for="order"></label>
 										<div class="controls">
-											<button id="order" type="order" class="btn btn-success">Order</button>
+											<button id="order" type="submit" class="btn btn-success">Order</button>
 										</div>
 									</div>
 								</fieldset>
@@ -269,9 +280,9 @@
 				total += Number($(this).text());
 				count += 1;
 			});
-			$('.total_price_basket').text('TOTAL: ' + total);
+			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
 			$("#productCount").text(count + ' items')
-			$("#totalPrices").text('$ ' + total);
+			$("#totalPrices").text('$ ' + total.toFixed(2));
 			return false;
 		});
 
@@ -279,14 +290,14 @@
 
 			// Update individual price
 			var price = $(this).data('price') * this.value;
-			$('#total_price_' + $(this).data('id')).text(price);
+			$('#total_price_' + $(this).data('id')).text(price.toFixed(2));
 
 			// Update total
 			var total = 0;
 			$('.all').each(function() {
 				total += Number($(this).text());
 			});
-			$('.total_price_basket').text('TOTAL: ' + total);
+			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
 		}).trigger('keyup');
 		function resize() {
 			setTimeout(resize, 50);
@@ -369,6 +380,6 @@
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByprgM_TZvFUC14rIRXrL00nxA1RQXWBw&callback=initialize"
 		type="text/javascript"></script>
-
+	<c:import url="footer.jsp" />
 </body>
 </html>
