@@ -96,7 +96,7 @@ body{
 		<table id="cart" class="table table-hover table-condensed">
 			<thead>
 				<tr>
-					<th style="width: 50%">Product</th>
+					<th style="width: 70%">Product</th>
 					<th style="width: 10%">Price</th>
 					<th style="width: 8%">Quantity</th>
 					<th style="width: 22%" class="text-center">Subtotal</th>
@@ -132,9 +132,7 @@ body{
 						<td data-th="Subtotal" class="all text-center"
 							id="total_price_${product.productId}">${order.price}</td>
 						<td class="actions" data-th="">
-							<button class="btn btn-info btn-sm refresh">
-								<i class="fa fa-refresh"></i>
-							</button> <input class="order" type="hidden" name="jsfForm:hiddenField"
+							<input class="order" type="hidden" name="jsfForm:hiddenField"
 							value="${order}" />
 							<button class="btn btn-danger btn-sm trash" onclick=>
 								<i class="fa fa-trash-o"></i>
@@ -300,8 +298,6 @@ body{
 				total += Number($(this).text());
 			});
 			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
-			$("#productCount").text($('.count').val() + ' items')
-			$("#totalPrices").text('$ ' + total.toFixed(2));
 		}).trigger('keyup');
 		function resize() {
 			setTimeout(resize, 50);

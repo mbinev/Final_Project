@@ -57,56 +57,6 @@ http://www.templatemo.com/free-website-templates/417-grill
                     <div class="row">
                         <div class="col-md-12">
                             <div class="heading-section">
-                                <h2>Feel free to send a message</h2>
-                                <img src="images/under-heading.png" alt="" >
-                            </div>
-                        </div>
-                    </div>
-                    <div id="contact-us">
-                        <div class="container">
-                            <div class="row">
-                                <div class="product-item col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-8">  
-                                            <div class="message-form">
-                                                <form action="#" method="post" class="send-message">
-                                                    <div class="row">
-                                                    <div class="name col-md-4">
-                                                        <input type="text" name="name" id="name" placeholder="Name" required/>
-                                                    </div>
-                                                    <div class="email col-md-4">
-                                                        <input type="email" name="email" id="email" placeholder="Email" required/>
-                                                    </div>
-                                                    <div class="subject col-md-4">
-                                                        <input type="password" name="subject" id="subject" placeholder="password" required/>
-                                                    </div>
-                                                    </div>
-                                                                              
-                                                    <div class="send" >
-                                                        <button type="submit" >Send</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-4">
-                                            <div class="info">
-                                                <p>Duis at pharetra neque, ut condimentum, purus nisl pretium quam, in pulvinar velit massa id elit. </p>
-                                                <ul>
-                                                    <li><i class="fa fa-phone"></i>090-080-0760</li>
-                                                    <li><i class="fa fa-globe"></i>456 New Dagon City Studio, Yankinn, Digital Estate</li>
-                                                    <li><i class="fa fa-envelope"></i><a href="#">info@company.com</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>     
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="heading-section">
                                 <h2>Find Us On Map</h2>
                                 <img src="images/under-heading.png" alt="" >
                             </div>
@@ -129,6 +79,25 @@ http://www.templatemo.com/free-website-templates/417-grill
         <script src="js/main.js"></script>
 	<script>
       var map;
+        var markerData = [ {
+			lat : 42.6996424670517,
+			lng : 23.31228017807007,
+			zoom : 16,
+			name : "Opulchenska",
+			info : "<h4>Pizza</h4> bul. Todor Alexandrov </br>1303 </br>Sofia </br>Bulgaria"
+		}, {
+			lat : 42.692671891757854,
+			lng : 23.310391902923584,
+			zoom : 16,
+			name : "Ruski pametnik",
+			info : "<h4>Pizza</h4> Russian Monument </br>1606 </br>Sofia </br>Bulgaria"
+		}, {
+			lat : 42.70131402715675,
+			lng : 23.322772979736328,
+			zoom : 16,
+			name : "Luvov Most",
+			info : "<h4>Pizza</h4> bul. Knyaginya Maria Luiza 45 </br>1202 </br>Sofia </br>Bulgaria"
+		}, ];
       function initialize() {
         map = new google.maps.Map(document.getElementById('googleMap'), {
           zoom: 15,
@@ -142,46 +111,26 @@ http://www.templatemo.com/free-website-templates/417-grill
             icon: iconBase + 'logo_icon.png'
           }
         };
+        markerData.forEach(function(data) {
+			var newmarker = new google.maps.Marker({
+				map : map,
+				position : {
+					lat : data.lat,
+					lng : data.lng
+				},
+				icon: 'images/logo_icon.png',
+				title : data.name
+			});
+			var infowindow = new google.maps.InfoWindow({
+		          content: data.info
+	        });
+			newmarker.addListener('click', function() {
+		          infowindow.open(map, this);
+		        });
+		});
 
-        var features = [
-          {
-            position: new google.maps.LatLng(42.6996424670517, 23.31228017807007),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(42.692671891757854, 23.310391902923584),
-            type: 'info'
-          }, {
-            position: new google.maps.LatLng(42.70131402715675, 23.322772979736328),
-            type: 'info'
-          }
-        ];
+
 		
-        var contentString = 
-        '<div>'+
-        '<h1 id="firstHeading" class="firstHeading">Grill</h1>'
-        '</div>';
-
-    	var infowindow = new google.maps.InfoWindow({
-      		content: contentString
-    	});
-        
-        // Create markers.
-        var markers = new Array();
-        features.forEach(function(feature) {
-          var marker = new google.maps.Marker({
-            position: feature.position,
-            icon: icons[feature.type].icon,
-            map: map
-          });
-          markers.push(marker);
-        });
-        markers.forEach(function(marker){        	
-        marker.addListener('click', function() {
-            map.setZoom(18);
-            map.setCenter(marker.getPosition());
-            infowindow.open(map, this);
-          });
-        });
       }
     </script>
         <script async defer

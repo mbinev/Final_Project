@@ -126,9 +126,7 @@ public class ProductsController {
 			}
 		}
 		double price = (double) session.getAttribute("totalPrice");
-		System.out.println(price);
 		price = price - order.getPrice();
-		System.out.println(price);
 		session.setAttribute("totalPrice", price);
 		if (p.remove(order)) {
 			System.out.println("item was removed");

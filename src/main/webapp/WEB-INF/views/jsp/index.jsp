@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="heading-section">
-                                <h2>Latest blog posts</h2>
+                                <h2>Clients favorites</h2>
                                 <img src="img/under-heading.png" alt="" >
                             </div>
                         </div>
@@ -80,11 +80,7 @@
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
-                                        <h4><a href="single-post.html">Summer Sandwich</a></h4>
-                                        <span>29 Sep 2084</span>
-                                    </div>
-                                    <div class="content-hide">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                        <h4><a href="products?product=Pepperoni%20Classic&category=Pizzaz">Favorite Pizza</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -96,11 +92,7 @@
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
-                                        <h4><a href="single-post.html">New Great Taste</a></h4>
-                                        <span>23 Sep 2084</span>
-                                    </div>
-                                    <div class="content-hide">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                        <h4><a href="products?product=Coca-cola%201.25l&category=Drinks">Favorite Drink</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -112,59 +104,7 @@
                                 </div>
                                 <div class="blog-content">
                                     <div class="content-show">
-                                        <h4><a href="single-post.html">Spicy Pizza</a></h4>
-                                        <span>14 Sep 2084</span>
-                                    </div>
-                                    <div class="content-hide">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="blog-post">
-                                <div class="blog-thumb">
-                                    <img src="img/blogpost4.jpg" alt="" />
-                                </div>
-                                <div class="blog-content">
-                                    <div class="content-show">
-                                        <h4><a href="single-post.html">Healthy Food</a></h4>
-                                        <span>25 Aug 2084</span>
-                                    </div>
-                                    <div class="content-hide">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="blog-post">
-                                <div class="blog-thumb">
-                                    <img src="img/blogpost5.jpg" alt="" />
-                                </div>
-                                <div class="blog-content">
-                                    <div class="content-show">
-                                        <h4><a href="single-post.html">Great Breakfast</a></h4>
-                                        <span>17 Aug 2084</span>
-                                    </div>
-                                    <div class="content-hide">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="blog-post">
-                                <div class="blog-thumb">
-                                    <img src="img/blogpost6.jpg" alt="" />
-                                </div>
-                                <div class="blog-content">
-                                    <div class="content-show">
-                                        <h4><a href="single-post.html">Fresh Fruit Juice</a></h4>
-                                        <span>12 Aug 2084</span>
-                                    </div>
-                                    <div class="content-hide">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit. Sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
+                                        <h4><a href="products?product=Nirvana%20Cookie%20And%20Cream&category=Desserts">Favorite Dessert</a></h4>
                                     </div>
                                 </div>
                             </div>
@@ -190,20 +130,20 @@
                               <ul class="slides">
                                 <li>
                                     <div class="testimonails-content">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                        <h6>Jennifer - <a href="#">Chief Designer</a></h6>
+                                        <p>Like all Dominos outlets this place does justice to its brand. 30 mins delivery and typical Dominos taste. Much better option in pizza market instead of the cheaper wannabe cafes.</p>
+                                        <h6>Jennifer</h6>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="testimonails-content">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                        <h6>Laureen - <a href="#">Marketing Executive</a></h6>
+                                        <p>The cheese burst in the mouth and i exactly canfeel what heavens feels like :) just way tooo yummm and awsom :) this place is everything <3 i also liked the new burger pizzaa tooo.</p>
+                                        <h6>Laureen</h6>
                                     </div> 
                                 </li>
                                 <li>
                                     <div class="testimonails-content">
-                                        <p>Sed egestas tincidunt mollis. Suspendisse rhoncus vitae enim et faucibus. Ut dignissim nec arcu nec hendrerit sed arcu odio, sagittis vel diam in, malesuada malesuada risus. Aenean a sem leo. Nam ultricies dolor et mi tempor, non pulvinar felis sollicitudin.</p>
-                                        <h6>Tanya - <a href="#">Creative Director</a></h6>
+                                        <p>I can never find a better place to my pizza cravings the cheese burst that they serve is just heaven on my lap .. i can't think of anything els if my eating pizza <3 forever love.</p>
+                                        <h6>Tanya</h6>
                                     </div>
                                 </li>
                               </ul>
