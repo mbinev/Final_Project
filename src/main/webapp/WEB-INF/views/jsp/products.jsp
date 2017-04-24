@@ -85,7 +85,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 						<c:if test="${empty pageStart or pageStart < 0}">
 				      		<c:set var="pageStart" value="0"/>
 						</c:if>
-						<c:if test="${totalCount < pageStart}">
+						<c:if test="${totalCount-1 < pageStart}">
 						     <c:set var="pageStart" value="${pageStart - perPage}"/>
 						</c:if>
                         <c:forEach var="category" items="${categories}"> 	

@@ -300,6 +300,8 @@ body{
 				total += Number($(this).text());
 			});
 			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
+			$("#productCount").text($('.count').val() + ' items')
+			$("#totalPrices").text('$ ' + total.toFixed(2));
 		}).trigger('keyup');
 		function resize() {
 			setTimeout(resize, 50);
@@ -316,27 +318,27 @@ body{
 		var markerData = [ {
 			lat : 42.6996424670517,
 			lng : 23.31228017807007,
-			zoom : 17,
-			name : "Serdika",
-			info : "bla bla serdika"
+			zoom : 16,
+			name : "Opulchenska",
+			info : "<h4>Pizza</h4> bul. Todor Alexandrov </br>1303 </br>Sofia </br>Bulgaria"
 		}, {
 			lat : 42.692671891757854,
 			lng : 23.310391902923584,
-			zoom : 17,
-			name : "Opulchenska",
-			info : "bla bla opulchenska"
+			zoom : 16,
+			name : "Ruski pametnik",
+			info : "<h4>Pizza</h4> Russian Monument </br>1606 </br>Sofia </br>Bulgaria"
 		}, {
 			lat : 42.70131402715675,
 			lng : 23.322772979736328,
-			zoom : 17,
+			zoom : 16,
 			name : "Luvov Most",
-			info : "bla bla luvov most"
+			info : "<h4>Pizza</h4> bul. Knyaginya Maria Luiza 45 </br>1202 </br>Sofia </br>Bulgaria"
 		}, ];
 		function initialize() {
 			map = new google.maps.Map(document.getElementById('map-canvas'), {
-				zoom : 15,
-				center : new google.maps.LatLng(42.69752929836637,
-						23.32174301147461),
+				zoom : 14,
+				center : new google.maps.LatLng(42.70652929836637,
+						23.30174301147461),
 				mapTypeId : 'roadmap'
 			});
 			markerData.forEach(function(data) {
