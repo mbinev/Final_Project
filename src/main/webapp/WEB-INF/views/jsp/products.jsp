@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="msg" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -74,6 +75,16 @@ http://www.templatemo.com/free-website-templates/417-grill
        						 <div id="somediv"></div>
                             <ul id="filters" class="clearfix">
                                 <li><span class="filter" data-filter="all">All</span></li>
+                        <c:set var="products" scope="session" value="${products}"/>
+						<c:set var="totalCount" scope="session" value="${fn:length(products)}"/>
+						<c:set var="perPage" scope="session"  value="${20}"/>
+						<c:set var="pageStart" value="${param.start}"/>
+						<c:if test="${empty pageStart or pageStart < 0}">
+				      		<c:set var="pageStart" value="0"/>
+						</c:if>
+						<c:if test="${totalCount < pageStart}">
+						     <c:set var="pageStart" value="${pageStart - perPage}"/>
+						</c:if>
                         <c:forEach var="category" items="${categories}"> 	
                                 <li><span class="filter" data-filter=".${category}">${category}</span></li>
 						</c:forEach>
@@ -82,7 +93,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                     </div>
                     <div class="row" id="Container">
                     <h1></h1>
-                   <c:forEach var="product" items="${products}"> 	
+                   <c:forEach var="product" items="${products}" begin="${pageStart}" end="${pageStart + perPage - 1}"> 	
                         <div class="col-md col-sm mix ${product.category}">       
                             <div class="portfolio-wrapper">                
                                 <div class="portfolio-thumb">
@@ -107,12 +118,9 @@ http://www.templatemo.com/free-website-templates/417-grill
                         <div class="row">   
                             <div class="col-md-12">
                                 <ul>
-                                	<li><a href="#">Previous</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">Next</a></li>
+                                	<li><a href="?start=${pageStart - perPage}">Previous</a></li>
+                                    <li><a href="#">${pageStart + 1} - ${pageStart + perPage}</a></li>
+                                    <li><a href="?start=${pageStart + perPage}">Next</a></li>
                                 </ul>
                             </div>
                         </div>

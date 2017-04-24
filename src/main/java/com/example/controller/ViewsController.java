@@ -2,18 +2,22 @@ package com.example.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.model.Address;
+import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.db.AddressDAO;
+import com.example.model.db.ProductDAO;
 
 @Controller
 public class ViewsController {
@@ -36,6 +40,19 @@ public class ViewsController {
 	@RequestMapping(value = "/error500", method = RequestMethod.GET)
     public String error500View(){
         return "error500";
+    }
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test(Model model) throws SQLException{
+		List<String> categories = null;
+		List<Product> products = new ArrayList<>();
+		categories = new ArrayList<String>(ProductDAO.getInstance().getAllProducts().keySet());
+		for (String category : categories) {
+			products.addAll(ProductDAO.getInstance().getAllProducts().get(category));
+		}
+		model.addAttribute("products", products);
+		model.addAttribute("categories", categories);
+        return "test";
     }
 	
 	@RequestMapping(value = "/addresses", method = RequestMethod.GET)
