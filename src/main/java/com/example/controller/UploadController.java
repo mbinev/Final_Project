@@ -32,14 +32,14 @@ import io.undertow.server.session.Session;
 @MultipartConfig
 public class UploadController {
 	
-	private String vzemiToqImage;
+	private String image;
 
 	private static final String FILE_LOCATION = "C:\\Pictures\\";
 
 	@RequestMapping(value="/image/{fileName}", method=RequestMethod.GET)
 	@ResponseBody
 	public void prepareForUpload(@PathVariable("fileName") String fileName, HttpServletResponse resp, Model model) throws IOException {
-		File file = new File(FILE_LOCATION + vzemiToqImage);
+		File file = new File(FILE_LOCATION + image);
 		Files.copy(file.toPath(), resp.getOutputStream());
 	}
 	
@@ -48,11 +48,11 @@ public class UploadController {
 		User user = (User) session.getAttribute("user");
 		String email = user.getEmail();
 		user = UserDAO.getInstance().findByEmail(email);
-		vzemiToqImage = new Random().nextInt(1000000) + multiPartFile.getOriginalFilename();
-		File fileOnDisk = new File(FILE_LOCATION + vzemiToqImage);
+		image = new Random().nextInt(1000000) + multiPartFile.getOriginalFilename();
+		File fileOnDisk = new File(FILE_LOCATION + image);
 		Files.copy(multiPartFile.getInputStream(), fileOnDisk.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		UserDAO.getInstance().updateAvatarLink(user, FILE_LOCATION + vzemiToqImage);
-		user.setAvatarLink(FILE_LOCATION + vzemiToqImage);
+		UserDAO.getInstance().updateAvatarLink(user, FILE_LOCATION + image);
+		user.setAvatarLink(FILE_LOCATION + image);
 		model.addAttribute("filename", multiPartFile.getOriginalFilename());
 		return "profile";
 	}

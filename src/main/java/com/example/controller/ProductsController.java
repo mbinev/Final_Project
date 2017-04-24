@@ -22,22 +22,16 @@ import com.example.model.OrderObj;
 import com.example.model.Product;
 import com.example.model.db.ProductDAO;
 
-
 @Controller
 public class ProductsController {
 
-	@RequestMapping(value="/catalog",method = RequestMethod.GET)
-	public String products(Model model) {
+	@RequestMapping(value = "/catalog", method = RequestMethod.GET)
+	public String products(Model model) throws SQLException {
 		List<String> categories = null;
 		List<Product> products = new ArrayList<>();
-		try {
-			categories = new ArrayList<String>(ProductDAO.getInstance().getAllProducts().keySet());
-			for (String category : categories) {
-				products.addAll(ProductDAO.getInstance().getAllProducts().get(category));
-			}
-		} catch (SQLException e) {
-			System.out.println("MenuServlet problem");
-			e.printStackTrace();
+		categories = new ArrayList<String>(ProductDAO.getInstance().getAllProducts().keySet());
+		for (String category : categories) {
+			products.addAll(ProductDAO.getInstance().getAllProducts().get(category));
 		}
 		model.addAttribute("products", products);
 		model.addAttribute("categories", categories);
@@ -45,35 +39,32 @@ public class ProductsController {
 		System.out.println(categories);
 		return "products";
 	}
-	
-	@RequestMapping(value="/products",method = RequestMethod.GET)
-	public String products(HttpServletRequest request, Model model) {
+
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
+	public String products(HttpServletRequest request, Model model) throws SQLException {
 		String productName = (String) request.getParameter("product");
 		String category = (String) request.getParameter("category");
 		System.out.println(productName);
 		System.out.println(category);
 		Product pro = null;
-		try {
-			ArrayList<Product> products = ProductDAO.getInstance().getAllProducts().get(category);
-			for (Product p : products) {
-				if(p.getName().equals(productName)){
-					pro = p;
-					break;
-				}
+		ArrayList<Product> products = ProductDAO.getInstance().getAllProducts().get(category);
+		for (Product p : products) {
+			if (p.getName().equals(productName)) {
+				pro = p;
+				break;
 			}
-			request.removeAttribute("product");
-			request.getSession().setAttribute("crusts", ProductDAO.getInstance().getAllProducts().get("Crusts"));
-			request.getSession().setAttribute("sizes", ProductDAO.getInstance().getAllProducts().get("Sizes"));
-			request.getSession().setAttribute("toppings", ProductDAO.getInstance().getAllProducts().get("Toppings"));
-			request.getSession().setAttribute("product", pro);
-			System.out.println(request.getSession().getAttribute("sizes"));
-		} catch (SQLException e) {
-			System.out.println("fsafa");
 		}
+		request.removeAttribute("product");
+		request.getSession().setAttribute("crusts", ProductDAO.getInstance().getAllProducts().get("Crusts"));
+		request.getSession().setAttribute("sizes", ProductDAO.getInstance().getAllProducts().get("Sizes"));
+		request.getSession().setAttribute("toppings", ProductDAO.getInstance().getAllProducts().get("Toppings"));
+		request.getSession().setAttribute("product", pro);
+		System.out.println(request.getSession().getAttribute("sizes"));
+
 		return "single-post";
 	}
-	
-	@RequestMapping(value="/products",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/products", method = RequestMethod.POST)
 	public String products(Model model, HttpServletRequest request, HttpSession session) {
 		String[] pro = request.getParameterValues("subproduct");
 		String productPrice = request.getParameter("productPrice");
@@ -82,7 +73,7 @@ public class ProductsController {
 		ArrayList<String> subproducts = new ArrayList<>();
 		subproducts.add(request.getParameter("size"));
 		subproducts.add(request.getParameter("crust"));
-		if(pro != null){			
+		if (pro != null) {
 			for (String string : pro) {
 				subproducts.add(string);
 			}
@@ -92,17 +83,17 @@ public class ProductsController {
 		System.out.println(product.getName());
 		String description = new String();
 		for (String strg : product.getSubproducts()) {
-			if(!subproducts.contains(strg)){
-				description = description.concat(" -"+strg);
+			if (!subproducts.contains(strg)) {
+				description = description.concat(" -" + strg);
 				subproducts.remove(strg);
 			}
 		}
-		if(!subproducts.isEmpty()){
+		if (!subproducts.isEmpty()) {
 			objSubs.addAll(subproducts);
 		}
 		for (String strg : subproducts) {
-			if(strg != null && !product.getSubproducts().contains(strg)){				
-				description = description.concat(" +"+strg);
+			if (strg != null && !product.getSubproducts().contains(strg)) {
+				description = description.concat(" +" + strg);
 				objSubs.add(strg);
 			}
 			System.out.println(strg);
@@ -122,15 +113,15 @@ public class ProductsController {
 		session.setAttribute("productsNumber", p.size());
 		return "cart";
 	}
-	
-	@RequestMapping(value="/deleteOrderObj",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/deleteOrderObj", method = RequestMethod.POST)
 	public void deleteObj(HttpSession session, HttpServletRequest request) {
 		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
 		String obj = request.getParameter("name");
 		System.out.println(obj);
 		OrderObj order = null;
 		for (OrderObj orderObj : p) {
-			if(orderObj.toString().equals(obj)){
+			if (orderObj.toString().equals(obj)) {
 				order = orderObj;
 				break;
 			}
@@ -140,11 +131,11 @@ public class ProductsController {
 		price = price - order.getPrice();
 		System.out.println(price);
 		session.setAttribute("totalPrice", price);
-		if(p.remove(order)){
+		if (p.remove(order)) {
 			System.out.println("item was removed");
 		}
 		session.setAttribute("productsNumber", p.size());
-		
+
 	}
-	
+
 }
