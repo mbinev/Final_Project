@@ -33,6 +33,9 @@ http://www.templatemo.com/free-website-templates/417-grill
         <link rel="stylesheet" href="css/testimonails-slider.css">
 
         <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+     <style type="text/css">
+     #img { height: 264px; width: 264px; overflow: hidden; }
+     </style>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -75,7 +78,7 @@ http://www.templatemo.com/free-website-templates/417-grill
        						 <div id="somediv"></div>
                             <ul id="filters" class="clearfix">
                                 <li><span class="filter" data-filter="all">All</span></li>
-                        <c:set var="products" scope="session" value="${products}"/>
+                        <c:set var="items" scope="session" value="${products}"/>
 						<c:set var="totalCount" scope="session" value="${fn:length(products)}"/>
 						<c:set var="perPage" scope="session"  value="${20}"/>
 						<c:set var="pageStart" value="${param.start}"/>
@@ -93,21 +96,20 @@ http://www.templatemo.com/free-website-templates/417-grill
                     </div>
                     <div class="row" id="Container">
                     <h1></h1>
-                   <c:forEach var="product" items="${products}" begin="${pageStart}" end="${pageStart + perPage - 1}"> 	
+                   <c:forEach var="product" items="${items}" begin="${pageStart}" end="${pageStart + perPage - 1}"> 	
                         <div class="col-md col-sm mix ${product.category}">       
                             <div class="portfolio-wrapper">                
                                 <div class="portfolio-thumb">
-                                    <img src="img/product1.jpg" alt="" />
+                                    <img id="img" src="${product.img}" alt="" />
                                     <div class="hover">
                                         <div class="hover-iner">
-                                            <a class="fancybox" href="img/product2_big.jpg"><img src="img/open-icon.png" alt="" /></a>
+                                            <a class="fancybox" href="products?product=${product.name}&category=${product.category}"><img src="img/open-icon.png" alt="" /></a>
                                             <span>${product.sub}</span>
                                         </div>
                                     </div>
                                 </div>  
                                 <div class="label-text">
-                                    <h3><a href="products?product=${product.name}&category=${product.category}">${product.name}</a></h3>
-                                    <span class="text-category">${product.price}</span>
+                                    <h4><a href="products?product=${product.name}&category=${product.category}">${product.name}</a></h4>
                                 </div>
                             </div>          
                         </div>

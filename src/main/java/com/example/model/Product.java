@@ -11,7 +11,7 @@ public class Product {
 	private String category;
 	private ArrayList<String> subproducts;
 	private String sub;
-	private String path;
+	private String img;
 	
 	public Product(String name, double price, String category) {
 		this.name = name;
@@ -57,12 +57,12 @@ public class Product {
 		this.productId = productId;
 	}
 	
-	public String getPath() {
-		return path;
+	public String getImg() {
+		return img;
 	}
 	
-	public void setPath(String path) {
-		this.path = path;
+	public void setImg(String path) {
+		this.img = path;
 	}
 	
 	@Override

@@ -31,9 +31,9 @@ public class ProductsController {
 	public String products(Model model) throws SQLException {
 		List<String> categories = null;
 		List<Product> products = new ArrayList<>();
-		categories = new ArrayList<String>(ProductDAO.getInstance().getAllProducts().keySet());
+		categories = new ArrayList<String>(ProductDAO.getInstance().getAllItems().keySet());
 		for (String category : categories) {
-			products.addAll(ProductDAO.getInstance().getAllProducts().get(category));
+			products.addAll(ProductDAO.getInstance().getAllItems().get(category));
 		}
 		model.addAttribute("products", products);
 		model.addAttribute("categories", categories);
@@ -82,7 +82,6 @@ public class ProductsController {
 		}
 		ArrayList<String> objSubs = new ArrayList<>();
 		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
-		System.out.println(product.getName());
 		String description = new String();
 		for (String strg : product.getSubproducts()) {
 			if (!subproducts.contains(strg)) {
@@ -98,7 +97,6 @@ public class ProductsController {
 				description = description.concat(" +" + strg);
 				objSubs.add(strg);
 			}
-			System.out.println(strg);
 		}
 		OrderObj obj = new OrderObj();
 		obj.setDescription(description);
@@ -106,7 +104,6 @@ public class ProductsController {
 		obj.setPrice(Double.parseDouble(productPrice));
 		obj.setSubproducts(objSubs);
 		p.add(obj);
-		System.out.println(description);
 		double price = (double) session.getAttribute("totalPrice");
 		price = price + Double.parseDouble(productPrice);
 		session.setAttribute("totalPrice", round(price, 2));

@@ -91,6 +91,8 @@ http://www.templatemo.com/free-website-templates/417-grill
   border-color: #f0ad4e; }
 .checkbox-warning input[type="checkbox"]:checked + label::after {
   color: #fff; }
+ 
+#img { height: 400px; width: 400px; overflow: hidden; }
 </style>
 </head>
 <body>
@@ -132,7 +134,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 								<div class="col-md-8">
 									<div class="image">
 										<div class="image-post">
-											<img src="${product}" alt="">
+											<img id="img" src="${product.img}" alt="">
 										</div>
 									</div>
 									<div class="product-content">

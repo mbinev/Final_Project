@@ -68,6 +68,8 @@ body{
      right: 0;
      bottom: 0;
 }
+#img { height: 100px; width: 100px; overflow: hidden; }
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -114,7 +116,7 @@ body{
 						<td data-th="Product">
 							<div class="row">
 								<div class="col-sm-2 hidden-xs">
-									<img src="http://placehold.it/100x100" alt="..."
+									<img id="img" src="${product.img}" alt="..."
 										class="img-responsive" />
 								</div>
 								<div class="col-sm-10">

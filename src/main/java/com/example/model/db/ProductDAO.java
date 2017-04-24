@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 import com.example.model.Product;
 
@@ -54,12 +56,13 @@ private static ProductDAO instance;
 				while(rs1.next()){
 					products.put(rs1.getString("category"), new ArrayList<Product>());
 				}
-				String sql2 = "SELECT product_id, name, price, category FROM products";
+				String sql2 = "SELECT product_id, name, price, category, img_path FROM products";
 				st2 = con.prepareStatement(sql2);
 				ResultSet rs2 = st2.executeQuery();
 				while(rs2.next()){
 					Product p = new Product(rs2.getString("name"), rs2.getDouble("price"), rs2.getString("category"));
 					p.setProductId(rs2.getLong("product_id"));
+					p.setImg(rs2.getString("img_path"));
 					products.get(p.getCategory()).add(p);
 					String sql3 = "SELECT name FROM products WHERE product_id IN (SELECT sub_product_id FROM product_has_products WHERE product_id = "+p.getProductId()+" AND order_id IS NULL)";
 					st3 = con.prepareStatement(sql3);
@@ -98,5 +101,22 @@ private static ProductDAO instance;
 	@Override
 	public String getPrimaryKeyName() {
 		return "product_id";
+	}
+
+	public HashMap<String, ArrayList<Product>> getAllItems() throws SQLException {
+		HashMap<String, ArrayList<Product>> allProducts = getAllProducts();
+		HashMap<String, ArrayList<Product>> items = new HashMap<String, ArrayList<Product>>();
+		ArrayList<String> catalogueCategories = new ArrayList<>();
+		catalogueCategories.add("Pizzaz");
+		catalogueCategories.add("Drinks");
+		catalogueCategories.add("Salads");
+		catalogueCategories.add("Desserts");
+		catalogueCategories.add("Dips");
+		for (Entry<String, ArrayList<Product>> entry : allProducts.entrySet()) {
+			if(catalogueCategories.contains(entry.getKey())){
+				items.put(entry.getKey(), entry.getValue());
+			}
+		}
+		return items;
 	}
 }
