@@ -19,7 +19,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 <meta charset="utf-8">
 <title>Profile</title>
 <meta name="description" content="">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
@@ -117,44 +117,46 @@ http://www.templatemo.com/free-website-templates/417-grill
 							<p></p>
 						</div>
 					</div>
-					<table class="table table-striped table-hover table-users">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>City</th>
-								<th>Phone</th>
-								<th>Street</th>
-								<th>Address number</th>
-								<th>Edit</th>
-								<th>Delete</th>
-							</tr>
-						</thead>
-						<tbody>
-								<c:forEach items="${sessionScope.addresses}" var="address">
+					<div class="table-responsive">
+						<table class="table table-striped table-hover table-users">
+							<thead>
 								<tr>
-									<td>${address.name}</td>
-									<td>${address.city}</td>
-									<td>${address.phone}</td>
-									<td>${address.street}</td>
-									<td>${address.addressNumber}</td>
-
-									<td>
-										<a class="btn btn-info btn-sm refresh"
-										onclick="updateAddress(this,'${address.addressId}');">
-											<i class="fa fa-pencil-square-o"></i>
-										</a>
-									</td>
-
-									<td>
-										<button class="btn btn-danger btn-sm trash"
-											onclick="deleteAddress(this,'${address.addressId}');">
-											<i class="fa fa-trash-o"></i>
-										</button>
-									</td>
-							     </tr>
-								</c:forEach>
-						</tbody>
-					</table>
+									<th>Name</th>
+									<th>City</th>
+									<th>Phone</th>
+									<th>Street</th>
+									<th>Address number</th>
+									<th>Edit</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+									<c:forEach items="${sessionScope.addresses}" var="address">
+									<tr>
+										<td>${address.name}</td>
+										<td>${address.city}</td>
+										<td>${address.phone}</td>
+										<td>${address.street}</td>
+										<td>${address.addressNumber}</td>
+	
+										<td>
+											<a class="btn btn-info btn-sm refresh"
+											onclick="updateAddress(this,'${address.addressId}');">
+												<i class="fa fa-pencil-square-o"></i>
+											</a>
+										</td>
+	
+										<td>
+											<button class="btn btn-danger btn-sm trash"
+												onclick="deleteAddress(this,'${address.addressId}');">
+												<i class="fa fa-trash-o"></i>
+											</button>
+										</td>
+								     </tr>
+									</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</c:if>
 			</div>
 		</div>
