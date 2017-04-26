@@ -41,7 +41,6 @@ public class UserDAO implements IDao {
 		ResultSet rs = st.getGeneratedKeys();
 		rs.next();
 		u.setUserId(rs.getLong(1));
-		unconfirmedUsers.put(u.getEmail(), u);
 	}
 	
 	public synchronized User getUser(long primary) throws SQLException{

@@ -15,28 +15,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class User {
 
 	private long userId;
-	
-	@NotEmpty @Size(min=2, max=30) 
 	private String firstName;
-	
-	@NotEmpty @Size(min=2, max=30) 
 	private String lastName;
-	
-	@NotEmpty @Email @Pattern(regexp="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$")
 	private String email;
-	
-	@NotEmpty @Pattern(regexp="(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}")
 	private String password;
-	
 	private String avatarLink;
-	
 	private boolean isVerified;
-	
 	private LocalDateTime registrationTime;
-	
-	public User() {
-		
-	}
+	private String registrationCode;
 	
 	public User(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
@@ -88,6 +74,10 @@ public class User {
 		return this.registrationTime;
 	}
 	
+	public String getRegistrationCode() {
+		return registrationCode;
+	}
+	
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
@@ -102,6 +92,10 @@ public class User {
 	
 	public void setRegistrationTime() {
 		this.registrationTime = LocalDateTime.now();
+	}
+	
+	public void setRegistrationCode(String registrationCode) {
+		this.registrationCode = registrationCode;
 	}
 	
 	public static String hashPassword(String password) throws NoSuchAlgorithmException{

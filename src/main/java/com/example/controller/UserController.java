@@ -7,9 +7,13 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -37,21 +41,20 @@ import com.example.validation.Form;
 @SessionAttributes("user")
 public class UserController {
 
-//	@RequestMapping(value="/tryRegister", method = RequestMethod.POST)
-//	public String checkPersonInfo(@Valid User user, BindingResult bindingResult) {
-//        System.out.println("tuk li sme ");
-//        System.out.println(user);
-//        System.out.println(bindingResult);
-//		if (bindingResult.hasErrors()) {
-//			return "index";
-//		}
-//
-//		return "confirm-register";
-//	}
+	// @RequestMapping(value="/tryRegister", method = RequestMethod.POST)
+	// public String checkPersonInfo(@Valid User user, BindingResult
+	// bindingResult) {
+	// System.out.println(user);
+	// System.out.println(bindingResult);
+	// if (bindingResult.hasErrors()) {
+	// return "index";
+	// }
+	//
+	// return "confirm-register";
+	// }
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerUser(Model model, HttpServletRequest req) throws SQLException {
-		System.out.println("a tuk li sme ");
+	public String registerUser(Model model, HttpServletRequest req) throws SQLException, AddressException, MessagingException {
 		String firstName = req.getParameter("first name");
 		String lastName = req.getParameter("last name");
 		String password = req.getParameter("password");
@@ -61,6 +64,10 @@ public class UserController {
 		model.addAttribute("form", form);
 
 		if (UserDAO.getInstance().findByEmail(email) == null) {
+			boolean isNullOrEmpty = nullOrEmpty(firstName, lastName);
+			if(isNullOrEmpty) {
+				form.addError(form.new Error("name", "Please enter proper name"));
+			}
 
 			boolean validEmail = validateEmail(email);
 			if (!validEmail) {
@@ -76,11 +83,11 @@ public class UserController {
 				form.addError(form.new Error("confirm password", "Confirm password error"));
 			}
 
-			if (validEmail && validPassword && password.equals(confirmPassword)) {
+			if (!isNullOrEmpty && validEmail && validPassword && password.equals(confirmPassword)) {
 				User u = new User(firstName, lastName, email, password);
-				EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com", "Dominos pizza verification",
-						"Please click on the following link: ");
-				// TODO add link
+				String code = EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com");
+				System.out.println(code);
+				u.setRegistrationCode(code);
 				UserDAO.unconfirmedUsers.put(email, u);
 				return "confirm-register";
 			} else {
@@ -90,43 +97,50 @@ public class UserController {
 			}
 		} else {
 			form.addError(form.new Error("email", "This email is already registered"));
-			return "index";
+			return "register-failed";
 		}
 
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginUser(HttpServletRequest req, HttpSession session) throws SQLException, NoSuchAlgorithmException {
-		String email = req.getParameter("email");
+	@RequestMapping(value = "/confirmRegister", method = RequestMethod.POST)
+	public String confirmRegister(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws SQLException {
 		String password = req.getParameter("password");
+		String confirmPassword = req.getParameter("confirm password");
+		String email = req.getParameter("email");
+		String code = req.getParameter("code");
 		Form form = new Form();
+		model.addAttribute("form", form);
 		User user = null;
+
 		if (UserDAO.unconfirmedUsers.containsKey(email)) {
 			user = UserDAO.unconfirmedUsers.get(email);
 			LocalDateTime expireTime = user.getRegistrationTime().plusHours(1);
 			LocalDateTime now = LocalDateTime.now();
-			if (now.isBefore(expireTime)) {
+			if (password.equals(confirmPassword) && now.isBefore(expireTime) && code.equals(user.getRegistrationCode())) {
 				user.setIsVerified();
 				UserDAO.getInstance().addUser(user);
 				UserDAO.unconfirmedUsers.remove(email);
 			} else {
-				user.setRegistrationTime();
-				EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com", "Dominos pizza verification",
-						"Please click on the following link: ");
-				// TODO add link
+				form.addError(form.new Error("Incorrect data", "Incorrect data, please try again."));
 				return "confirm-register";
 			}
 		}
+		prepareLogin(session, response, user);
+		return "index";
+	}
 
-		user = UserDAO.getInstance().findByEmail(email);
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String loginUser(HttpServletRequest req, HttpSession session, HttpServletResponse response)
+			throws SQLException, NoSuchAlgorithmException {
+		String email = req.getParameter("email");
+		String password = req.getParameter("password");
+		Form form = new Form();
+		User user = UserDAO.getInstance().findByEmail(email);
 		boolean validLogin = UserDAO.getInstance().validLogin(user, email, password);
 		System.out.println(validLogin);
 
 		if (validLogin) {
-			session.setAttribute("user", user);
-			session.setAttribute("logged", true);
-			ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
-			session.setAttribute("addresses", list);
+			prepareLogin(session, response, user);
 			return "index";
 		} else {
 			// stay on the same page, keep the correct data
@@ -134,6 +148,20 @@ public class UserController {
 			session.setAttribute("form", form);
 			return "login";
 		}
+	}
+
+	private void prepareLogin(HttpSession session, HttpServletResponse response, User user) throws SQLException {
+		session.setAttribute("user", user);
+		session.setAttribute("logged", true);
+		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
+		session.setAttribute("addresses", list);
+		response.setHeader("Pragma", "No-cache");
+		response.setDateHeader("Expires", 0);
+		response.setHeader("Cache-control", "no-cache");
+	}
+	
+	private boolean nullOrEmpty(String firstName, String lastName) {
+		return firstName == null  || lastName == null || firstName.isEmpty() || lastName.isEmpty();
 	}
 
 	@RequestMapping(value = "/facebookLogin", method = RequestMethod.POST)
@@ -147,7 +175,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, ServletResponse response) {
 		session.invalidate();
 		return "index";
 	}
