@@ -2,7 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html >
 <html>
@@ -96,49 +95,14 @@
 											<div class="form-group">
 												<button id="btnRegister" class="btn btn-block" type="submit">Login</button>
 											</div>
-											<a href="#" title="Fast and free sign up!" id="btnNewUser"
+											<a href="register" title="Fast and free sign up!" id="btnNewUser"
 												data-toggle="collapse" data-target="#formRegister"
 												class="small">New User? Sign-up..</a>
 										</form>
-										<form id="formRegister" class="form collapse container-fluid"
-											action="register" method="post">
+										<form id="formRegister" action="register" method="post">
 											<br>
-											<div class="form-group">
-												<input class="form-control" name="email" id="inputEmail"
-													type="email" placeholder="Email" required="">
-											</div>
-											<div class="form-group">
-												<input class="form-control" name="first name"
-													id="inputFistName" type="text" placeholder="First Name"
-													data-valid-min="4"
-													title="First name" required="">
-											</div>
-											<div class="form-group">
-												<input class="form-control" name="last name"
-													id="inputlastName" type="text" placeholder="Last Name"
-													data-valid-min="4"
-													title="Last name" required="">
-											</div>
-											<div class="form-group">
-												<input class="form-control" name="password"
-													id="inputpassword" type="password" placeholder="Password"
-													required="">
-											</div>
-											<div class="form-group">
-												<input class="form-control" name="confirm password"
-													id="inputVerify" type="password"
-													placeholder="Password (again)" required="">
-											</div>
-											<div class="form-group">
-												<button id="btnRegister" class="btn btn-block" type="submit">Sign
-													Up</button>
-											</div>
 										</form>
 										<hr>
-										<div class="container-fluid">
-											<a class="small" data-toggle="modal" role="button"
-												href="#forgotPasswordModal">Forgot username or password?</a>
-										</div>
 									</div></li>
 							</ul>
 						</div>
