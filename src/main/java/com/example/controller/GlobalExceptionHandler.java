@@ -7,6 +7,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -36,6 +38,18 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(NullPointerException.class)
 	public String handleNullPointerException(HttpServletRequest request, Exception ex){
+		logException(request, ex);
+		return "error500";
+	}
+	
+	@ExceptionHandler(AddressException.class)
+	public String handleAddressException(HttpServletRequest request, Exception ex){
+		logException(request, ex);
+		return "error500";
+	}
+	
+	@ExceptionHandler(MessagingException.class)
+	public String handleMessagingException(HttpServletRequest request, Exception ex){
 		logException(request, ex);
 		return "error500";
 	}
