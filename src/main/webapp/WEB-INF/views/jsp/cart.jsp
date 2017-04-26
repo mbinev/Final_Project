@@ -221,20 +221,30 @@ body{
 											</h3>
 									</c:forEach>
 									<!-- Button -->
-									<div class="control-group">
-										<label class="control-label" for="order"></label>
-										<div class="controls">
-											<button id="order" type="submit" class="btn btn-success">Order</button>
+									<c:if test="${sessionScope.addresses eq null}">
+										<div class="control-group">
+											<label class="control-label"></label>
+											<div class="controls">
+												<button type="button" onclick="alert('Please add an address!')" class="btn btn-success">Order</button>
+											</div>
 										</div>
-									</div>
+									</c:if>
+									<c:if test="${sessionScope.addresses ne null}">
+										<div class="control-group">
+											<label class="control-label" for="order"></label>
+											<div class="controls">
+												<button id="order" type="submit" class="btn btn-success">Order</button>
+											</div>
+										</div>
+									</c:if>
 								</fieldset>
 							</form>
 						</div>
 						<div class="tab-pane fade" id="pickIt">
-							<form class="form-horizontal">
+							<form class="form-horizontal" action="order" method="post">
 								<div class="col-md-12 col-sm-12">
 
-									<select name="shop" id="selectlocation">
+									<select name="address" id="selectlocation">
 									</select>
 
 								</div>
@@ -243,7 +253,7 @@ body{
 								<div class="control-group">
 									<label class="control-label" for="order"></label>
 									<div class="controls">
-										<button id="order" name="order" class="btn btn-success">Order</button>
+										<button id="order" type="submit" class="btn btn-success">Order</button>
 									</div>
 								</div>
 							</form>
@@ -257,7 +267,7 @@ body{
 		</div>
 	</div>
 	<script>
-		$('#address-select').on('change', function () {
+		$('#address-select').on('change click', function () {
 		   var valueSelected = this.value;
 		   $('.addressinfo').each(function(i, obj) {
 			    if(this.id == valueSelected){
@@ -266,7 +276,6 @@ body{
 			    	$("#"+this.id).hide();
 			    }
 			});
-		 
 		});
 		
 		$('.trash').on('click', function() {
@@ -302,6 +311,7 @@ body{
 		}).trigger('keyup');
 		function resize() {
 			setTimeout(resize, 50);
+			$('#address-select').trigger('click');
 			google.maps.event.trigger(map, 'resize');
 		};
 	</script>
@@ -328,7 +338,7 @@ body{
 			lat : 42.70131402715675,
 			lng : 23.322772979736328,
 			zoom : 16,
-			name : "Luvov Most",
+			name : "Luvov most",
 			info : "<h4>Pizza</h4> bul. Knyaginya Maria Luiza 45 </br>1202 </br>Sofia </br>Bulgaria"
 		}, ];
 		function initialize() {
@@ -356,7 +366,7 @@ body{
 			        });
 				jQuery("#selectlocation").append(
 						'<option value="'
-								+ [ data.lat, data.lng, data.zoom ].join('|')
+								+ [ data.name ].join('|')
 								+ '">' + data.name + '</option>');
 			});
 

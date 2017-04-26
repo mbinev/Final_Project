@@ -154,8 +154,8 @@ public class UserController {
 	private void prepareLogin(HttpSession session, HttpServletResponse response, User user) throws SQLException {
 		session.setAttribute("user", user);
 		session.setAttribute("logged", true);
-//		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
-//		session.setAttribute("addresses", list);
+		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
+		session.setAttribute("addresses", list);
 		response.setHeader("Pragma", "No-cache");
 		response.setDateHeader("Expires", 0);
 		response.setHeader("Cache-control", "no-cache");
@@ -204,7 +204,8 @@ public class UserController {
 		// add to data base
 		User user = (User) session.getAttribute("user");
 		long userId = user.getUserId();
-		Address address = new Address(name, street, addressNumber, postcode, phone, floor);
+		Address address = new Address(name, street, addressNumber, postcode, phone);
+		address.setFloor(floor);
 		address.setBell(bell);
 		address.setBuildingNumber(buildingNumber);
 		address.setApartmentNumber(apartamentNumber);
@@ -253,7 +254,8 @@ public class UserController {
 				: Integer.parseInt(req.getParameter("apartament number"));
 		String entrance = req.getParameter("entrance").equals("") ? "" : req.getParameter("entrance");
 
-		Address address = new Address(name, street, addressNumber, postcode, phone, floor);
+		Address address = new Address(name, street, addressNumber, postcode, phone);
+		address.setFloor(floor);
 		address.setBell(bell);
 		address.setBuildingNumber(buildingNumber);
 		address.setApartmentNumber(apartamentNumber);
@@ -294,8 +296,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public String deleteObj(HttpSession session, HttpServletRequest request) throws SQLException {
+	public String order(HttpServletRequest request) throws SQLException {
 		System.out.println("here------------------");
+		HttpSession session = request.getSession();
 		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
 		User user = (User) session.getAttribute("user");
 		ArrayList<Address> addresses = (ArrayList<Address>) session.getAttribute("addresses");
@@ -306,6 +309,18 @@ public class UserController {
 				address = adrs;
 				break;
 			}
+		}
+		if(address == null){
+			ArrayList<Address> shopAddresses = AddressDAO.getInstance().shopAddresses();
+			for (Address adr : shopAddresses) {
+				if(adr.getName().equals(addressName)){
+					address = adr;
+					break;
+				}
+			}
+		}
+		if(address == null){			
+			return "error500";
 		}
 		Order order = new Order(user.getUserId(), LocalDateTime.now());
 		order.setAddressId(address.getAddressId());
