@@ -42,6 +42,11 @@ public class ViewsController {
         return "error500";
     }
 	
+	@RequestMapping(value = "/confirmRegisterWithCode", method = RequestMethod.GET)
+    public String confirmRegisterWithCodeView(){
+        return "confirm-register-with-code";
+    }
+	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(Model model) throws SQLException{
 		List<String> categories = null;

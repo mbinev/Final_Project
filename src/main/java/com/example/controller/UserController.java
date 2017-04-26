@@ -102,10 +102,9 @@ public class UserController {
 
 	}
 
-	@RequestMapping(value = "/confirmRegister", method = RequestMethod.POST)
+	@RequestMapping(value = "/confirmRegisterWithCode", method = RequestMethod.POST)
 	public String confirmRegister(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws SQLException {
 		String password = req.getParameter("password");
-		String confirmPassword = req.getParameter("confirm password");
 		String email = req.getParameter("email");
 		String code = req.getParameter("code");
 		Form form = new Form();
@@ -116,7 +115,7 @@ public class UserController {
 			user = UserDAO.unconfirmedUsers.get(email);
 			LocalDateTime expireTime = user.getRegistrationTime().plusHours(1);
 			LocalDateTime now = LocalDateTime.now();
-			if (password.equals(confirmPassword) && now.isBefore(expireTime) && code.equals(user.getRegistrationCode())) {
+			if (password.equals(user.getPassword()) && now.isBefore(expireTime) && code.equals(user.getRegistrationCode())) {
 				user.setIsVerified();
 				UserDAO.getInstance().addUser(user);
 				UserDAO.unconfirmedUsers.remove(email);
@@ -153,8 +152,8 @@ public class UserController {
 	private void prepareLogin(HttpSession session, HttpServletResponse response, User user) throws SQLException {
 		session.setAttribute("user", user);
 		session.setAttribute("logged", true);
-		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
-		session.setAttribute("addresses", list);
+//		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
+//		session.setAttribute("addresses", list);
 		response.setHeader("Pragma", "No-cache");
 		response.setDateHeader("Expires", 0);
 		response.setHeader("Cache-control", "no-cache");
