@@ -37,6 +37,11 @@ public class ViewsController {
         return "about-us";
     }
 	
+	@RequestMapping(value = "/order-success", method = RequestMethod.GET)
+    public String orderSuccessUsView(){
+        return "order-success";
+    }
+	
 	@RequestMapping(value = "/error500", method = RequestMethod.GET)
     public String error500View(){
         return "error500";
@@ -71,10 +76,15 @@ public class ViewsController {
 	}
 
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
-		public String showProfile() throws SQLException {
+		public String showProfile() {
 			return "profile";
 		}
 		
+	@RequestMapping(value="register", method=RequestMethod.GET)
+	public String showRegister() {
+		return "register";
 	}
+}
+    
 	
 

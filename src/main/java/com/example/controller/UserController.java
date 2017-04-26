@@ -318,7 +318,7 @@ public class UserController {
 		session.setAttribute("productsNumber", 0);
 		session.setAttribute("totalPrice", 0.0);
 		session.setAttribute("products", new ArrayList<OrderObj>());
-		return "index";
+		return "order-success";
 	}
 
 	// @RequestMapping(value="form", method=RequestMethod.POST)

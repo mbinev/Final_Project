@@ -59,12 +59,16 @@
 							</ul>
 						</div>
 						<div class="col-md-6">
-                                <div class="cart-info">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <fmt:formatNumber var="i" type="number" minFractionDigits="2" maxFractionDigits="2" value="${sessionScope.totalPrice}" />
-                                    (<a href="cart" id="productCount">${sessionScope.productsNumber} items</a>) in your cart (<a href="cart" id=""> <c:out value="${i}" /> </a>)
-                                </div>
-                            </div>
+							<div class="cart-info">
+								<i class="fa fa-shopping-cart"></i>
+								<fmt:formatNumber var="i" type="number" minFractionDigits="2"
+									maxFractionDigits="2" value="${sessionScope.totalPrice}" />
+								(<a href="cart" id="productCount">${sessionScope.productsNumber}
+									items</a>) in your cart (<a href="cart" id=""> <c:out
+										value="${i}" />
+								</a>)
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -95,9 +99,10 @@
 											<div class="form-group">
 												<button id="btnRegister" class="btn btn-block" type="submit">Login</button>
 											</div>
-											<a href="register" title="Fast and free sign up!" id="btnNewUser"
-												data-toggle="collapse" data-target="#formRegister"
-												class="small">New User? Sign-up..</a>
+											<a href="register" title="Fast and free sign up!"
+												id="btnNewUser" data-toggle="collapse"
+												data-target="#formRegister" class="small">New User?
+												Sign-up..</a>
 										</form>
 										<form id="formRegister" action="register" method="post">
 											<br>
@@ -107,11 +112,13 @@
 							</ul>
 						</div>
 						<div class="col-md-6">
-                                <div class="cart-info">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    (<a href="cart" id="productCount">${sessionScope.productsNumber} items</a>) in your cart (<a href="cart" id="totalPrices">$ ${sessionScope.totalPrice}</a>)
-                                </div>
-                            </div>
+							<div class="cart-info">
+								<i class="fa fa-shopping-cart"></i> (<a href="cart"
+									id="productCount">${sessionScope.productsNumber} items</a>) in
+								your cart (<a href="cart" id="totalPrices">$
+									${sessionScope.totalPrice}</a>)
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
