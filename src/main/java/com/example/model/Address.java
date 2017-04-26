@@ -16,13 +16,12 @@ public class Address {
 	private String entrance;
 	private int userId;
 	
-	public Address(String name, String street, String addressNumber, String postcode, String phone, int floor) {
+	public Address(String name, String street, String addressNumber, String postcode, String phone) {
 		this.name = name;
 		this.street = street;
 		this.addressNumber = addressNumber;
 		this.postcode = postcode;
 		this.phone = phone;
-		this.floor = floor;
 	}
 	
 	public void setAddressId(long addressId) {
@@ -35,6 +34,10 @@ public class Address {
 	
 	public void setCity(String city) {
 		this.city = city;
+	}
+	
+	public void setFloor(int floor) {
+		this.floor = floor;
 	}
 	
 	public void setBell(String bell) {

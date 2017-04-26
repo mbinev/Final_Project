@@ -59,11 +59,27 @@ public class AddressDAO implements IDao {
 		ResultSet rs = st.executeQuery();
 		while (rs.next()) {
 			Address address = new Address(rs.getString("name"), rs.getString("street"), rs.getString("address_number"),
-					rs.getString("post_code"), rs.getString("mobile_number"), rs.getInt("floor"));
+					rs.getString("post_code"), rs.getString("mobile_number"));
+			address.setFloor(rs.getInt("floor"));
 			address.setBell(rs.getString("bell"));
 			address.setBuildingNumber(rs.getInt("building_number"));
 			address.setApartmentNumber(rs.getInt("apartment_number"));
 			address.setEntrance(rs.getString("entrace"));
+			address.setAddressId(rs.getLong("address_id"));
+			list.add(address);
+		}
+		return list;
+	}
+	
+	public ArrayList<Address> shopAddresses() throws SQLException {
+		ArrayList<Address> list = new ArrayList<>();
+		String sql = "SELECT address_id, name, street, address_number, post_code, city, mobile_number FROM addresses WHERE user_id IS NULL";
+		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		while (rs.next()) {
+			Address address = new Address(rs.getString("name"), rs.getString("street"), rs.getString("address_number"),
+					rs.getString("post_code"), rs.getString("mobile_number"));
+			address.setCity(rs.getString("city"));
 			address.setAddressId(rs.getLong("address_id"));
 			list.add(address);
 		}
@@ -99,7 +115,8 @@ public class AddressDAO implements IDao {
 		Address address = null;
 		while(rs.next()) {
 			address = new Address(rs.getString("name"), rs.getString("street"), rs.getString("address_number"),
-					rs.getString("post_code"), rs.getString("mobile_number"), rs.getInt("floor"));
+					rs.getString("post_code"), rs.getString("mobile_number"));
+			address.setFloor(rs.getInt("floor"));
 			address.setBell(rs.getString("bell"));
 			address.setBuildingNumber(rs.getInt("building_number"));
 			address.setApartmentNumber(rs.getInt("apartment_number"));

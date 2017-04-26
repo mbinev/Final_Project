@@ -16,7 +16,7 @@ import com.example.model.Product;
 public class ProductDAO implements IDao{
 	
 private static ProductDAO instance;
-	
+	private static final String[] CATEGORIES = {"Pizzaz", "Drinks", "Salads", "Desserts", "Dips"};
 	private static HashMap<String, ArrayList<Product>> products; //category -> products
 
 	private ProductDAO() {
@@ -107,11 +107,9 @@ private static ProductDAO instance;
 		HashMap<String, ArrayList<Product>> allProducts = getAllProducts();
 		HashMap<String, ArrayList<Product>> items = new HashMap<String, ArrayList<Product>>();
 		ArrayList<String> catalogueCategories = new ArrayList<>();
-		catalogueCategories.add("Pizzaz");
-		catalogueCategories.add("Drinks");
-		catalogueCategories.add("Salads");
-		catalogueCategories.add("Desserts");
-		catalogueCategories.add("Dips");
+		for (String string : CATEGORIES) {
+			catalogueCategories.add(string);
+		}
 		for (Entry<String, ArrayList<Product>> entry : allProducts.entrySet()) {
 			if(catalogueCategories.contains(entry.getKey())){
 				items.put(entry.getKey(), entry.getValue());
