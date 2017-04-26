@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,14 +32,13 @@ public class ProductsController {
 	public String products(Model model) throws SQLException {
 		List<String> categories = null;
 		List<Product> products = new ArrayList<>();
-		categories = new ArrayList<String>(ProductDAO.getInstance().getAllItems().keySet());
+		HashMap<String, ArrayList<Product>> items = ProductDAO.getInstance().getAllItems();
+		categories = new ArrayList<String>(items.keySet());
 		for (String category : categories) {
-			products.addAll(ProductDAO.getInstance().getAllItems().get(category));
+			products.addAll(items.get(category));
 		}
 		model.addAttribute("products", products);
 		model.addAttribute("categories", categories);
-		System.out.println(products);
-		System.out.println(categories);
 		return "products";
 	}
 
@@ -46,23 +46,20 @@ public class ProductsController {
 	public String products(HttpServletRequest request, Model model) throws SQLException {
 		String productName = (String) request.getParameter("product");
 		String category = (String) request.getParameter("category");
-		System.out.println(productName);
-		System.out.println(category);
+		HashMap<String, ArrayList<Product>> products = ProductDAO.getInstance().getAllProducts();
 		Product pro = null;
-		ArrayList<Product> products = ProductDAO.getInstance().getAllProducts().get(category);
-		for (Product p : products) {
+		ArrayList<Product> items = products.get(category);
+		for (Product p : items) {
 			if (p.getName().equals(productName)) {
 				pro = p;
 				break;
 			}
 		}
 		request.removeAttribute("product");
-		request.getSession().setAttribute("crusts", ProductDAO.getInstance().getAllProducts().get("Crusts"));
-		request.getSession().setAttribute("sizes", ProductDAO.getInstance().getAllProducts().get("Sizes"));
-		request.getSession().setAttribute("toppings", ProductDAO.getInstance().getAllProducts().get("Toppings"));
+		request.getSession().setAttribute("crusts", products.get("Crusts"));
+		request.getSession().setAttribute("sizes", products.get("Sizes"));
+		request.getSession().setAttribute("toppings", products.get("Toppings"));
 		request.getSession().setAttribute("product", pro);
-		System.out.println(request.getSession().getAttribute("sizes"));
-
 		return "single-post";
 	}
 
@@ -70,7 +67,6 @@ public class ProductsController {
 	public String products(Model model, HttpServletRequest request, HttpSession session) {
 		String[] pro = request.getParameterValues("subproduct");
 		String productPrice = request.getParameter("productPrice");
-		System.out.println(productPrice);
 		Product product = (Product) session.getAttribute("product");
 		ArrayList<String> subproducts = new ArrayList<>();
 		subproducts.add(request.getParameter("size"));
@@ -115,11 +111,10 @@ public class ProductsController {
 
 	@RequestMapping(value = "/deleteOrderObj", method = RequestMethod.POST)
 	public void deleteObj(HttpSession session, HttpServletRequest request) {
-		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
+		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
 		String obj = request.getParameter("name");
-		System.out.println(obj);
 		OrderObj order = null;
-		for (OrderObj orderObj : p) {
+		for (OrderObj orderObj : products) {
 			if (orderObj.toString().equals(obj)) {
 				order = orderObj;
 				break;
@@ -128,10 +123,8 @@ public class ProductsController {
 		double price = (double) session.getAttribute("totalPrice");
 		price = price - order.getPrice();
 		session.setAttribute("totalPrice", price);
-		if (p.remove(order)) {
-			System.out.println("item was removed");
-		}
-		session.setAttribute("productsNumber", p.size());
+		products.remove(order);
+		session.setAttribute("productsNumber", products.size());
 		if((int)session.getAttribute("productsNumber") == 0){
 			session.setAttribute("totalPrice", 0.0);
 		}

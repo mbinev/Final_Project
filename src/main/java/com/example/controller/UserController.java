@@ -87,7 +87,6 @@ public class UserController {
 				User u = new User(firstName, lastName, email, password);
 				String code = EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com");
 				u.setRegistrationCode(code);
-				System.out.println(u.getRegistrationCode());
 				UserDAO.unconfirmedUsers.put(email, u);
 				return "confirm-register";
 			} else {
@@ -115,9 +114,7 @@ public class UserController {
 			user = UserDAO.unconfirmedUsers.get(email);
 			LocalDateTime expireTime = user.getRegistrationTime().plusHours(1);
 			LocalDateTime now = LocalDateTime.now();
-			System.out.println("not verified");
 			if (password.equals(user.getPassword()) && now.isBefore(expireTime) && code.equals(user.getRegistrationCode())) {
-				System.out.println("verified");
 				user.setIsVerified();
 				UserDAO.getInstance().addUser(user);
 				UserDAO.unconfirmedUsers.remove(email);
@@ -136,10 +133,9 @@ public class UserController {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		Form form = new Form();
-		User user = UserDAO.getInstance().findByEmail(email);
-		boolean validLogin = UserDAO.getInstance().validLogin(user, email, password);
-		System.out.println(validLogin);
-
+		UserDAO userDAO = UserDAO.getInstance();
+		User user = userDAO.findByEmail(email);
+		boolean validLogin = userDAO.validLogin(user, email, password);
 		if (validLogin) {
 			prepareLogin(session, response, user);
 			return "index";
@@ -228,9 +224,7 @@ public class UserController {
 		if (request.getParameter("id") != null) {
 			int addressId = Integer.parseInt(request.getParameter("id"));
 			long id = addressId;
-			System.out.println(id);
 			Address address = AddressDAO.getInstance().getAddressById(id);
-			System.out.println("address in update " + address);
 			session.setAttribute("address", address);
 			session.setAttribute("addressID", id);
 		}
@@ -261,10 +255,10 @@ public class UserController {
 		address.setApartmentNumber(apartamentNumber);
 		address.setEntrance(entrance);
 		address.setAddressId((long) session.getAttribute("addressID"));
-
-		AddressDAO.getInstance().updateAddress(address);
+		AddressDAO addressDAO = AddressDAO.getInstance(); 
+		addressDAO.updateAddress(address);
 		User user = (User) session.getAttribute("user");
-		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
+		ArrayList<Address> list = addressDAO.getUserAddresses(user.getUserId());
 		session.setAttribute("addresses", list);
 		return "profile";
 	}
@@ -297,7 +291,6 @@ public class UserController {
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
 	public String order(HttpServletRequest request) throws SQLException {
-		System.out.println("here------------------");
 		HttpSession session = request.getSession();
 		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
 		User user = (User) session.getAttribute("user");
@@ -324,11 +317,8 @@ public class UserController {
 		}
 		Order order = new Order(user.getUserId(), LocalDateTime.now());
 		order.setAddressId(address.getAddressId());
-		System.out.println(products);
 		order.setProducts(products);
-
 		OrderDAO.getInstance().makeOrder(order, ProductDAO.getInstance().getAllProducts());
-
 		session.setAttribute("productsNumber", 0);
 		session.setAttribute("totalPrice", 0.0);
 		session.setAttribute("products", new ArrayList<OrderObj>());
