@@ -17,7 +17,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
 <meta charset="utf-8">
-<title>Addresses</title>
+<title>Confirm your email</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -50,7 +50,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 			<div class="row">
 				<div class="col-md-12">
 					<div class="heading-content">
-						<h2>Manage addresses</h2>
+						<h2>Confrim your email</h2>
 					</div>
 				</div>
 			</div>
@@ -64,7 +64,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 				<div class="col-md-12">
 					<div class="heading-section">
 						<h2>
-							<c:out value="Add a new address"></c:out>
+							<c:out value="Confrim your email"></c:out>
 						</h2>
 						<img src="images/under-heading.png" alt="">
 					</div>
@@ -78,14 +78,14 @@ http://www.templatemo.com/free-website-templates/417-grill
 					<form action="confirmRegisterWithCode" method="post" class="send-message">
 						<div class="row">
 							<div class="name col-md-4">
-								Email <input type="text" name="name" id="name"
+								Email <input type="email" name="email" id="email"
 									required />
 							</div>
 							<div class="street col-md-4">
-								Password <input type="text" name="street" id="street" required />
+								Password <input type="password" name="password" id="street" required />
 							</div>
 							<div class="subject col-md-4">
-								Registration code <input type="text" name="address number"
+								Registration code <input type="text" name="code"
 									id="address number" required />
 							</div>
 						</div>

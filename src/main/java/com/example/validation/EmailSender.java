@@ -19,7 +19,7 @@ public class EmailSender {
 	private static final String SUBJECT_TEXT = "Dominos pizza verification";
 	private static final String VERIFY_PAGE = "";
 
-	public static String sendValidationEmail(String receiverEmail) throws AddressException, MessagingException {
+	public static synchronized String sendValidationEmail(String receiverEmail) throws AddressException, MessagingException {
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");

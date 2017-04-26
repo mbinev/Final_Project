@@ -86,8 +86,8 @@ public class UserController {
 			if (!isNullOrEmpty && validEmail && validPassword && password.equals(confirmPassword)) {
 				User u = new User(firstName, lastName, email, password);
 				String code = EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com");
-				System.out.println(code);
 				u.setRegistrationCode(code);
+				System.out.println(u.getRegistrationCode());
 				UserDAO.unconfirmedUsers.put(email, u);
 				return "confirm-register";
 			} else {
@@ -115,7 +115,9 @@ public class UserController {
 			user = UserDAO.unconfirmedUsers.get(email);
 			LocalDateTime expireTime = user.getRegistrationTime().plusHours(1);
 			LocalDateTime now = LocalDateTime.now();
+			System.out.println("not verified");
 			if (password.equals(user.getPassword()) && now.isBefore(expireTime) && code.equals(user.getRegistrationCode())) {
+				System.out.println("verified");
 				user.setIsVerified();
 				UserDAO.getInstance().addUser(user);
 				UserDAO.unconfirmedUsers.remove(email);
