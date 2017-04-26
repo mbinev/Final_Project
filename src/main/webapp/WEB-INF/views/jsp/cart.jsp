@@ -276,6 +276,7 @@ body{
 			    	$("#"+this.id).hide();
 			    }
 			});
+		 
 		});
 		
 		$('.trash').on('click', function() {
@@ -332,7 +333,7 @@ body{
 			lat : 42.692671891757854,
 			lng : 23.310391902923584,
 			zoom : 16,
-			name : "Ruski pametnik",
+			name : "Russian Monument",
 			info : "<h4>Pizza</h4> Russian Monument </br>1606 </br>Sofia </br>Bulgaria"
 		}, {
 			lat : 42.70131402715675,
@@ -367,6 +368,8 @@ body{
 				jQuery("#selectlocation").append(
 						'<option value="'
 								+ [ data.name ].join('|')
+								+ '" data-cord="'
+								+ [ data.lat, data.lng, data.zoom ].join('|')
 								+ '">' + data.name + '</option>');
 			});
 
@@ -377,7 +380,7 @@ body{
 						'change',
 						'#selectlocation',
 						function() {
-							var latlngzoom = jQuery(this).val().split('|');
+							var latlngzoom = jQuery(this).getAttribute('data-cord').split('|');
 							var newzoom = 1 * latlngzoom[2], newlat = 1 * latlngzoom[0], newlng = 1 * latlngzoom[1];
 							map.setZoom(newzoom);
 							map.setCenter({
