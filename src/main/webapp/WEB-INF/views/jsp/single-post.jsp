@@ -110,7 +110,6 @@ http://www.templatemo.com/free-website-templates/417-grill
 				<div class="col-md-12">
 					<div class="heading-content">
 						<h2>Single Product</h2>
-						<span>Home / <a href="single-post.html">Single Product</a></span>
 					</div>
 				</div>
 			</div>

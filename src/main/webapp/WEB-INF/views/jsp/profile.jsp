@@ -69,35 +69,6 @@ http://www.templatemo.com/free-website-templates/417-grill
 				</div>
 			</div>
 			<div class="space50"></div>
-
-			<div class="row">
-				<div class="col-md-2 col-sm-4">
-					<div class="timeline-thumb">
-						<div class="thumb">
-							<c:if test="${sessionScope.filename == null}">
-								<img src="images/avatar.jpg" alt="">
-							</c:if>
-							<c:if test="${sessionScope.filename != null}">
-								<img src="image/${filename}">
-							</c:if>
-						</div>
-						<div class="overlay">
-							<div class="timeline-caption">
-								<h4>Nice pic</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-md-6">
-					<form method="post" enctype="multipart/form-data">
-						<input type="file" id="file" name="failche" accept="image/*">
-						<input type="submit" value="Upload now">
-					</form>
-				</div>
-			</div>
 			
 			<div class="container">
 			<br>

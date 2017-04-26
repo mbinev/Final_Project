@@ -87,7 +87,6 @@ body{
 				<div class="col-md-12">
 					<div class="heading-content">
 						<h2>Cart</h2>
-						<span>Home / <a href="cart.html">Cart</a></span>
 					</div>
 				</div>
 			</div>
