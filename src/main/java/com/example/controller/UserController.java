@@ -35,7 +35,6 @@ import com.example.model.db.OrderDAO;
 import com.example.model.db.ProductDAO;
 import com.example.model.db.UserDAO;
 import com.example.validation.EmailSender;
-import com.example.validation.Form;
 
 @Controller
 @SessionAttributes("user")
@@ -60,30 +59,34 @@ public class UserController {
 		String password = req.getParameter("password");
 		String confirmPassword = req.getParameter("confirm password");
 		String email = req.getParameter("email");
-		Form form = new Form();
-		model.addAttribute("form", form);
+		HttpSession session = req.getSession();
 
 		if (UserDAO.getInstance().findByEmail(email) == null) {
-			boolean isNullOrEmpty = nullOrEmpty(firstName, lastName);
-			if(isNullOrEmpty) {
-				form.addError(form.new Error("name", "Please enter proper name"));
+			boolean fnNullOrEmpty = nullOrEmpty(firstName);
+			boolean lnNullOrEmpty = nullOrEmpty(lastName);
+			if(fnNullOrEmpty) {
+				session.setAttribute("firstName", "WRONG FIRST NAME");
+			}
+			
+			if(lnNullOrEmpty) {
+				session.setAttribute("lastName", "WRONG LAST NAME");
 			}
 
 			boolean validEmail = validateEmail(email);
 			if (!validEmail) {
-				form.addError(form.new Error("email", "Invalid email"));
+				session.setAttribute("email", "INCORRECT EMAIL");
 			}
 
 			boolean validPassword = validatePassword(password);
 			if (!validPassword) {
-				form.addError(form.new Error("password", "Incorrect password"));
+				session.setAttribute("password", "INCORRECT PASSWORD");;
 			}
 
 			if (!password.equals(confirmPassword)) {
-				form.addError(form.new Error("confirm password", "Confirm password error"));
+				session.setAttribute("confirmPassword", "WRONG CONFIRMATION");
 			}
 
-			if (!isNullOrEmpty && validEmail && validPassword && password.equals(confirmPassword)) {
+			if (!fnNullOrEmpty && !lnNullOrEmpty && validEmail && validPassword && password.equals(confirmPassword)) {
 				User u = new User(firstName, lastName, email, password);
 				String code = EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com");
 				u.setRegistrationCode(code);
@@ -91,13 +94,11 @@ public class UserController {
 				UserDAO.unconfirmedUsers.put(email, u);
 				return "confirm-register";
 			} else {
-				// TODO stay on same page, keep the right data and ask the user
-				// to fill the form again
-				return "index";
+				return "register";
 			}
 		} else {
-			form.addError(form.new Error("email", "This email is already registered"));
-			return "register-failed";
+			session.setAttribute("email", "This email is already registered");
+			return "register";
 		}
 
 	}
@@ -107,8 +108,6 @@ public class UserController {
 		String password = req.getParameter("password");
 		String email = req.getParameter("email");
 		String code = req.getParameter("code");
-		Form form = new Form();
-		model.addAttribute("form", form);
 		User user = null;
 
 		if (UserDAO.unconfirmedUsers.containsKey(email)) {
@@ -121,13 +120,15 @@ public class UserController {
 				user.setIsVerified();
 				UserDAO.getInstance().addUser(user);
 				UserDAO.unconfirmedUsers.remove(email);
+				prepareLogin(session, response, user);
+				return "index";
 			} else {
-				form.addError(form.new Error("Incorrect data", "Incorrect data, please try again."));
+				session.setAttribute("incorrectData", "Incorrect data, please try again.");
 				return "confirm-register";
 			}
+		} else {
+			return "error500";
 		}
-		prepareLogin(session, response, user);
-		return "index";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -135,7 +136,6 @@ public class UserController {
 			throws SQLException, NoSuchAlgorithmException {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-		Form form = new Form();
 		User user = UserDAO.getInstance().findByEmail(email);
 		boolean validLogin = UserDAO.getInstance().validLogin(user, email, password);
 		System.out.println(validLogin);
@@ -144,25 +144,21 @@ public class UserController {
 			prepareLogin(session, response, user);
 			return "index";
 		} else {
-			// stay on the same page, keep the correct data
-			form.addError(form.new Error("email", "Invalid email or password"));
-			session.setAttribute("form", form);
-			return "login";
+			session.setAttribute("error", "Invalid email or password");
+			return "index";
 		}
 	}
 
 	private void prepareLogin(HttpSession session, HttpServletResponse response, User user) throws SQLException {
 		session.setAttribute("user", user);
 		session.setAttribute("logged", true);
-//		ArrayList<Address> list = AddressDAO.getInstance().getUserAddresses(user.getUserId());
-//		session.setAttribute("addresses", list);
 		response.setHeader("Pragma", "No-cache");
 		response.setDateHeader("Expires", 0);
 		response.setHeader("Cache-control", "no-cache");
 	}
 	
-	private boolean nullOrEmpty(String firstName, String lastName) {
-		return firstName == null  || lastName == null || firstName.isEmpty() || lastName.isEmpty();
+	private boolean nullOrEmpty(String firstName) {
+		return firstName == null  || firstName.isEmpty();
 	}
 
 	@RequestMapping(value = "/facebookLogin", method = RequestMethod.POST)
