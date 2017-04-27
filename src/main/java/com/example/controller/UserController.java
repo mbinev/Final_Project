@@ -1,9 +1,11 @@
 package com.example.controller;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.model.Address;
@@ -35,6 +38,9 @@ import com.example.model.db.OrderDAO;
 import com.example.model.db.ProductDAO;
 import com.example.model.db.UserDAO;
 import com.example.validation.EmailSender;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Controller
 @SessionAttributes("user")
@@ -52,56 +58,105 @@ public class UserController {
 	// return "confirm-register";
 	// }
 
+	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerUser(Model model, HttpServletRequest req) throws SQLException, AddressException, MessagingException {
-		String firstName = req.getParameter("first name");
-		String lastName = req.getParameter("last name");
-		String password = req.getParameter("password");
-		String confirmPassword = req.getParameter("confirm password");
-		String email = req.getParameter("email");
-		HttpSession session = req.getSession();
+	public String register(HttpServletRequest request) throws AddressException, MessagingException, SQLException {
+		Scanner sc = null;
+		try {
+			sc = new Scanner(request.getInputStream());
+		} catch (IOException e) {
+			System.out.println("problem with register user " + e.getMessage());
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
+		while(sc.hasNextLine()){
+			sb.append(sc.nextLine());
+		}
+		
+		JsonParser parser = new JsonParser();
+		JsonObject obj = parser.parse(sb.toString()).getAsJsonObject();
+		
+		JsonObject respJSON = new JsonObject();
+		
+		String name = obj.get("name").getAsString();
+		String familyName = obj.get("familyName").getAsString();
+		String email = obj.get("email").getAsString();
+		String passwordFirst = obj.get("passwordFirst").getAsString();
+		String passwordSecond = obj.get("passwordSecond").getAsString();
 
-		if (UserDAO.getInstance().findByEmail(email) == null) {
-			boolean fnNullOrEmpty = nullOrEmpty(firstName);
-			boolean lnNullOrEmpty = nullOrEmpty(lastName);
-			if(fnNullOrEmpty) {
-				session.setAttribute("firstName", "WRONG FIRST NAME");
+		boolean NameisNullOrEmpty = nullOrEmpty(name);
+		boolean FamilyIsNullOrEmpty = nullOrEmpty(familyName);
+		boolean validEmail = validateEmail(email);
+		boolean validPassword = validatePassword(passwordFirst);
+		if(NameisNullOrEmpty || FamilyIsNullOrEmpty || !validEmail || !validPassword || !passwordFirst.equals(passwordSecond)){
+			respJSON.addProperty("error", true);
+			JsonArray errorsArray = new JsonArray();
+			if(name.length() < 4){
+				JsonObject error = new JsonObject();
+				error.addProperty("errorPlace", "nameError");
+				error.addProperty("errorMessege", "Min 4 letters");
+				errorsArray.add(error);
+				
+			}
+			if(familyName.length() < 4){
+				JsonObject error = new JsonObject();
+				error.addProperty("errorPlace", "familyNameError");
+				error.addProperty("errorMessege", "Min 4 letters");
+				errorsArray.add(error);
+				
+			}
+			if(!validEmail){
+//				errorsArray.add(new JsonPrimitive("priceError"));
+				if(!UserDAO.getInstance().isEmailFree(email)){
+					JsonObject error = new JsonObject();
+					error.addProperty("errorPlace", "emailError");
+					error.addProperty("errorMessege", "Email is already taken");
+					errorsArray.add(error);	
+				}
+				else{
+					JsonObject error = new JsonObject();
+					error.addProperty("errorPlace", "emailError");
+					error.addProperty("errorMessege", "Invalid Email");
+					errorsArray.add(error);
+				}
+				
+			}
+			if(!validPassword){
+//				errorsArray.add(new JsonPrimitive("brandError"));	
+				JsonObject error = new JsonObject();
+				error.addProperty("errorPlace", "passwordFirstError");
+				error.addProperty("errorMessege", "Invalid Password");
+				errorsArray.add(error);
+			}
+			else{
+				if (!passwordFirst.equals(passwordSecond)){
+					JsonObject error = new JsonObject();
+					error.addProperty("errorPlace", "passwordSecondError");
+					error.addProperty("errorMessege", "Confirm password doesnt match password!");
+					errorsArray.add(error);
+				}
 			}
 			
-			if(lnNullOrEmpty) {
-				session.setAttribute("lastName", "WRONG LAST NAME");
-			}
+			respJSON.add("errors", errorsArray);
 
-			boolean validEmail = validateEmail(email);
-			if (!validEmail) {
-				session.setAttribute("email", "INCORRECT EMAIL");
-			}
-
-			boolean validPassword = validatePassword(password);
-			if (!validPassword) {
-				session.setAttribute("password", "INCORRECT PASSWORD");;
-			}
-
-			if (!password.equals(confirmPassword)) {
-				session.setAttribute("confirmPassword", "WRONG CONFIRMATION");
-			}
-
-			if (!fnNullOrEmpty && !lnNullOrEmpty && validEmail && validPassword && password.equals(confirmPassword)) {
-				User u = new User(firstName, lastName, email, password);
-				String code = EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com");
-				u.setRegistrationCode(code);
-				UserDAO.unconfirmedUsers.put(email, u);
-				return "confirm-register";
-			} else {
-				return "register";
-			}
-		} else {
-			session.setAttribute("email", "This email is already registered");
-			return "register";
+			System.out.println(respJSON.toString());
+			return respJSON.toString();
 		}
-
+		else{
+			respJSON.addProperty("error", false);
+			User u = new User(name, familyName, email, passwordFirst);
+			String code = EmailSender.sendValidationEmail("mbinev2@gmail.com");
+			u.setRegistrationCode(code);
+			UserDAO.unconfirmedUsers.put(email, u);
+			System.out.println("Registered");
+		}
+		System.out.println(respJSON.toString());
+		return respJSON.toString();
+		
+		
 	}
-
+	@ResponseBody
 	@RequestMapping(value = "/confirmRegisterWithCode", method = RequestMethod.POST)
 	public String confirmRegister(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws SQLException {
 		String password = req.getParameter("password");
@@ -127,21 +182,45 @@ public class UserController {
 			return "error500";
 		}
 	}
-
+	
+	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginUser(HttpServletRequest req, HttpSession session, HttpServletResponse response)
 			throws SQLException, NoSuchAlgorithmException {
-		String email = req.getParameter("email");
-		String password = req.getParameter("password");
+		Scanner sc = null;
+		try {
+			sc = new Scanner(req.getInputStream());
+		} catch (IOException e) {
+			System.out.println("problem with register user " + e.getMessage());
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
+		while(sc.hasNextLine()){
+			sb.append(sc.nextLine());
+		}
+		JsonParser parser = new JsonParser();
+		JsonObject obj = parser.parse(sb.toString()).getAsJsonObject();
+		JsonObject respJSON = new JsonObject();
+		String email = obj.get("email").getAsString();
+		String password = obj.get("password").getAsString();
 		UserDAO userDAO = UserDAO.getInstance();
 		User user = userDAO.findByEmail(email);
 		boolean validLogin = userDAO.validLogin(user, email, password);
 		if (validLogin) {
 			prepareLogin(session, response, user);
-			return "index";
+			respJSON.addProperty("error", false);
+			return respJSON.toString();
 		} else {
-			session.setAttribute("error", "Invalid email or password");
-			return "index";
+			respJSON.addProperty("error", true);
+			JsonArray errorsArray = new JsonArray();
+			JsonObject error = new JsonObject();
+			error.addProperty("errorPlace", "status");
+			error.addProperty("errorMessege", "Invalid email or password!");
+			errorsArray.add(error);
+			respJSON.add("errors", errorsArray);
+			System.out.println(respJSON.toString());
+			return respJSON.toString();
 		}
 	}
 
