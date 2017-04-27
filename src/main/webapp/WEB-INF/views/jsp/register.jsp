@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
-<!-- 
-
-Grill Template 
-
-http://www.templatemo.com/free-website-templates/417-grill
-
--->
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html >
+<html class="no-js">
 <head>
 <meta charset="utf-8">
 <title>Register</title>
@@ -33,8 +24,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 <link rel="stylesheet" href="css/testimonails-slider.css">
 
 <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -75,54 +65,44 @@ http://www.templatemo.com/free-website-templates/417-grill
 
 			<div class="col-md-8">
 				<div class="message-form">
-					<form action="register" method="post" class="send-message">
+					<form action="" method="post" class="send-message">
 						<div class="row">
-						<c:if test="${sessionScope.incorrectData != null}">
-						<c:out value="${sessionScope.incorrectData}"></c:out>
-						</c:if>
+							<legend><span id="output" class="help-block"></span></legend>
 							<div class="first name col-md-4">
 								First name
-								<c:if test="${sessionScope.firstName != null }">
-								<c:out value="${sessionScope.firstName}"></c:out>
-								</c:if>
-								 <input type="text" name="first name" id="first name"
+								 <input type="text" name="name" id="name"
 									min="4" max="20" placeholder="" required />
+								<span id="nameError" class="help-block"></span>
+								
 							</div>
 							<div class="last name col-md-4">
 								Last name 
-								<c:if test="${sessionScope.lastName != null }">
-								<c:out value="${sessionScope.lastName}"></c:out>
-								</c:if>
-								<input type="text" name="last name" id="last name" 
+								<input type="text" name="familyName" id="familyName" 
 								min="4" max="20" required />
+								<span id="familyNameError" class="help-block"></span>
 							</div>
 							<div class="email col-md-4">
-								Email 
-								<c:if test="${sessionScope.email != null }">
-								<c:out value="${sessionScope.email}"></c:out>
-								</c:if>
+								Email
 								<input type="email" name="email"
 									id="email"  required />
+								<span id="emailError" class="help-block"></span>
 							</div>
 							<div class="password col-md-4">
-								Password(1Aa) 
-								<c:if test="${sessionScope.password != null }">
-								<c:out value="${sessionScope.password}"></c:out>
-								</c:if>
-								<input type="password" name="password" id="password"
+								Password(1Aa)
+								<input type="password" name="passwordFirst" id="passwordFirst"
 									required />
+								<span id="passwordFirstError" class="help-block"></span>
 							</div>
 							<div class="confirm password col-md-4">
-								Confirm password 
-								<c:if test="${sessionScope.confirmPassword != null }">
-								<c:out value="${sessionScope.confirmPassword}"></c:out>
-								</c:if>
-								<input type="password" name="confirm password" id="confirm password"
+								Confirm password
+								<input type="password" name="passwordSecond" id="passwordSecond"
 									required />
+								<span id="passwordSecondError" class="help-block"></span>
 							</div>
 						</div>
 						<div class="send">
-							<button type="submit">Register</button>
+							<button id="register_btn" type="button">Register</button>
+							
 						</div>
 					</form>
 				</div>
@@ -131,39 +111,66 @@ http://www.templatemo.com/free-website-templates/417-grill
 	</div>
 
 
-	<footer>
-		<div class="container">
-			<div class="top-footer">
-				<div class="row">
-					<div class="col-md-9"></div>
-				</div>
-			</div>
-			<div class="main-footer">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="more-info">
-							<h4 class="footer-title">More info</h4>
-							<li><i class="fa fa-phone"></i>010-020-0340</li>
-							<li><i class="fa fa-globe"></i>Sofia, Bulgaia</li>
-							<li><i class="fa fa-envelope"></i><a href="#">info@company.com</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="bottom-footer">
-				<p>
-					Copyright © 2084 <a href="#">ITT Pizza</a>
-				</p>
-			</div>
-
-		</div>
-	</footer>
+	<c:import url="footer.jsp" />
 
 	<script src="js/vendor/jquery-1.11.0.min.js"></script>
 	<script src="js/vendor/jquery.gmap3.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		$('#register_btn').click(function() {
+    		$.ajax({
+    			  url: "register",
+    			  type: "POST",
+    			  contentType : 'application/json; charset=utf-8',
+    			  dataType : 'json',
+    			  data: JSON.stringify(
+    					  	{
+    							name: document.getElementById("name").value,	  		
+    							familyName: document.getElementById("familyName").value,
+    							email: document.getElementById("email").value,
+    							passwordFirst: document.getElementById("passwordFirst").value,
+    							passwordSecond: document.getElementById("passwordSecond").value,
+    					  	}			  
+    			  ),
+    			  success: function(response) {
+    				  	var responseData = response;
+    				  	document.getElementById("nameError").innerHTML="";
+    					document.getElementById("familyNameError").innerHTML="";
+    					document.getElementById("emailError").innerHTML="";
+    					document.getElementById("passwordFirstError").innerHTML="";
+    					document.getElementById("passwordSecondError").innerHTML="";
+    					document.getElementById("status").innerHTML="";
+    				  	
+    				  if(!responseData.error){
+    					  	document.getElementById("output").innerHTML="Successful registration!";
+    					  	document.getElementById("name").value="";	  		
+    						document.getElementById("familyName").value="";
+    						document.getElementById("email").value="";
+    						document.getElementById("passwordFirst").value="";
+    						document.getElementById("passwordSecond").value="";
+    				  }
+    				  else{
+    					  var errors = responseData.errors;
+    					  
+    					  for(var i = 0; i < errors.length; i++){
+    						  document.getElementById(errors[i].errorPlace).innerHTML = errors[i].errorMessege;
+    					  }
+    				  }
+    				  
+    				  
+    			  },
+    			  error: function(xhr) {
+    				  document.getElementById("status").innerHTML="Its our mistake please excuse us.";
+    			  }
+    			});    
+    		
+    		
+    		
+    	});
+        
+        
+        </script>
 
 </body>
 </html>

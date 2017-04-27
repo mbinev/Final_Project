@@ -87,7 +87,7 @@
 								</a>
 									<div class="dropdown-menu">
 										<form id="formLogin" class="form container-fluid"
-											action="login" method="post">
+											action="" method="post">
 											<div class="form-group">
 												<input class="form-control" name="email" id="inputEmail"
 													type="Email" placeholder="Email" required="">
@@ -98,15 +98,13 @@
 													required="">
 											</div>
 											<div class="form-group">
-												<button id="btnRegister" class="btn btn-block" type="submit">Login</button>
+												<button id="loginbtn" class="btn btn-block" type="button">Login</button>
 											</div>
+											<span id="status" class="help-block"></span>
 											<a href="register" title="Fast and free sign up!"
 												id="btnNewUser" data-toggle="collapse"
 												data-target="#formRegister" class="small">New User?
 												Sign-up..</a>
-										</form>
-										<form id="formRegister" action="register" method="post">
-											<br>
 										</form>
 										<hr>
 									</div></li>
@@ -146,6 +144,45 @@
 			</div>
 		</div>
 	</header>
+	<script>
+		$('#loginbtn').click(function() {
+    		$.ajax({
+    			  url: "login",
+    			  type: "POST",
+    			  contentType : 'application/json; charset=utf-8',
+    			  dataType : 'json',
+    			  data: JSON.stringify(
+    					  	{
+    							email: document.getElementById("inputEmail").value,	  		
+    							password: document.getElementById("inputpassword").value,
+    					  	}			  
+    			  ),
+    			  success: function(response) {
+  				  	var responseData = response;
+  					document.getElementById("status").innerHTML="";
+  				  	
+  				  if(!responseData.error){
+  						window.location.replace("index");
+  				  }
+  				  else{
+  					  var errors = responseData.errors;
+  					  
+  					  for(var i = 0; i < errors.length; i++){
+  						  document.getElementById(errors[i].errorPlace).innerHTML = errors[i].errorMessege;
+  					  }
+  				  }
+  				  
+  				  
+  			  },
+  			  error: function(xhr) {
+  				  document.getElementById("status").innerHTML="Its our mistake please excuse us.";
+  			  }
+  			});     
+    		
+    		
+    		
+    	});
+        </script>
 
 </body>
 </html>
