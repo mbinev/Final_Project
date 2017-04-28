@@ -91,28 +91,30 @@ http://www.templatemo.com/free-website-templates/417-grill
 							</div>
 							<div class="postcode col-md-4">
 								Postcode <input type="text" name="postcode" id="postcode"
-									required />
+									min="1010" required />
 							</div>
 							<div class="phone col-md-4">
 								Phone(eg. 0878661551) <input type="text" name="phone" id="phone"
 									max="10" required />
 							</div>
 							<div class="bell col-md-4">
-								Bell(eg. Ivanovi) <input type="text" name="bell" id="bell" />
+								Bell(eg. Ivanovi) <input type="text" name="bell" id="bell" 
+								min="1"/>
 							</div>
 							<div class="floor col-md-4">
-								Floor <input type="number" name="floor" id="floor" required />
+								Floor <input type="number" name="floor" id="floor" min="1"
+								required />
 							</div>
 							<div class="building number col-md-4">
 								Building number <input type="number" name="building number"
-									id="building number" />
+									min="1" id="building number" />
 							</div>
 							<div class="apartament number col-md-4">
 								Apartament number <input type="number" name="apartament number"
-									id="apartament number" />
+									id="apartament number" min="1" />
 							</div>
 							<div class="entrance col-md-4">
-								Entrance <input type="text" name="entrance" id="entrance" />
+								Entrance <input type="text" name="entrance" id="entrance" min="1"/>
 							</div>
 						</div>
 
@@ -127,19 +129,21 @@ http://www.templatemo.com/free-website-templates/417-grill
 						<div class="row">
 							<div class="name col-md-4">
 								Name your address <input type="text" name="name" id="name"
+								min="4" max="20"
 									value="${sessionScope.address.name }" required />
 							</div>
 							<div class="street col-md-4">
 								Street <input type="text" name="street" id="street" 
-								value="${sessionScope.address.street }" required />
+								value="${sessionScope.address.street }" max="20" required />
 							</div>
 							<div class="subject col-md-4">
 								Address number(eg. 2A) <input type="text" name="address number"
-									id="address number" value="${sessionScope.address.addressNumber }" required />
+									id="address number" value="${sessionScope.address.addressNumber }" 
+									max="10" required />
 							</div>
 							<div class="postcode col-md-4">
 								Postcode <input type="text" name="postcode" id="postcode"
-									value="${sessionScope.address.postcode }" required />
+									value="${sessionScope.address.postcode }" min="4" max="10" required />
 							</div>
 							<div class="phone col-md-4">
 								Phone(eg. 0878661551) <input type="text" name="phone" id="phone"
@@ -151,19 +155,19 @@ http://www.templatemo.com/free-website-templates/417-grill
 							</div>
 							<div class="floor col-md-4">
 								Floor <input type="number" name="floor" id="floor" required
-								value="${sessionScope.address.floor }" />
+								min="1" max="20" value="${sessionScope.address.floor }" />
 							</div>
 							<div class="building number col-md-4">
 								Building number <input type="number" name="building number"
-									id="building number" value="${sessionScope.address.buildingNumber }"/>
+									min="1" id="building number" value="${sessionScope.address.buildingNumber }"/>
 							</div>
 							<div class="apartament number col-md-4">
 								Apartament number <input type="number" name="apartament number"
-									id="apartament number" value="${sessionScope.address.apartmentNumber }"/>
+									min="1" id="apartament number" value="${sessionScope.address.apartmentNumber }"/>
 							</div>
 							<div class="entrance col-md-4">
 								Entrance <input type="text" name="entrance" id="entrance" 
-								value="${sessionScope.address.entrance }"/>
+								min="1" value="${sessionScope.address.entrance }"/>
 							</div>
 						</div>
 

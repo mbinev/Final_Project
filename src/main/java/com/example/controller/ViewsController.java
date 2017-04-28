@@ -81,14 +81,20 @@ public class ViewsController {
 			long id = addressId;
 			session.setAttribute("addressID", id);
 		}
+		if(request.getSession().getAttribute("logged") == null) {
+			return "index";
+		}
 		return "addresses";
 	}
 
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
-		public String showProfile() {
-			return "profile";
+		public String showProfile(HttpServletRequest req) {
+		if(req.getSession().getAttribute("logged") == null) {
+			return "index";
 		}
-		
+	    return "profile";
+    }
+
 	@RequestMapping(value="register", method=RequestMethod.GET)
 	public String showRegister() {
 		return "register";

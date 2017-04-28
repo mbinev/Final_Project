@@ -90,13 +90,13 @@
 							<div class="password col-md-4">
 								Password(1Aa)
 								<input type="password" name="passwordFirst" id="passwordFirst"
-									required />
+									min="8" max="20" required />
 								<span id="passwordFirstError" class="help-block"></span>
 							</div>
 							<div class="confirm password col-md-4">
 								Confirm password
 								<input type="password" name="passwordSecond" id="passwordSecond"
-									required />
+									min="8" max="20" required />
 								<span id="passwordSecondError" class="help-block"></span>
 							</div>
 						</div>
