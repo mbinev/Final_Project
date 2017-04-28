@@ -69,14 +69,16 @@ http://www.templatemo.com/free-website-templates/417-grill
 				</div>
 			</div>
 			<div class="space50"></div>
-			
+
 			<div class="container">
-			<br>
-				<c:if test="${empty sessionScope.addresses || sessionScope.addresses == null}">
-					<h4>You have no added addresses. Go to address section to add an address.</h4>
+				<br>
+				<c:if
+					test="${empty sessionScope.addresses || sessionScope.addresses == null}">
+					<h4>You have no added addresses.</h4>
 				</c:if>
 
-				<c:if test="${sessionScope.addresses != null && not empty sessionScope.addresses}">
+				<c:if
+					test="${sessionScope.addresses != null && not empty sessionScope.addresses}">
 					<div id="myModal" class="modal hide fade" tabindex="-1"
 						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-header">
@@ -102,33 +104,37 @@ http://www.templatemo.com/free-website-templates/417-grill
 								</tr>
 							</thead>
 							<tbody>
-									<c:forEach items="${sessionScope.addresses}" var="address">
+								<c:forEach items="${sessionScope.addresses}" var="address">
 									<tr>
 										<td>${address.name}</td>
 										<td>${address.city}</td>
 										<td>${address.phone}</td>
 										<td>${address.street}</td>
 										<td>${address.addressNumber}</td>
-	
-										<td>
-											<a class="btn btn-info btn-sm refresh"
-											onclick="updateAddress(this,'${address.addressId}');">
-												<i class="fa fa-pencil-square-o"></i>
-											</a>
-										</td>
-	
+
+										<td><a class="btn btn-info btn-sm refresh"
+											onclick="updateAddress(this,'${address.addressId}');"> <i
+												class="fa fa-pencil-square-o"></i>
+										</a></td>
+
 										<td>
 											<button class="btn btn-danger btn-sm trash"
 												onclick="deleteAddress(this,'${address.addressId}');">
 												<i class="fa fa-trash-o"></i>
 											</button>
 										</td>
-								     </tr>
-									</c:forEach>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
 				</c:if>
+				<form action="addresses" method="get">
+					<div class="send">
+					    <h4>Click the button to add a new address</h4>
+						<button type="submit">Add</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -140,35 +146,34 @@ http://www.templatemo.com/free-website-templates/417-grill
 	<script src="js/vendor/jquery.gmap3.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/main.js"></script>
-	
+
 	<script type="text/javascript">
-	
-	function deleteAddress(btn, id) {
-		
-		if (!confirm('Are you sure?')) {
-			return;
+		function deleteAddress(btn, id) {
+
+			if (!confirm('Are you sure?')) {
+				return;
+			}
+
+			$.post("deleteAddress", {
+				id : id
+			}).then(function() {
+				//window.location.reload();
+			});
+			var $tr = $(btn).closest('tr');
+			$tr.hide(300, function() {
+				$tr.remove();
+			});
 		}
-		
-		$.post("deleteAddress", {
-			id : id
-		}).then(function() {
-			//window.location.reload();
-		});
-		var $tr = $(btn).closest('tr');
-		$tr.hide(300, function() {
-			$tr.remove();
-		});
-	}
-	
-	function updateAddress(btn, id) {
-		
-		$.get("update", {
-			id : id
-		}).then(function() {
-			window.location.assign("addresses")
-			
-		});
-	}
+
+		function updateAddress(btn, id) {
+
+			$.get("update", {
+				id : id
+			}).then(function() {
+				window.location.assign("addresses")
+
+			});
+		}
 	</script>
 
 </body>
