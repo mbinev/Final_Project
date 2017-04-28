@@ -128,7 +128,7 @@ body{
 						<td data-th="Price">${order.price}</td>
 						<td data-th="Quantity"><input data-id="${product.productId}"
 							data-price="${order.price}" value="1"
-							class="count form-control text-center" type="number" /></td>
+							class="count form-control text-center" type="number"  min="1"/></td>
 						<td data-th="Subtotal" class="all text-center"
 							id="total_price_${product.productId}">${order.price}</td>
 						<td class="actions" data-th="">
@@ -296,7 +296,7 @@ body{
 			return false;
 		});
 
-		$('.count').on('change keyup paste', function() {
+		$('.count').on('change keyup paste click', function() {
 
 			// Update individual price
 			var price = $(this).data('price') * this.value;
@@ -348,45 +348,45 @@ body{
 						23.30174301147461),
 				mapTypeId : 'roadmap'
 			});
-			markerData.forEach(function(data) {
-				var newmarker = new google.maps.Marker({
-					map : map,
-					position : {
-						lat : data.lat,
-						lng : data.lng
-					},
-					icon: 'images/logo_icon.png',
-					title : data.name
-				});
-				var infowindow = new google.maps.InfoWindow({
-			          content: data.info
-		        });
-				newmarker.addListener('click', function() {
-			          infowindow.open(map, this);
-			        });
-				jQuery("#selectlocation").append(
-						'<option value="'
-								+ [ data.name ].join('|')
-								+ '" data-cord="'
-								+ [ data.lat, data.lng, data.zoom ].join('|')
-								+ '">' + data.name + '</option>');
+			
+		 var json = (function () { 
+	            var json = null; 
+	                $.ajax({ 
+	                    'async': false, 
+	                    'global': false, 
+	                    'type': "POST",
+	                    'url': "markers", 
+	                    'dataType': "json", 
+	                    'success': function (data) {
+	                     json = data; } }); 
+	                return json;})();
+		 for (var i = 0, length = json.length; i < length; i++) {
+			  var data = json[i],
+			      latLng = new google.maps.LatLng(data.lat, data.lng); 
+			  
+			var newmarker = new google.maps.Marker({
+				map : map,
+				position : {
+					lat : data.lat,
+					lng : data.lng
+				},
+				icon: 'images/logo_icon.png',
+				title : data.name
 			});
+			var infowindow = new google.maps.InfoWindow({
+		          content: data.info
+	        });
+			newmarker.addListener('click', function() {
+		          infowindow.open(map, this);
+		          $('#selectlocation').val(this.title).trigger('change');
+		        });
+			jQuery("#selectlocation").append(
+					'<option value="'
+							+ [ data.name ].join('|')
+							+ '">' + data.name + '</option>');
+		};
 
-		}
-
-		jQuery(document)
-				.on(
-						'change',
-						'#selectlocation',
-						function() {
-							var latlngzoom = jQuery(this).getAttribute('data-cord').split('|');
-							var newzoom = 1 * latlngzoom[2], newlat = 1 * latlngzoom[0], newlng = 1 * latlngzoom[1];
-							map.setZoom(newzoom);
-							map.setCenter({
-								lat : newlat,
-								lng : newlng
-							});
-						});
+	}
 	</script>
 
 
