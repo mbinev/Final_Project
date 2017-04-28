@@ -143,7 +143,7 @@
     					document.getElementById("status").innerHTML="";
     				  	
     				  if(!responseData.error){
-    					  	document.getElementById("output").innerHTML="Successful registration!";
+    					  	document.getElementById("output").innerHTML="Successful registration! Please check your email for confirmation.";
     					  	document.getElementById("name").value="";	  		
     						document.getElementById("familyName").value="";
     						document.getElementById("email").value="";

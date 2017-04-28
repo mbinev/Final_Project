@@ -73,7 +73,8 @@ http://www.templatemo.com/free-website-templates/417-grill
                     </div>
                     
                     <div class="space50"></div>
-                    
+               </div>
+               </div>     
             <c:import url="footer.jsp" />
 
         <script src="js/vendor/jquery-1.11.0.min.js"></script>

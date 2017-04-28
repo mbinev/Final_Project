@@ -60,13 +60,8 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(HttpServletRequest request) throws AddressException, MessagingException, SQLException {
-		Scanner sc = null;
-		try {
-			sc = new Scanner(request.getInputStream());
-		} catch (IOException e) {
-			System.out.println("problem with register user " + e.getMessage());
-		}
+	public String register(HttpServletRequest request) throws AddressException, MessagingException, SQLException, IOException {
+		Scanner sc = new Scanner(request.getInputStream());
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -82,8 +77,8 @@ public class UserController {
 		String name = obj.get("name").getAsString();
 		String familyName = obj.get("familyName").getAsString();
 		String email = obj.get("email").getAsString();
-		String passwordFirst = obj.get("passwordFirst").getAsString();
-		String passwordSecond = obj.get("passwordSecond").getAsString();
+		String passwordFirst = obj.get("passwordFirst").getAsString().trim();
+		String passwordSecond = obj.get("passwordSecond").getAsString().trim();
 
 		boolean NameisNullOrEmpty = nullOrEmpty(name);
 		boolean FamilyIsNullOrEmpty = nullOrEmpty(familyName);
@@ -107,7 +102,6 @@ public class UserController {
 				
 			}
 			if(!validEmail){
-//				errorsArray.add(new JsonPrimitive("priceError"));
 				if(!UserDAO.getInstance().isEmailFree(email)){
 					JsonObject error = new JsonObject();
 					error.addProperty("errorPlace", "emailError");
@@ -123,7 +117,6 @@ public class UserController {
 				
 			}
 			if(!validPassword){
-//				errorsArray.add(new JsonPrimitive("brandError"));	
 				JsonObject error = new JsonObject();
 				error.addProperty("errorPlace", "passwordFirstError");
 				error.addProperty("errorMessege", "Invalid Password");
@@ -154,15 +147,17 @@ public class UserController {
 		System.out.println(respJSON.toString());
 		return respJSON.toString();
 		
-		
 	}
-	@ResponseBody
+	
+	
 	@RequestMapping(value = "/confirmRegisterWithCode", method = RequestMethod.POST)
-	public String confirmRegister(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) throws SQLException {
-		String password = req.getParameter("password");
+	public String confirmRegister(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) 
+			throws SQLException {
+		String password = req.getParameter("password").trim();
 		String email = req.getParameter("email");
 		String code = req.getParameter("code");
 		User user = null;
+		String jsp = "";
 
 		if (UserDAO.unconfirmedUsers.containsKey(email)) {
 			user = UserDAO.unconfirmedUsers.get(email);
@@ -173,27 +168,27 @@ public class UserController {
 				UserDAO.getInstance().addUser(user);
 				UserDAO.unconfirmedUsers.remove(email);
 				prepareLogin(session, response, user);
-				return "index";
+				jsp = "index";
 			} else {
 				session.setAttribute("incorrectData", "Incorrect data, please try again.");
-				return "confirm-register";
+				jsp = "confirm-register";
 			}
 		} else {
-			return "error500";
+			jsp = "error500";
 		}
+		return jsp;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginUser(HttpServletRequest req, HttpSession session, HttpServletResponse response)
-			throws SQLException, NoSuchAlgorithmException {
-		Scanner sc = null;
-		try {
-			sc = new Scanner(req.getInputStream());
-		} catch (IOException e) {
-			System.out.println("problem with register user " + e.getMessage());
-		}
-		
+			throws SQLException, NoSuchAlgorithmException, IOException {
+		String url = req.getHeader("Referer");
+		int index = url.lastIndexOf('/') + 1;
+		url = url.substring(index);
+		session.setAttribute("url", url);
+		Scanner	sc = new Scanner(req.getInputStream());
+			
 		StringBuilder sb = new StringBuilder();
 		
 		while(sc.hasNextLine()){
@@ -230,10 +225,6 @@ public class UserController {
 		response.setHeader("Pragma", "No-cache");
 		response.setDateHeader("Expires", 0);
 		response.setHeader("Cache-control", "no-cache");
-	}
-	
-	private boolean nullOrEmpty(String firstName) {
-		return firstName == null  || firstName.isEmpty();
 	}
 
 	@RequestMapping(value = "/facebookLogin", method = RequestMethod.POST)
@@ -362,6 +353,10 @@ public class UserController {
 		// characters, no whitespaces
 		Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
 		return matcher.find();
+	}
+	
+	private boolean nullOrEmpty(String firstName) {
+		return firstName == null  || firstName.isEmpty();
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST)

@@ -52,7 +52,6 @@ http://www.templatemo.com/free-website-templates/417-grill
                         <div class="col-md-12">
                             <div class="heading-content">
                                 <h2>Our Products</h2>
-                                <span><a href="index.html">Home</a>/ Products</span>
                             </div>
                         </div>
                     </div>
