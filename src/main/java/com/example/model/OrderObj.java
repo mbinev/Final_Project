@@ -8,6 +8,7 @@ public class OrderObj {
 	private String description;
 	private double price;
 	private ArrayList<String> subproducts;
+	private int quantity;
 	
 	public Product getProduct() {
 		return product;
@@ -42,6 +43,14 @@ public class OrderObj {
 	
 	public void setSubproducts(ArrayList<String> subproducts) {
 		this.subproducts = subproducts;
+	}
+	
+	public int getQuantity() {
+		return quantity;
+	}
+	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	

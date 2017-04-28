@@ -127,7 +127,7 @@ body{
 						</td>
 						<td data-th="Price">${order.price}</td>
 						<td data-th="Quantity"><input data-id="${product.productId}"
-							data-price="${order.price}" value="1"
+							data-price="${order.price}" value="${order.quantity}"
 							class="count form-control text-center" type="number"  min="1"/></td>
 						<td data-th="Subtotal" class="all text-center"
 							id="total_price_${product.productId}">${order.price}</td>
@@ -302,8 +302,9 @@ body{
 
 			// Update individual price
 			var price = $(this).data('price') * this.value;
-			$('#total_price_' + $(this).data('id')).text(price.toFixed(2));
-
+			var obj = $(this).closest('tr').find('.order').val();
+			var number = this.value;
+			$(this).closest('tr').find('#total_price_' + $(this).data('id')).text(price.toFixed(2)) ;
 			// Update total
 			var total = 0;
 			var count = 0;
@@ -316,6 +317,13 @@ body{
 			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
 			$("#productCount").text(count + ' items')
 			$("#totalPrices").text('$ ' + total.toFixed(2));
+			$.post("changeAttributes", {
+				name : obj,
+				numbers : number,
+				totalPrice : total,
+				productCount : count
+			});
+			return false;
 		}).trigger('keyup');
 		function resize() {
 			setTimeout(resize, 50);

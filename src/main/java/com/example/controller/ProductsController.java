@@ -99,6 +99,7 @@ public class ProductsController {
 		obj.setProduct(product);
 		obj.setPrice(Double.parseDouble(productPrice));
 		obj.setSubproducts(objSubs);
+		obj.setQuantity(1);
 		p.add(obj);
 		double price = (double) session.getAttribute("totalPrice");
 		price = price + Double.parseDouble(productPrice);
@@ -129,6 +130,31 @@ public class ProductsController {
 			session.setAttribute("totalPrice", 0.0);
 		}
 
+	}
+	
+	@RequestMapping(value = "/changeAttributes", method = RequestMethod.POST)
+	public void changeAttributes(HttpSession session, HttpServletRequest request) {
+		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
+		String obj = request.getParameter("name");
+		System.out.println(obj);
+		System.out.println(request.getParameter("numbers"));
+		int numbers = Integer.parseInt(request.getParameter("numbers"));
+		OrderObj order = null;
+		for (OrderObj orderObj : products) {
+			if (orderObj.toString().equals(obj)) {
+				order = orderObj;
+				break;
+			}
+		}
+		System.out.println(order);
+		System.out.println(products);
+		order.setQuantity(numbers);
+		String totalPrice = request.getParameter("totalPrice");
+		String productCount = request.getParameter("productCount");
+		double price = Double.parseDouble(totalPrice);
+		int count = Integer.parseInt(productCount);
+		session.setAttribute("totalPrice", price);
+		session.setAttribute("productsNumber", count);
 	}
 	
 	public double round(double value, int places) {
@@ -192,7 +218,9 @@ public class ProductsController {
 		obj.setProduct(product);
 		obj.setPrice(productPrice);
 		obj.setSubproducts(objSubs);
+		obj.setQuantity(1);
 		p.add(obj);
+		System.out.println(p);
 		double price = (double) session.getAttribute("totalPrice");
 		price = price + productPrice;
 		session.setAttribute("totalPrice", round(price, 2));

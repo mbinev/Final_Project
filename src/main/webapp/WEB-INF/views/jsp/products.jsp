@@ -102,7 +102,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     <img id="img" src="${product.img}" alt="" />
                                     <div class="hover">
                                         <div class="hover-iner">
-                                            <a class="fancybox" href="products?product=${product.name}&category=${product.category}"><img src="img/open-icon.png" alt="" /></a>
+                                            <a class="fancybox" href="directBuy?product=${product.name}&category=${product.category}"><img src="img/open-icon.png" alt="" /></a>
                                             <span>${product.sub}</span>
                                         </div>
                                     </div>
