@@ -288,7 +288,9 @@ body{
 			var total = 0;
 			$('.all').each(function() {
 				total += Number($(this).text());
-				count += 1;
+			});
+			$('.count').each(function() {
+				count += Number(this.value);
 			});
 			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
 			$("#productCount").text(count + ' items')
@@ -304,10 +306,16 @@ body{
 
 			// Update total
 			var total = 0;
+			var count = 0;
 			$('.all').each(function() {
 				total += Number($(this).text());
 			});
+			$('.count').each(function() {
+				count += Number(this.value);
+			});
 			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
+			$("#productCount").text(count + ' items')
+			$("#totalPrices").text('$ ' + total.toFixed(2));
 		}).trigger('keyup');
 		function resize() {
 			setTimeout(resize, 50);
