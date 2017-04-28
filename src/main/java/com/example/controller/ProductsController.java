@@ -64,7 +64,7 @@ public class ProductsController {
 	}
 
 	@RequestMapping(value = "/products", method = RequestMethod.POST)
-	public String products(Model model, HttpServletRequest request, HttpSession session) {
+	public String products(HttpServletRequest request, HttpSession session) {
 		String[] pro = request.getParameterValues("subproduct");
 		String productPrice = request.getParameter("productPrice");
 		Product product = (Product) session.getAttribute("product");
@@ -131,12 +131,75 @@ public class ProductsController {
 
 	}
 	
-	public static double round(double value, int places) {
+	public double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 
 	    BigDecimal bd = new BigDecimal(value);
 	    bd = bd.setScale(places, RoundingMode.HALF_UP);
 	    return bd.doubleValue();
+	}
+	
+	@RequestMapping(value = "/directBuy", method = RequestMethod.GET)
+	public String directBuy(HttpServletRequest request) throws SQLException {
+		String productName = (String) request.getParameter("product");
+		String category = (String) request.getParameter("category");
+		HttpSession session = request.getSession();
+		Double productPrice = null;
+		HashMap<String, ArrayList<Product>> products = ProductDAO.getInstance().getAllProducts();
+		Product product = null;
+		ArrayList<Product> items = products.get(category);
+		for (Product p : items) {
+			if (p.getName().equals(productName)) {
+				product = p;
+				productPrice = p.getPrice();
+				break;
+			}
+		}
+		ArrayList<String> subproducts = new ArrayList<>();
+		if(category.equals("Pizzaz")){			
+			subproducts.add("Medium (6 Slices)");
+			subproducts.add("Hand Tossed");
+		}
+		for (String product2 : product.getSubproducts()) {
+			request.setAttribute("subproduct", product2);
+			productPrice += 1.25;
+		}
+		if (!product.getSubproducts().isEmpty()) {
+			for (String string : product.getSubproducts()) {
+				subproducts.add(string);
+			}
+		}
+		ArrayList<String> objSubs = new ArrayList<>();
+		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
+		String description = new String();
+		for (String strg : product.getSubproducts()) {
+			if (!subproducts.contains(strg)) {
+				description = description.concat(" -" + strg);
+				subproducts.remove(strg);
+			}
+		}
+		if (!subproducts.isEmpty()) {
+			objSubs.addAll(subproducts);
+		}
+		for (String strg : subproducts) {
+			if (strg != null && !product.getSubproducts().contains(strg)) {
+				description = description.concat(" +" + strg);
+				objSubs.add(strg);
+			}
+		}
+		OrderObj obj = new OrderObj();
+		obj.setDescription(description);
+		obj.setProduct(product);
+		obj.setPrice(productPrice);
+		obj.setSubproducts(objSubs);
+		p.add(obj);
+		double price = (double) session.getAttribute("totalPrice");
+		price = price + productPrice;
+		session.setAttribute("totalPrice", round(price, 2));
+		session.setAttribute("products", p);
+		session.setAttribute(product.toString(), description);
+		session.setAttribute("productsNumber", p.size());
+		return "cart";
 	}
 
 }
