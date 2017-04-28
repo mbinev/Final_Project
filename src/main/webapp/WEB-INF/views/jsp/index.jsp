@@ -22,7 +22,7 @@
 
         <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
         <style type="text/css">
-        #img { height: 600px; width: 1900px; overflow: hidden; }
+        #img { height: 100%; width: 100%; overflow: hidden; }
         </style>
     </head>
     <body>

@@ -162,7 +162,7 @@
   					document.getElementById("status").innerHTML="";
   				  	
   				  if(!responseData.error){
-  						window.location.replace("index");
+  						window.location.replace("${sessionScope.url}");
   				  }
   				  else{
   					  var errors = responseData.errors;
