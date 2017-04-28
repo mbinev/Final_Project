@@ -239,6 +239,7 @@ public class UserController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public String logout(HttpSession session, ServletResponse response) {
+		session.setAttribute("logged", false);
 		session.invalidate();
 		return "index";
 	}

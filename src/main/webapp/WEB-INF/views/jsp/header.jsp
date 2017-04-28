@@ -29,6 +29,7 @@
 <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
 </head>
 <body>
+<input type="hidden" id="refresh" value="no">
 	<header>
 		<c:if test="${sessionScope.logged}">
 			<div id="top-header">
@@ -65,7 +66,7 @@
 								<fmt:formatNumber var="i" type="number" minFractionDigits="2"
 									maxFractionDigits="2" value="${sessionScope.totalPrice}" />
 								(<a href="cart" id="productCount">${sessionScope.productsNumber}
-									items</a>) in your cart (<a href="cart" id=""> <c:out
+									items</a>) in your cart (<a href="cart" id="totalPrices"> <c:out
 										value="${i}" />
 								</a>)
 							</div>
@@ -145,6 +146,11 @@
 		</div>
 	</header>
 	<script>
+		$(document).ready(function(e) {
+		    var $input = $('#refresh');
+	
+		    $input.val() == 'yes' ? location.reload(true) : $input.val('yes');
+		});
 		$('#loginbtn').click(function() {
     		$.ajax({
     			  url: "login",
@@ -162,7 +168,7 @@
   					document.getElementById("status").innerHTML="";
   				  	
   				  if(!responseData.error){
-  						window.location.replace("${sessionScope.url}");
+  						window.location.replace("index");
   				  }
   				  else{
   					  var errors = responseData.errors;
