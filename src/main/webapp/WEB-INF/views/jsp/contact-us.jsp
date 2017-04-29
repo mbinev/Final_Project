@@ -63,7 +63,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div id="googleMap" style="height:340px;"></div>
+                            <div id="googleMap" style="height:600px;"></div>
                         </div>
                     </div>     
                 </div>
@@ -78,61 +78,51 @@ http://www.templatemo.com/free-website-templates/417-grill
         <script src="js/main.js"></script>
 	<script>
       var map;
-        var markerData = [ {
-			lat : 42.6996424670517,
-			lng : 23.31228017807007,
-			zoom : 16,
-			name : "Opulchenska",
-			info : "<h4>Pizza</h4> bul. Todor Alexandrov </br>1303 </br>Sofia </br>Bulgaria"
-		}, {
-			lat : 42.692671891757854,
-			lng : 23.310391902923584,
-			zoom : 16,
-			name : "Ruski pametnik",
-			info : "<h4>Pizza</h4> Russian Monument </br>1606 </br>Sofia </br>Bulgaria"
-		}, {
-			lat : 42.70131402715675,
-			lng : 23.322772979736328,
-			zoom : 16,
-			name : "Luvov Most",
-			info : "<h4>Pizza</h4> bul. Knyaginya Maria Luiza 45 </br>1202 </br>Sofia </br>Bulgaria"
-		}, ];
-      function initialize() {
-        map = new google.maps.Map(document.getElementById('googleMap'), {
-          zoom: 15,
-          center: new google.maps.LatLng(42.69752929836637, 23.32174301147461),
-          mapTypeId: 'roadmap'
-        });
-
-        var iconBase = 'images/';
-        var icons = {
-          info: {
-            icon: iconBase + 'logo_icon.png'
-          }
-        };
-        markerData.forEach(function(data) {
+      var json = null; 
+		function initialize() {
+			map = new google.maps.Map(document.getElementById('googleMap'), {
+				zoom : 14,
+				center : new google.maps.LatLng(42.69652929836637,
+						23.31474301147461),
+				mapTypeId : 'roadmap'
+			});
+			
+		 var json = (function () { 
+	                $.ajax({ 
+	                    'async': false, 
+	                    'global': false, 
+	                    'type': "POST",
+	                    'url': "markers", 
+	                    'dataType': "json", 
+	                    'success': function (data) {
+	                     json = data; } }); 
+	                return json;})();
+		 for (var i = 0, length = json.length; i < length; i++) {
+			  var data = json[i]
 			var newmarker = new google.maps.Marker({
 				map : map,
 				position : {
-					lat : data.lat,
-					lng : data.lng
+					lat : json[i].lat,
+					lng : json[i].lng
 				},
 				icon: 'images/logo_icon.png',
 				title : data.name
 			});
-			var infowindow = new google.maps.InfoWindow({
-		          content: data.info
-	        });
-			newmarker.addListener('click', function() {
-		          infowindow.open(map, this);
-		        });
-		});
+			var infowindow = new google.maps.InfoWindow();
+			bindInfoWindow(newmarker, map, infowindow, data.info);
+			
+		};
 
-
-		
-      }
-    </script>
-        <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByprgM_TZvFUC14rIRXrL00nxA1RQXWBw&callback=initialize" type="text/javascript"></script>                
+	}
+	function bindInfoWindow(marker, map, infowindow, html) {
+	    marker.addListener('click', function() {
+	        infowindow.setContent(html);
+	        infowindow.open(map, this);
+	        $('#selectlocation').val(this.title).trigger('change');
+	    });
+	}
+	</script>
+	
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByprgM_TZvFUC14rIRXrL00nxA1RQXWBw&callback=initialize"type="text/javascript"></script>            
     </body>
 </html>
