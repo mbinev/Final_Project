@@ -281,7 +281,9 @@ body{
 		$('.trash').on('click', function() {
 			var obj = $(this).closest('tr').find('.order').val();
 			$.post("deleteOrderObj", {
-				name : obj
+				name : obj,
+				totalPrice : total,
+				productCount : count
 			});
 			$(this).closest('tr').remove();
 			var count = 0;
@@ -295,24 +297,34 @@ body{
 			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
 			$("#productCount").text(count + ' items')
 			$("#totalPrices").text('$ ' + total.toFixed(2));
+			$('.count').trigger('click');
 			return false;
 		});
-
 		$('.count').on('change keyup paste click', function() {
 
 			// Update individual price
 			var price = $(this).data('price') * this.value;
+			if(price <= 0){
+				price = $(this).data('price');
+			}
 			var obj = $(this).closest('tr').find('.order').val();
 			var number = this.value;
 			$(this).closest('tr').find('#total_price_' + $(this).data('id')).text(price.toFixed(2)) ;
 			// Update total
 			var total = 0;
 			var count = 0;
-			$('.all').each(function() {
-				total += Number($(this).text());
-			});
 			$('.count').each(function() {
+				if(this.value < 1){
+					this.value = 1;
+				}
 				count += Number(this.value);
+			});
+			$('.all').each(function() {
+				if(Number($(this).text()) < 1){				
+					total -= Number($(this).text());
+				}else{
+					total += Number($(this).text());
+				}
 			});
 			$('.total_price_basket').text('TOTAL: ' + total.toFixed(2));
 			$("#productCount").text(count + ' items')
@@ -338,25 +350,8 @@ body{
 	<script src="js/main.js"></script>
 	<script>
 		var map;
-		var markerData = [ {
-			lat : 42.6996424670517,
-			lng : 23.31228017807007,
-			zoom : 16,
-			name : "Opulchenska",
-			info : "<h4>Pizza</h4> bul. Todor Alexandrov </br>1303 </br>Sofia </br>Bulgaria"
-		}, {
-			lat : 42.692671891757854,
-			lng : 23.310391902923584,
-			zoom : 16,
-			name : "Russian Monument",
-			info : "<h4>Pizza</h4> Russian Monument </br>1606 </br>Sofia </br>Bulgaria"
-		}, {
-			lat : 42.70131402715675,
-			lng : 23.322772979736328,
-			zoom : 16,
-			name : "Luvov most",
-			info : "<h4>Pizza</h4> bul. Knyaginya Maria Luiza 45 </br>1202 </br>Sofia </br>Bulgaria"
-		}, ];
+		
+	    var json = null; 
 		function initialize() {
 			map = new google.maps.Map(document.getElementById('map-canvas'), {
 				zoom : 14,
@@ -366,7 +361,6 @@ body{
 			});
 			
 		 var json = (function () { 
-	            var json = null; 
 	                $.ajax({ 
 	                    'async': false, 
 	                    'global': false, 
@@ -377,32 +371,32 @@ body{
 	                     json = data; } }); 
 	                return json;})();
 		 for (var i = 0, length = json.length; i < length; i++) {
-			  var data = json[i],
-			      latLng = new google.maps.LatLng(data.lat, data.lng); 
-			  
+			  var data = json[i]
 			var newmarker = new google.maps.Marker({
 				map : map,
 				position : {
-					lat : data.lat,
-					lng : data.lng
+					lat : json[i].lat,
+					lng : json[i].lng
 				},
 				icon: 'images/logo_icon.png',
 				title : data.name
 			});
-			var infowindow = new google.maps.InfoWindow({
-		          content: data.info
-	        });
-			newmarker.addListener('click', function() {
-		          infowindow.open(map, this);
-		          $('#selectlocation').val(this.title).trigger('change');
-		        });
+			var infowindow = new google.maps.InfoWindow();
+			bindInfoWindow(newmarker, map, infowindow, data.info);
 			jQuery("#selectlocation").append(
 					'<option value="'
-							+ [ data.name ].join('|')
-							+ '">' + data.name + '</option>');
+							+ [ json[i].name ].join('|')
+							+ '">' + json[i].name + '</option>');
 		};
 
 	}
+	function bindInfoWindow(marker, map, infowindow, html) {
+	    marker.addListener('click', function() {
+	        infowindow.setContent(html);
+	        infowindow.open(map, this);
+	        $('#selectlocation').val(this.title).trigger('change');
+	    });
+	} 
 	</script>
 
 
