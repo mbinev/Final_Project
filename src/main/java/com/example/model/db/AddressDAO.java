@@ -5,16 +5,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.model.Address;
+import com.example.model.ShopAddress;
 import com.example.model.User;
 
 public class AddressDAO implements IDao {
 
 	private static AddressDAO instance;
+	private static HashMap<Long, ShopAddress> shops; // AddressId -> ShopAddress
 
 	private AddressDAO() {
+		shops = new HashMap<Long, ShopAddress>();
 	}
 
 	public static synchronized AddressDAO getInstance() {
@@ -71,19 +75,29 @@ public class AddressDAO implements IDao {
 		return list;
 	}
 	
-	public ArrayList<Address> shopAddresses() throws SQLException {
-		ArrayList<Address> list = new ArrayList<>();
-		String sql = "SELECT address_id, name, street, address_number, post_code, city, mobile_number FROM addresses WHERE user_id IS NULL";
-		PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
-		ResultSet rs = st.executeQuery();
-		while (rs.next()) {
-			Address address = new Address(rs.getString("name"), rs.getString("street"), rs.getString("address_number"),
-					rs.getString("post_code"), rs.getString("mobile_number"));
-			address.setCity(rs.getString("city"));
-			address.setAddressId(rs.getLong("address_id"));
-			list.add(address);
+	public HashMap<Long, ShopAddress> shopAddresses() throws SQLException {
+		if(shops.isEmpty()){			
+			String sql = "SELECT address_id, name, street, address_number, post_code, city, mobile_number FROM addresses WHERE user_id IS NULL";
+			PreparedStatement st = DBManager.getInstance().getConnection().prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				ShopAddress shop = new ShopAddress(rs.getString("name"), rs.getString("street"), rs.getString("address_number"),
+						rs.getString("post_code"), rs.getString("mobile_number"));
+				shop.setCity(rs.getString("city"));
+				shop.setAddressId(rs.getLong("address_id"));
+				shops.put(shop.getAddressId(), shop);
+			}
+			String sql2 = "SELECT address_id, lat, lng, info FROM shop_has_info";
+			PreparedStatement st2 = DBManager.getInstance().getConnection().prepareStatement(sql2);
+			ResultSet rs2 = st2.executeQuery();
+			while (rs2.next()) {
+				ShopAddress shop = shops.get(rs2.getLong("address_id"));
+				shop.setLat(rs2.getDouble("lat"));
+				shop.setLng(rs2.getDouble("lng"));
+				shop.setInfo(rs2.getString("info"));
+			}
 		}
-		return list;
+		return shops;
 	}
 
 	public void deleteAddress(long id) throws SQLException {

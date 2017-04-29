@@ -93,6 +93,11 @@ http://www.templatemo.com/free-website-templates/417-grill
   color: #fff; }
  
 #img { height: 400px; width: 400px; overflow: hidden; }
+.checkbox-grid li {
+    display: block;
+    float: left;
+    width: 25%;
+}
 </style>
 </head>
 <body>
@@ -146,15 +151,18 @@ http://www.templatemo.com/free-website-templates/417-grill
 											</h3>
 										</div>
 										<c:if test="${product.category eq 'Pizzaz'}">
-											<form action="products" method="post">
+											<form action="products" method="post" class="form-inline">
 												<table>
 													<tr>
 														<th><div class="form-group">
 														 <label class="col-md-2 control-label" for="crust"> </label>
 														 <div class="col-md-12">
+														     		 <label class="control-label" for="crustSelect">
+											                            Crusts: 
+											                        </label>
 														    <select id="crustSelect" name="crust" class="form-control price-option">
-														      <c:forEach var="crust" items="${crusts}">
-																	<option value="${crust}" data-price="${crust.price}">${crust}</option>
+														      <c:forEach var="crust" items="${Crusts}">
+																	<option  value="${crust}" data-price="${crust.price}">${crust}</option>
 																</c:forEach>
 														    </select>
 														  </div>
@@ -162,9 +170,12 @@ http://www.templatemo.com/free-website-templates/417-grill
 														<th><div class="form-group">
 														 <label class="col-md-2 control-label" for="size"> </label>
 														 <div class="col-md-12">
+														      		<label for="sizeSelect">
+											                            Sizes: 
+											                        </label>
 														    <select id="sizeSelect" name="size" class="form-control price-option">
-														      <c:forEach var="size" items="${sizes}">
-																	<option value="${size}" data-price="${size.price}">${size}</option>
+														      <c:forEach var="size" items="${Sizes}">
+																	<option  value="${size}" data-price="${size.price}">${size}</option>
 																</c:forEach>
 														    </select>
 														  </div>
@@ -172,29 +183,32 @@ http://www.templatemo.com/free-website-templates/417-grill
 													</tr>
 												</table>
 												<br>
-												<c:forEach var="topping" items="${toppings}">
+												<c:forEach var="topping" items="${Toppings}">
 													<c:set var="contains" value="false" />
 													<c:forEach var="sub" items="${product.subproducts}">
 														<c:if test="${sub eq topping.name }">
 															<c:set var="contains" value="true" />
 														</c:if>
 													</c:forEach>
-													<c:if test="${contains eq true }">
+													<ul class="checkbox-grid">
+													<li></li>
+													<li><c:if test="${contains eq true }">
 														<div class="checkbox checkbox-warning ">
 									                        <input id="${topping.name}" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}" checked>
 									                        <label for="${topping.name}">
 									                            ${topping.name}
 									                        </label>
 									                    </div>
-													</c:if>
-													<c:if test="${contains eq false }">
+													</c:if></li>
+													<li><c:if test="${contains eq false }">
 														<div class="checkbox checkbox-warning ">
 									                        <input id="${topping.name}" type="checkbox" name="subproduct" data-price="${topping.price}" value="${topping.name}">
 									                        <label for="${topping.name}">
 									                            ${topping.name}
 									                        </label>
 									                    </div>
-													</c:if>
+													</c:if></li>
+													</ul>
 												</c:forEach>
 												<input id="productPrice" type="hidden" name="productPrice" value="${product.price}">
 												<c:set var="product" value="${product}" scope="session" />

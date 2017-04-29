@@ -15,12 +15,13 @@ import com.example.model.Product;
 
 public class ProductDAO implements IDao{
 	
-private static ProductDAO instance;
-	private static final String[] CATEGORIES = {"Pizzaz", "Drinks", "Salads", "Desserts", "Dips"};
-	private static HashMap<String, ArrayList<Product>> products; //category -> products
+	private static ProductDAO instance;
+	private static HashMap<String, HashMap<String, Product>> products; //category -> product_name, products
+	private static HashMap<String, HashMap<String, Product>> subproducts; //category -> subproduct_name, subproducts
 
 	private ProductDAO() {
-		products = new HashMap<String, ArrayList<Product>>();
+		products = new HashMap<String, HashMap<String, Product>>();
+		subproducts = new HashMap<String, HashMap<String, Product>>();
 	}
 	
 	public static synchronized ProductDAO getInstance(){
@@ -41,7 +42,8 @@ private static ProductDAO instance;
 		p.setProductId(rs.getLong(1));
 	}
 	
-	public HashMap<String, ArrayList<Product>> getAllProducts() throws SQLException{
+	public HashMap<String, HashMap<String, Product>> getAllProducts() throws SQLException{
+		System.out.println(products);
 		if(products.isEmpty()){
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement st1 = null;
@@ -54,7 +56,7 @@ private static ProductDAO instance;
 				st1 = con.prepareStatement(sql1);
 				ResultSet rs1 = st1.executeQuery();
 				while(rs1.next()){
-					products.put(rs1.getString("category"), new ArrayList<Product>());
+					products.put(rs1.getString("category"), new HashMap<String, Product>());
 				}
 				String sql2 = "SELECT product_id, name, price, category, img_path FROM products";
 				st2 = con.prepareStatement(sql2);
@@ -63,8 +65,8 @@ private static ProductDAO instance;
 					Product p = new Product(rs2.getString("name"), rs2.getDouble("price"), rs2.getString("category"));
 					p.setProductId(rs2.getLong("product_id"));
 					p.setImg(rs2.getString("img_path"));
-					products.get(p.getCategory()).add(p);
-					String sql3 = "SELECT name FROM products WHERE product_id IN (SELECT sub_product_id FROM product_has_products WHERE product_id = "+p.getProductId()+" AND order_id IS NULL)";
+					products.get(p.getCategory()).put(p.getName(), p);
+					String sql3 = "SELECT name FROM subproducts WHERE subproduct_id IN (SELECT sub_product_id FROM product_has_subproducts WHERE product_id = "+p.getProductId()+");	";
 					st3 = con.prepareStatement(sql3);
 					ResultSet rs3 = st3.executeQuery();
 					while(rs3.next()){
@@ -75,6 +77,48 @@ private static ProductDAO instance;
 				System.err.print("Problem with extracting products");
 				System.out.println(e.getMessage());
 				products = null;
+				throw e;
+			} finally {
+				if (st1 != null) {
+		            st1.close();
+		        }
+		        if (st2 != null) {
+		            st2.close();
+		        }
+		        if (st3 != null) {
+		            st3.close();
+		        }
+			}
+		}
+		return products;
+	}
+	
+	public HashMap<String, HashMap<String, Product>> getAllSubproducts() throws SQLException{
+		System.out.println(subproducts);
+		if(subproducts.isEmpty()){
+			Connection con = DBManager.getInstance().getConnection();
+			PreparedStatement st1 = null;
+			PreparedStatement st2 = null;
+			try {
+				String sql1 = "SELECT DISTINCT category FROM subproducts";
+				st1 = con.prepareStatement(sql1);
+				ResultSet rs1 = st1.executeQuery();
+				while(rs1.next()){
+					subproducts.put(rs1.getString("category"), new HashMap<String, Product>());
+				}
+				String sql2 = "SELECT subproduct_id, name, price, category FROM subproducts";
+				st2 = con.prepareStatement(sql2);
+				ResultSet rs2 = st2.executeQuery();
+				while(rs2.next()){
+					Product p = new Product(rs2.getString("name"), rs2.getDouble("price"), rs2.getString("category"));
+					p.setProductId(rs2.getLong("subproduct_id"));
+					subproducts.get(p.getCategory()).put(p.getName(), p);
+				}
+			} catch (SQLException e) {
+				System.err.print("Problem with extracting subproducts");
+				System.out.println(e.getMessage());
+				subproducts = null;
+				throw e;
 			} finally {
 				if (st1 != null) {
 		            st1.close();
@@ -84,7 +128,8 @@ private static ProductDAO instance;
 		        }
 			}
 		}
-		return products;
+		System.out.println("subproducts " + subproducts);
+		return subproducts;
 	}
 
 	@Override
@@ -101,20 +146,5 @@ private static ProductDAO instance;
 	@Override
 	public String getPrimaryKeyName() {
 		return "product_id";
-	}
-
-	public HashMap<String, ArrayList<Product>> getAllItems() throws SQLException {
-		HashMap<String, ArrayList<Product>> allProducts = getAllProducts();
-		HashMap<String, ArrayList<Product>> items = new HashMap<String, ArrayList<Product>>();
-		ArrayList<String> catalogueCategories = new ArrayList<>();
-		for (String string : CATEGORIES) {
-			catalogueCategories.add(string);
-		}
-		for (Entry<String, ArrayList<Product>> entry : allProducts.entrySet()) {
-			if(catalogueCategories.contains(entry.getKey())){
-				items.put(entry.getKey(), entry.getValue());
-			}
-		}
-		return items;
 	}
 }

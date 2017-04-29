@@ -2,7 +2,7 @@ package com.example.model;
 
 import java.util.ArrayList;
 
-public class Product {
+public class Product implements Comparable<Product>{
 
 	private long productId;
 	private String name;
@@ -77,6 +77,11 @@ public class Product {
 		}
 		sub = sb.toString();
 		return sub;
+	}
+
+	@Override
+	public int compareTo(Product o) {
+		return this.getProductId() > o.getProductId() ? 1 : this.getProductId() < o.getProductId() ? -1 : 0;
 	}
 }
 

@@ -375,7 +375,7 @@ public class UserController {
 			}
 		}
 		if(address == null){
-			ArrayList<Address> shopAddresses = AddressDAO.getInstance().shopAddresses();
+			ArrayList<Address> shopAddresses = new ArrayList<Address>(AddressDAO.getInstance().shopAddresses().values());
 			for (Address adr : shopAddresses) {
 				if(adr.getName().equals(addressName)){
 					address = adr;
@@ -389,7 +389,7 @@ public class UserController {
 		Order order = new Order(user.getUserId(), LocalDateTime.now());
 		order.setAddressId(address.getAddressId());
 		order.setProducts(products);
-		OrderDAO.getInstance().makeOrder(order, ProductDAO.getInstance().getAllProducts());
+		OrderDAO.getInstance().makeOrder(order, ProductDAO.getInstance().getAllSubproducts());
 		session.setAttribute("productsNumber", 0);
 		session.setAttribute("totalPrice", 0.0);
 		session.setAttribute("products", new ArrayList<OrderObj>());

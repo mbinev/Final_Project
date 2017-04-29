@@ -4,22 +4,23 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthStyle;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.example.model.OrderObj;
 import com.example.model.Product;
@@ -30,15 +31,14 @@ public class ProductsController {
 
 	@RequestMapping(value = "/catalog", method = RequestMethod.GET)
 	public String products(Model model) throws SQLException {
-		List<String> categories = null;
-		List<Product> products = new ArrayList<>();
-		HashMap<String, ArrayList<Product>> items = ProductDAO.getInstance().getAllItems();
-		categories = new ArrayList<String>(items.keySet());
-		for (String category : categories) {
-			products.addAll(items.get(category));
+		ArrayList<Product> products = new ArrayList<Product>();
+		HashMap<String, HashMap<String, Product>> items = ProductDAO.getInstance().getAllProducts();
+		for (Entry<String, HashMap<String, Product>> entry : items.entrySet()) {
+			products.addAll(entry.getValue().values());
 		}
+		Collections.sort(products);	
 		model.addAttribute("products", products);
-		model.addAttribute("categories", categories);
+		model.addAttribute("categories", new ArrayList<>(items.keySet()));
 		return "products";
 	}
 
@@ -46,20 +46,15 @@ public class ProductsController {
 	public String products(HttpServletRequest request, Model model) throws SQLException {
 		String productName = (String) request.getParameter("product");
 		String category = (String) request.getParameter("category");
-		HashMap<String, ArrayList<Product>> products = ProductDAO.getInstance().getAllProducts();
-		Product pro = null;
-		ArrayList<Product> items = products.get(category);
-		for (Product p : items) {
-			if (p.getName().equals(productName)) {
-				pro = p;
-				break;
-			}
-		}
+		HashMap<String, HashMap<String, Product>> products = ProductDAO.getInstance().getAllSubproducts();
+		Product product = ProductDAO.getInstance().getAllProducts().get(category).get(productName);
 		request.removeAttribute("product");
-		request.getSession().setAttribute("crusts", products.get("Crusts"));
-		request.getSession().setAttribute("sizes", products.get("Sizes"));
-		request.getSession().setAttribute("toppings", products.get("Toppings"));
-		request.getSession().setAttribute("product", pro);
+		for (Entry<String, HashMap<String, Product>> entry : products.entrySet()) {
+			ArrayList<Product> subproducts = new ArrayList<Product>(entry.getValue().values());
+			Collections.sort(subproducts);
+			request.getSession().setAttribute(entry.getKey(), subproducts);
+		}
+		request.getSession().setAttribute("product", product);
 		return "single-post";
 	}
 
@@ -111,6 +106,7 @@ public class ProductsController {
 	}
 
 	@RequestMapping(value = "/deleteOrderObj", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
 	public void deleteObj(HttpSession session, HttpServletRequest request) {
 		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
 		String obj = request.getParameter("name");
@@ -133,12 +129,14 @@ public class ProductsController {
 	}
 	
 	@RequestMapping(value = "/changeAttributes", method = RequestMethod.POST)
-	public void changeAttributes(HttpSession session, HttpServletRequest request) {
+	@ResponseStatus(value = HttpStatus.OK)
+	public void changeAttributes(HttpSession session, HttpServletRequest request) throws Exception {
 		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
 		String obj = request.getParameter("name");
-		System.out.println(obj);
-		System.out.println(request.getParameter("numbers"));
 		int numbers = Integer.parseInt(request.getParameter("numbers"));
+		if(numbers < 1 || request.getParameter("numbers").isEmpty() || request.getParameter("numbers") == null){
+			numbers = 1;
+		}
 		OrderObj order = null;
 		for (OrderObj orderObj : products) {
 			if (orderObj.toString().equals(obj)) {
@@ -146,8 +144,6 @@ public class ProductsController {
 				break;
 			}
 		}
-		System.out.println(order);
-		System.out.println(products);
 		order.setQuantity(numbers);
 		String totalPrice = request.getParameter("totalPrice");
 		String productCount = request.getParameter("productCount");
@@ -170,17 +166,8 @@ public class ProductsController {
 		String productName = (String) request.getParameter("product");
 		String category = (String) request.getParameter("category");
 		HttpSession session = request.getSession();
-		Double productPrice = null;
-		HashMap<String, ArrayList<Product>> products = ProductDAO.getInstance().getAllProducts();
-		Product product = null;
-		ArrayList<Product> items = products.get(category);
-		for (Product p : items) {
-			if (p.getName().equals(productName)) {
-				product = p;
-				productPrice = p.getPrice();
-				break;
-			}
-		}
+		Product product = ProductDAO.getInstance().getAllProducts().get(category).get(productName);
+		Double productPrice = product.getPrice();
 		ArrayList<String> subproducts = new ArrayList<>();
 		if(category.equals("Pizzaz")){			
 			subproducts.add("Medium (6 Slices)");
