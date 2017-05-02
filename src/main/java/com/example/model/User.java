@@ -3,6 +3,7 @@ package com.example.model;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
@@ -23,6 +24,7 @@ public class User {
 	private boolean isVerified;
 	private LocalDateTime registrationTime;
 	private String registrationCode;
+	private ArrayList<Address> addresses;
 	
 	public User(String firstName, String lastName, String email, String password) {
 		this.firstName = firstName;
@@ -31,6 +33,7 @@ public class User {
 		this.password = password;
 		this.registrationTime = LocalDateTime.now();
 		this.isVerified = false;
+		addresses = new ArrayList<Address>();
 	} 
 	
 	public User(String firstName, String lastName, String email, String password, LocalDateTime regTime, boolean isVerified) {
@@ -78,6 +81,10 @@ public class User {
 		return registrationCode;
 	}
 	
+	public ArrayList<Address> getAddresses() {
+		return addresses;
+	}
+	
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
@@ -96,6 +103,10 @@ public class User {
 	
 	public void setRegistrationCode(String registrationCode) {
 		this.registrationCode = registrationCode;
+	}
+	
+	public void setAddresses(ArrayList<Address> addresses) {
+		this.addresses = addresses;
 	}
 	
 	public static String hashPassword(String password) throws NoSuchAlgorithmException{

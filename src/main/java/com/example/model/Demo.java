@@ -28,9 +28,9 @@ public class Demo {
 		
 		
 //		
-		ArrayList<Address> list = (ArrayList<Address>) AddressDAO.getInstance().getUserAddresses(3);
-		for(Address a : list) {
-			System.out.println(a.getPhone());
-		}
+//		ArrayList<Address> list = (ArrayList<Address>) AddressDAO.getInstance().getUserAddresses(3);
+//		for(Address a : list) {
+//			System.out.println(a.getPhone());
+//		}
 	}
 }

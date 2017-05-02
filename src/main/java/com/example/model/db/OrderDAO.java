@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.example.model.Order;
-import com.example.model.OrderObj;
+import com.example.model.OrderObject;
 import com.example.model.Product;
 
 public class OrderDAO implements IDao{
@@ -27,46 +27,34 @@ public class OrderDAO implements IDao{
 		return instance;
 	}
 	
-	public synchronized void addOrder(Order	o) throws SQLException{
-		PreparedStatement st = DBManager.getInstance().getInsertStatement(getTableName(), getColumns());
+	public ArrayList<Order> getOrder(long userId) throws SQLException, ClassNotFoundException{
+		PreparedStatement st = null;
 		ResultSet rs = null;
-		try {
-			st.setLong(2, o.getUserId());
-			st.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-			st.execute();
-			rs = st.getGeneratedKeys();
-			rs.next();
-			o.setOrderId(rs.getLong(1));
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
+		try{
+			st = DBManager.getInstance().getSelectStatement(
+					getTableName(), getColumns(), getPrimaryKeyName());
+			st.setLong(1, userId);
+			rs = st.executeQuery();
+			ArrayList<Order> orders = new ArrayList<>();
+			Order order = null;
+			while(rs.next()){
+				order = new Order(userId,
+						rs.getTimestamp("time").toLocalDateTime());
+				order.setOrderId(rs.getLong("order_id"));
+				orders.add(order);
+			}
+			return orders;
 		} finally {
-			if (st != null) {
-	            st.close();
-	        }
-	        if (rs != null) {
-	            rs.close();
-	        }
+			if(st != null) {
+				st.close();
+			}
+			if(rs != null) {
+				rs.close();
+			}
 		}
 	}
 	
-	public ArrayList<Order> getOrder(long userId) throws SQLException{
-		PreparedStatement st = DBManager.getInstance().getSelectStatement(
-				getTableName(), getColumns(), getPrimaryKeyName());
-		st.setLong(1, userId);
-		ResultSet rs = st.executeQuery();
-		ArrayList<Order> orders = new ArrayList<>();
-		Order order = null;
-		while(rs.next()){
-			order = new Order(userId,
-					rs.getTimestamp("time").toLocalDateTime());
-			order.setOrderId(rs.getLong("order_id"));
-			orders.add(order);
-		}
-		return orders;
-	}
-	
-	public void makeOrder(Order order, HashMap<String, HashMap<String, Product>> products) throws SQLException {
+	public void makeOrder(Order order, HashMap<String, HashMap<String, Product>> products) throws SQLException, ClassNotFoundException {
 		Connection con = DBManager.getInstance().getConnection();
 		PreparedStatement st1 = null;
 		PreparedStatement st2 = null;
@@ -85,29 +73,35 @@ public class OrderDAO implements IDao{
 			order.setOrderId(rs.getLong(1));
 			String sql2 = "INSERT INTO orders_has_products (order_id, product_id, quantity) VALUES (?, ?, ?)";
 			st2 = con.prepareStatement(sql2);
-			for (OrderObj obj : order.getProducts()) {
+			ArrayList<Long> generatedKeys = new ArrayList<>();
+			for (OrderObject obj : order.getProducts()) {
 				st2.setLong(1, order.getOrderId());
 				st2.setLong(2, obj.getProduct().getProductId());
 				st2.setInt(3, obj.getQuantity());
 				st2.executeUpdate();
-			}
+				ResultSet rs2 = st2.getGeneratedKeys();
+				rs2.next();
+				generatedKeys.add(rs2.getLong(1));
+			}	
 			String sql3 = "INSERT INTO orders_has_products (order_id, product_id, owner_id) VALUES (?, ?, ?)";
 			st3 = con.prepareStatement(sql3);
-			for (OrderObj obj : order.getProducts()) {
+			for (OrderObject obj : order.getProducts()) {
 				if(!obj.getSubproducts().isEmpty()){					
 					for (String subName : obj.getSubproducts()) {
+						System.out.println(obj.getSubproducts());
 						for (HashMap<String, Product> map : products.values()) {
-							for (Product product : map.values()) {
-								if(product.getName().equals(subName)){
-									st3.setLong(1, order.getOrderId());
-									st3.setLong(2, product.getProductId());
-									st3.setLong(3, obj.getProduct().getProductId());
-									st3.executeUpdate();
-								}
+							if(map.containsKey(subName)){
+								Product p = map.get(subName);
+								System.out.println(generatedKeys.get(0));
+								st3.setLong(1, order.getOrderId());
+								st3.setLong(2, p.getProductId());
+								st3.setLong(3, generatedKeys.get(0));
+								st3.executeUpdate();
 							}
 						}
 					}
 				}
+				generatedKeys.remove(0);
 			}
 			
 			con.commit();

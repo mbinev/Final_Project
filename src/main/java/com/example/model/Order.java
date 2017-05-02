@@ -10,7 +10,7 @@ public class Order {
 	private long userId;
 	private LocalDateTime date;
 	private long addressId;
-	private ArrayList<OrderObj> products;
+	private ArrayList<OrderObject> products;
 	
 	public Order(long userId, LocalDateTime date) {
 		this.userId = userId;
@@ -41,11 +41,11 @@ public class Order {
 		this.addressId = addressId;
 	}
 	
-	public ArrayList<OrderObj> getProducts() {
+	public ArrayList<OrderObject> getProducts() {
 		return products;
 	}
 	
-	public void setProducts(ArrayList<OrderObj> products) {
+	public void setProducts(ArrayList<OrderObject> products) {
 		this.products = products;
 	}
 	

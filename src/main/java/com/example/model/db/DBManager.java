@@ -14,21 +14,23 @@ public class DBManager {
 	private static DBManager instance;
 	private Connection connection = null;
 	
-	private DBManager() {
+	private DBManager() throws ClassNotFoundException, SQLException{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Problem loading the driver!");
+			throw e;
 		}
 		try {
 			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dominos?user=user&password=user");
 		} catch (SQLException e) {
 			System.out.println("Unable to connect to Database" + e.getMessage());
+			throw e;
 		}
 		
 	}
 	
-	public static synchronized DBManager getInstance(){
+	public static synchronized DBManager getInstance() throws ClassNotFoundException, SQLException{
 		if(instance == null){
 			instance = new DBManager();
 		}

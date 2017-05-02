@@ -31,19 +31,31 @@ public class ProductDAO implements IDao{
 		return instance;
 	}
 	
-	public synchronized void addProduct(Product	p) throws SQLException {
-		PreparedStatement st = DBManager.getInstance().getInsertStatement(getTableName(), getColumns());
-		st.setString(2, p.getName());
-		st.setDouble(3, p.getPrice());
-		st.setString(4, p.getCategory());
-		st.execute();
-		ResultSet rs = st.getGeneratedKeys();
-		rs.next();
-		p.setProductId(rs.getLong(1));
+	public synchronized void addProduct(Product	p) throws SQLException, ClassNotFoundException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		try {
+			st = DBManager.getInstance().getInsertStatement(getTableName(), getColumns());
+			st.setString(2, p.getName());
+			st.setDouble(3, p.getPrice());
+			st.setString(4, p.getCategory());
+			st.execute();
+			rs = st.getGeneratedKeys();
+			rs.next();
+			p.setProductId(rs.getLong(1));
+		} finally {
+			if(st != null) {
+				st.close();
+			}
+			if(rs != null) {
+				rs.close();
+			}
+		}
+		
 	}
 	
-	public HashMap<String, HashMap<String, Product>> getAllProducts() throws SQLException{
-		System.out.println(products);
+	public HashMap<String, HashMap<String, Product>> getAllProducts() throws SQLException, ClassNotFoundException{
 		if(products.isEmpty()){
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement st1 = null;
@@ -76,7 +88,7 @@ public class ProductDAO implements IDao{
 			} catch (SQLException e) {
 				System.err.print("Problem with extracting products");
 				System.out.println(e.getMessage());
-				products = null;
+				products = new HashMap<String, HashMap<String, Product>>();
 				throw e;
 			} finally {
 				if (st1 != null) {
@@ -93,8 +105,7 @@ public class ProductDAO implements IDao{
 		return products;
 	}
 	
-	public HashMap<String, HashMap<String, Product>> getAllSubproducts() throws SQLException{
-		System.out.println(subproducts);
+	public HashMap<String, HashMap<String, Product>> getAllSubproducts() throws SQLException, ClassNotFoundException{
 		if(subproducts.isEmpty()){
 			Connection con = DBManager.getInstance().getConnection();
 			PreparedStatement st1 = null;
@@ -128,7 +139,6 @@ public class ProductDAO implements IDao{
 		        }
 			}
 		}
-		System.out.println("subproducts " + subproducts);
 		return subproducts;
 	}
 

@@ -2,7 +2,7 @@ package com.example.model;
 
 import java.util.ArrayList;
 
-public class OrderObj {
+public class OrderObject {
 	private Product product;
 	private long userId;
 	private String description;
