@@ -17,41 +17,49 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	
+	private static final String ERROR_PAGE = "error500";
 
 	@ExceptionHandler(SQLException.class)
 	public String handleSQLException(HttpServletRequest request, Exception ex){
 		logException(request, ex);
-		return "error500";
+		return ERROR_PAGE;
 	}
 	
 	@ExceptionHandler(IOException.class)
 	public String handleIOException(HttpServletRequest request, Exception ex){
 		logException(request, ex);
-		return "error500";
+		return ERROR_PAGE;
 	}
 	
 	@ExceptionHandler(NoSuchAlgorithmException.class)
 	public String handleNoSuchAlgorithmException(HttpServletRequest request, Exception ex){
 		logException(request, ex);
-		return "error500";
+		return ERROR_PAGE;
 	}
 	
 	@ExceptionHandler(NullPointerException.class)
 	public String handleNullPointerException(HttpServletRequest request, Exception ex){
 		logException(request, ex);
-		return "error500";
+		return ERROR_PAGE;
 	}
 	
 	@ExceptionHandler(AddressException.class)
 	public String handleAddressException(HttpServletRequest request, Exception ex){
 		logException(request, ex);
-		return "error500";
+		return ERROR_PAGE;
 	}
 	
 	@ExceptionHandler(MessagingException.class)
 	public String handleMessagingException(HttpServletRequest request, Exception ex){
 		logException(request, ex);
-		return "error500";
+		return ERROR_PAGE;
+	}
+	
+	@ExceptionHandler(ClassNotFoundException.class)
+	public String handleClassNotFoundException(HttpServletRequest request, Exception ex){
+		logException(request, ex);
+		return ERROR_PAGE;
 	}
 	
 	private void logException(HttpServletRequest request, Exception ex) {

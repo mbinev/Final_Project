@@ -1,24 +1,20 @@
 package com.example.controller;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.example.model.ShopAddress;
-import com.example.model.db.AddressDAO;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 @Controller
 public class ViewsController {
+	
+	@RequestMapping(value="/index", method=RequestMethod.GET)
+	public String indexView() {
+		return "index";
+	}
 	
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String cartView(){
@@ -76,23 +72,4 @@ public class ViewsController {
 		return "register";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/markers", method = RequestMethod.POST)
-	public String loginUser(HttpServletRequest req, HttpServletResponse response) throws SQLException {
-		ArrayList<ShopAddress> shops = new ArrayList<>(AddressDAO.getInstance().shopAddresses().values());
-		JsonArray markers = new JsonArray();
-		for (ShopAddress shop : shops) {
-			JsonObject marker = new JsonObject();
-			marker.addProperty("lat", shop.getLat());
-			marker.addProperty("lng", shop.getLng());
-			marker.addProperty("zoom", 16);
-			marker.addProperty("name", shop.getName());
-			marker.addProperty("info", shop.getInfo());
-			markers.add(marker);
-		}
-		return markers.toString();
-	}
 }
-    
-	
-

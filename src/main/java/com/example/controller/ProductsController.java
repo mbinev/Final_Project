@@ -22,15 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.example.model.OrderObj;
+import com.example.model.OrderObject;
 import com.example.model.Product;
 import com.example.model.db.ProductDAO;
 
 @Controller
 public class ProductsController {
 
-	@RequestMapping(value = "/catalog", method = RequestMethod.GET)
-	public String products(Model model) throws SQLException {
+	@RequestMapping(value = "/products", method = RequestMethod.GET)
+	public String products(Model model) throws SQLException, ClassNotFoundException {
 		ArrayList<Product> products = new ArrayList<Product>();
 		HashMap<String, HashMap<String, Product>> items = ProductDAO.getInstance().getAllProducts();
 		for (Entry<String, HashMap<String, Product>> entry : items.entrySet()) {
@@ -42,13 +42,16 @@ public class ProductsController {
 		return "products";
 	}
 
-	@RequestMapping(value = "/products", method = RequestMethod.GET)
-	public String products(HttpServletRequest request, Model model) throws SQLException {
+	@RequestMapping(value = "/singleProduct", method = RequestMethod.GET)
+	public String products(HttpServletRequest request, Model model) throws SQLException, ClassNotFoundException {
 		String productName = (String) request.getParameter("product");
 		String category = (String) request.getParameter("category");
+		if(productName == null || category == null){
+			return "error500";
+		}
 		HashMap<String, HashMap<String, Product>> products = ProductDAO.getInstance().getAllSubproducts();
 		Product product = ProductDAO.getInstance().getAllProducts().get(category).get(productName);
-		request.removeAttribute("product");
+		//request.removeAttribute("product");
 		for (Entry<String, HashMap<String, Product>> entry : products.entrySet()) {
 			ArrayList<Product> subproducts = new ArrayList<Product>(entry.getValue().values());
 			Collections.sort(subproducts);
@@ -72,11 +75,11 @@ public class ProductsController {
 			}
 		}
 		ArrayList<String> objSubs = new ArrayList<>();
-		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
-		String description = new String();
+		ArrayList<OrderObject> p = (ArrayList<OrderObject>) session.getAttribute("products");
+		StringBuilder description = new StringBuilder();
 		for (String strg : product.getSubproducts()) {
 			if (!subproducts.contains(strg)) {
-				description = description.concat(" -" + strg);
+				description.append(" -" + strg);
 				subproducts.remove(strg);
 			}
 		}
@@ -85,12 +88,11 @@ public class ProductsController {
 		}
 		for (String strg : subproducts) {
 			if (strg != null && !product.getSubproducts().contains(strg)) {
-				description = description.concat(" +" + strg);
-				objSubs.add(strg);
+				description.append(" +" + strg);
 			}
 		}
-		OrderObj obj = new OrderObj();
-		obj.setDescription(description);
+		OrderObject obj = new OrderObject();
+		obj.setDescription(description.toString());
 		obj.setProduct(product);
 		obj.setPrice(Double.parseDouble(productPrice));
 		obj.setSubproducts(objSubs);
@@ -108,10 +110,10 @@ public class ProductsController {
 	@RequestMapping(value = "/deleteOrderObj", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void deleteObj(HttpSession session, HttpServletRequest request) {
-		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
+		ArrayList<OrderObject> products = (ArrayList<OrderObject>) session.getAttribute("products");
 		String obj = request.getParameter("name");
-		OrderObj order = null;
-		for (OrderObj orderObj : products) {
+		OrderObject order = null;
+		for (OrderObject orderObj : products) {
 			if (orderObj.toString().equals(obj)) {
 				order = orderObj;
 				break;
@@ -131,14 +133,14 @@ public class ProductsController {
 	@RequestMapping(value = "/changeAttributes", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void changeAttributes(HttpSession session, HttpServletRequest request) throws Exception {
-		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
+		ArrayList<OrderObject> products = (ArrayList<OrderObject>) session.getAttribute("products");
 		String obj = request.getParameter("name");
 		int numbers = Integer.parseInt(request.getParameter("numbers"));
 		if(numbers < 1 || request.getParameter("numbers").isEmpty() || request.getParameter("numbers") == null){
 			numbers = 1;
 		}
-		OrderObj order = null;
-		for (OrderObj orderObj : products) {
+		OrderObject order = null;
+		for (OrderObject orderObj : products) {
 			if (orderObj.toString().equals(obj)) {
 				order = orderObj;
 				break;
@@ -153,16 +155,8 @@ public class ProductsController {
 		session.setAttribute("productsNumber", count);
 	}
 	
-	public double round(double value, int places) {
-	    if (places < 0) throw new IllegalArgumentException();
-
-	    BigDecimal bd = new BigDecimal(value);
-	    bd = bd.setScale(places, RoundingMode.HALF_UP);
-	    return bd.doubleValue();
-	}
-	
 	@RequestMapping(value = "/directBuy", method = RequestMethod.GET)
-	public String directBuy(HttpServletRequest request) throws SQLException {
+	public String directBuy(HttpServletRequest request) throws SQLException, ClassNotFoundException {
 		String productName = (String) request.getParameter("product");
 		String category = (String) request.getParameter("category");
 		HttpSession session = request.getSession();
@@ -183,7 +177,7 @@ public class ProductsController {
 			}
 		}
 		ArrayList<String> objSubs = new ArrayList<>();
-		ArrayList<OrderObj> p = (ArrayList<OrderObj>) session.getAttribute("products");
+		ArrayList<OrderObject> p = (ArrayList<OrderObject>) session.getAttribute("products");
 		String description = new String();
 		for (String strg : product.getSubproducts()) {
 			if (!subproducts.contains(strg)) {
@@ -197,17 +191,15 @@ public class ProductsController {
 		for (String strg : subproducts) {
 			if (strg != null && !product.getSubproducts().contains(strg)) {
 				description = description.concat(" +" + strg);
-				objSubs.add(strg);
 			}
 		}
-		OrderObj obj = new OrderObj();
+		OrderObject obj = new OrderObject();
 		obj.setDescription(description);
 		obj.setProduct(product);
 		obj.setPrice(productPrice);
 		obj.setSubproducts(objSubs);
 		obj.setQuantity(1);
 		p.add(obj);
-		System.out.println(p);
 		double price = (double) session.getAttribute("totalPrice");
 		price = price + productPrice;
 		session.setAttribute("totalPrice", round(price, 2));
@@ -215,6 +207,14 @@ public class ProductsController {
 		session.setAttribute(product.toString(), description);
 		session.setAttribute("productsNumber", p.size());
 		return "cart";
+	}
+	
+	public double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 
 }

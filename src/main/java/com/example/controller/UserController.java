@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.model.Address;
 import com.example.model.Order;
-import com.example.model.OrderObj;
+import com.example.model.OrderObject;
 import com.example.model.Product;
 import com.example.model.User;
 import com.example.model.db.AddressDAO;
@@ -46,34 +47,31 @@ import com.google.gson.JsonParser;
 @SessionAttributes("user")
 public class UserController {
 
-	// @RequestMapping(value="/tryRegister", method = RequestMethod.POST)
-	// public String checkPersonInfo(@Valid User user, BindingResult
-	// bindingResult) {
-	// System.out.println(user);
-	// System.out.println(bindingResult);
-	// if (bindingResult.hasErrors()) {
-	// return "index";
-	// }
-	//
-	// return "confirm-register";
-	// }
-
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(HttpServletRequest request) throws AddressException, MessagingException, SQLException, IOException {
-		Scanner sc = new Scanner(request.getInputStream());
-		
+	public String register(HttpServletRequest request)
+			throws AddressException, MessagingException, SQLException, IOException, ClassNotFoundException {
+
+		Scanner sc = null;
 		StringBuilder sb = new StringBuilder();
-		
-		while(sc.hasNextLine()){
-			sb.append(sc.nextLine());
+
+		try {
+			sc = new Scanner(request.getInputStream());
+
+			while (sc.hasNextLine()) {
+				sb.append(sc.nextLine());
+			}
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
 		}
-		
+
 		JsonParser parser = new JsonParser();
 		JsonObject obj = parser.parse(sb.toString()).getAsJsonObject();
-		
+
 		JsonObject respJSON = new JsonObject();
-		
+
 		String name = obj.get("name").getAsString();
 		String familyName = obj.get("familyName").getAsString();
 		String email = obj.get("email").getAsString();
@@ -84,75 +82,71 @@ public class UserController {
 		boolean FamilyIsNullOrEmpty = nullOrEmpty(familyName);
 		boolean validEmail = validateEmail(email);
 		boolean validPassword = validatePassword(passwordFirst);
-		if(NameisNullOrEmpty || FamilyIsNullOrEmpty || !validEmail || !validPassword || !passwordFirst.equals(passwordSecond)){
+
+		if (NameisNullOrEmpty || FamilyIsNullOrEmpty || !validEmail || !validPassword
+				|| !passwordFirst.equals(passwordSecond)) {
 			respJSON.addProperty("error", true);
 			JsonArray errorsArray = new JsonArray();
-			if(name.length() < 4){
+			if (name.length() < 4) {
 				JsonObject error = new JsonObject();
 				error.addProperty("errorPlace", "nameError");
 				error.addProperty("errorMessege", "Min 4 letters");
 				errorsArray.add(error);
-				
+
 			}
-			if(familyName.length() < 4){
+			if (familyName.length() < 4) {
 				JsonObject error = new JsonObject();
 				error.addProperty("errorPlace", "familyNameError");
 				error.addProperty("errorMessege", "Min 4 letters");
 				errorsArray.add(error);
-				
+
 			}
-			if(!validEmail){
-				if(!UserDAO.getInstance().isEmailFree(email)){
+			if (!validEmail) {
+				if (!UserDAO.getInstance().isEmailFree(email)) {
 					JsonObject error = new JsonObject();
 					error.addProperty("errorPlace", "emailError");
 					error.addProperty("errorMessege", "Email is already taken");
-					errorsArray.add(error);	
-				}
-				else{
+					errorsArray.add(error);
+				} else {
 					JsonObject error = new JsonObject();
 					error.addProperty("errorPlace", "emailError");
 					error.addProperty("errorMessege", "Invalid Email");
 					errorsArray.add(error);
 				}
-				
+
 			}
-			if(!validPassword){
+			if (!validPassword) {
 				JsonObject error = new JsonObject();
 				error.addProperty("errorPlace", "passwordFirstError");
 				error.addProperty("errorMessege", "Invalid Password");
 				errorsArray.add(error);
-			}
-			else{
-				if (!passwordFirst.equals(passwordSecond)){
+			} else {
+				if (!passwordFirst.equals(passwordSecond)) {
 					JsonObject error = new JsonObject();
 					error.addProperty("errorPlace", "passwordSecondError");
 					error.addProperty("errorMessege", "Confirm password doesnt match password!");
 					errorsArray.add(error);
 				}
 			}
-			
+
 			respJSON.add("errors", errorsArray);
 
-			System.out.println(respJSON.toString());
 			return respJSON.toString();
-		}
-		else{
+		} else {
 			respJSON.addProperty("error", false);
 			User u = new User(name, familyName, email, passwordFirst);
-			String code = EmailSender.sendValidationEmail("mbinev2@gmail.com");
+			String code = EmailSender.sendValidationEmail("dominos.pizza.itt@gmail.com");
 			u.setRegistrationCode(code);
 			UserDAO.unconfirmedUsers.put(email, u);
-			System.out.println("Registered");
 		}
-		System.out.println(respJSON.toString());
+
 		return respJSON.toString();
-		
+
 	}
-	
-	
+
 	@RequestMapping(value = "/confirmRegisterWithCode", method = RequestMethod.POST)
-	public String confirmRegister(Model model, HttpServletRequest req, HttpSession session, HttpServletResponse response) 
-			throws SQLException {
+	public String confirmRegister(Model model, HttpServletRequest req, HttpSession session,
+			HttpServletResponse response) throws SQLException, ClassNotFoundException {
 		String password = req.getParameter("password").trim();
 		String email = req.getParameter("email");
 		String code = req.getParameter("code");
@@ -163,7 +157,8 @@ public class UserController {
 			user = UserDAO.unconfirmedUsers.get(email);
 			LocalDateTime expireTime = user.getRegistrationTime().plusHours(1);
 			LocalDateTime now = LocalDateTime.now();
-			if (password.equals(user.getPassword()) && now.isBefore(expireTime) && code.equals(user.getRegistrationCode())) {
+			if (password.equals(user.getPassword()) && now.isBefore(expireTime)
+					&& code.equals(user.getRegistrationCode())) {
 				user.setIsVerified();
 				UserDAO.getInstance().addUser(user);
 				UserDAO.unconfirmedUsers.remove(email);
@@ -178,22 +173,31 @@ public class UserController {
 		}
 		return jsp;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginUser(HttpServletRequest req, HttpSession session, HttpServletResponse response)
-			throws SQLException, NoSuchAlgorithmException, IOException {
+			throws SQLException, NoSuchAlgorithmException, IOException, ClassNotFoundException {
 		String url = req.getHeader("Referer");
 		int index = url.lastIndexOf('/') + 1;
 		url = url.substring(index);
 		session.setAttribute("url", url);
-		Scanner	sc = new Scanner(req.getInputStream());
-			
-		StringBuilder sb = new StringBuilder();
 		
-		while(sc.hasNextLine()){
-			sb.append(sc.nextLine());
+		Scanner sc = null;
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			sc = new Scanner(req.getInputStream());
+
+			while (sc.hasNextLine()) {
+				sb.append(sc.nextLine());
+			}
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
 		}
+
 		JsonParser parser = new JsonParser();
 		JsonObject obj = parser.parse(sb.toString()).getAsJsonObject();
 		JsonObject respJSON = new JsonObject();
@@ -214,17 +218,16 @@ public class UserController {
 			error.addProperty("errorMessege", "Invalid email or password!");
 			errorsArray.add(error);
 			respJSON.add("errors", errorsArray);
-			System.out.println(respJSON.toString());
 			return respJSON.toString();
 		}
 	}
 
-	private void prepareLogin(HttpSession session, HttpServletResponse response, User user) throws SQLException {
+	private void prepareLogin(HttpSession session, HttpServletResponse response, User user)
+			throws SQLException, ClassNotFoundException {
+		user.setAddresses(AddressDAO.getInstance().getUserAddresses(user.getUserId()));
+		session.setAttribute("addresses", user.getAddresses());
 		session.setAttribute("user", user);
 		session.setAttribute("logged", true);
-		response.setHeader("Pragma", "No-cache");
-		response.setDateHeader("Expires", 0);
-		response.setHeader("Cache-control", "no-cache");
 	}
 
 	@RequestMapping(value = "/facebookLogin", method = RequestMethod.POST)
@@ -244,101 +247,7 @@ public class UserController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/addAddress", method = RequestMethod.POST)
-	public String addAddress(HttpServletRequest req, HttpSession session) throws SQLException {
-		// req
-		String name = req.getParameter("name");
-		String street = req.getParameter("street");
-		String addressNumber = req.getParameter("address number");
-		String postcode = req.getParameter("postcode");
-		String phone = req.getParameter("phone");
-		int floor = Integer.parseInt(req.getParameter("floor"));
-
-		// not req
-		String bell = req.getParameter("bell").equals("") ? "" : req.getParameter("bell");
-		int buildingNumber = req.getParameter("building number").equals("") ? -1
-				: Integer.parseInt(req.getParameter("building number"));
-		int apartamentNumber = req.getParameter("apartament number").equals("") ? -1
-				: Integer.parseInt(req.getParameter("apartament number"));
-		String entrance = req.getParameter("entrance").equals("") ? "" : req.getParameter("entrance");
-
-		// TODO validate and add city
-
-		// add to data base
-		User user = (User) session.getAttribute("user");
-		long userId = user.getUserId();
-		Address address = new Address(name, street, addressNumber, postcode, phone);
-		address.setFloor(floor);
-		address.setBell(bell);
-		address.setBuildingNumber(buildingNumber);
-		address.setApartmentNumber(apartamentNumber);
-		address.setEntrance(entrance);
-		AddressDAO.getInstance().addNewAddress(user, address);
-		return "addresses";
-	}
-
-	// @RequestMapping(value="/getAddresses", method=RequestMethod.GET)
-	// public String getAddresses(HttpSession session) throws SQLException {
-	// User user = (User) session.getAttribute("user");
-	// ArrayList<Address> list =
-	// AddressDAO.getInstance().getUserAddresses(user.getUserId());
-	// session.setAttribute("addresses", list);
-	// return "addresses";
-	// }
-
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String showAddres(HttpServletRequest request, HttpSession session) throws SQLException {
-		if (request.getParameter("id") != null) {
-			int addressId = Integer.parseInt(request.getParameter("id"));
-			long id = addressId;
-			Address address = AddressDAO.getInstance().getAddressById(id);
-			session.setAttribute("address", address);
-			session.setAttribute("addressID", id);
-		}
-		return "addresses";
-	}
-
-	@RequestMapping(value = "/updateAddress", method = RequestMethod.POST)
-	public String updateAddres(HttpServletRequest req, HttpSession session) throws SQLException {
-		String name = req.getParameter("name");
-		String street = req.getParameter("street");
-		String addressNumber = req.getParameter("address number");
-		String postcode = req.getParameter("postcode");
-		String phone = req.getParameter("phone");
-		int floor = Integer.parseInt(req.getParameter("floor"));
-
-		// not req
-		String bell = req.getParameter("bell").equals("") ? "" : req.getParameter("bell");
-		int buildingNumber = req.getParameter("building number").equals("") ? -1
-				: Integer.parseInt(req.getParameter("building number"));
-		int apartamentNumber = req.getParameter("apartament number").equals("") ? -1
-				: Integer.parseInt(req.getParameter("apartament number"));
-		String entrance = req.getParameter("entrance").equals("") ? "" : req.getParameter("entrance");
-
-		Address address = new Address(name, street, addressNumber, postcode, phone);
-		address.setFloor(floor);
-		address.setBell(bell);
-		address.setBuildingNumber(buildingNumber);
-		address.setApartmentNumber(apartamentNumber);
-		address.setEntrance(entrance);
-		address.setAddressId((long) session.getAttribute("addressID"));
-		AddressDAO addressDAO = AddressDAO.getInstance(); 
-		addressDAO.updateAddress(address);
-		User user = (User) session.getAttribute("user");
-		ArrayList<Address> list = addressDAO.getUserAddresses(user.getUserId());
-		session.setAttribute("addresses", list);
-		return "profile";
-	}
-
-	@RequestMapping(value = "/deleteAddress", method = RequestMethod.POST)
-	public String deleteAddress(HttpSession session, HttpServletRequest request) throws SQLException {
-		int addressId = Integer.parseInt(request.getParameter("id"));
-		long id = addressId;
-		AddressDAO.getInstance().deleteAddress(id);
-		return "addresses";
-	}
-
-	private boolean validateEmail(String email) throws SQLException {
+	private boolean validateEmail(String email) throws SQLException, ClassNotFoundException {
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 				Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
@@ -348,22 +257,10 @@ public class UserController {
 		return matcher.find() && isTaken;
 	}
 
-	private boolean validatePassword(String password) {
-		Pattern VALID_PASSWORD_REGEX = Pattern.compile("(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}");
-		// at least one digit,at least one upper case letter, at least 8
-		// characters, no whitespaces
-		Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
-		return matcher.find();
-	}
-	
-	private boolean nullOrEmpty(String firstName) {
-		return firstName == null  || firstName.isEmpty();
-	}
-
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public String order(HttpServletRequest request) throws SQLException {
+	public String order(HttpServletRequest request) throws SQLException, ClassNotFoundException {
 		HttpSession session = request.getSession();
-		ArrayList<OrderObj> products = (ArrayList<OrderObj>) session.getAttribute("products");
+		ArrayList<OrderObject> products = (ArrayList<OrderObject>) session.getAttribute("products");
 		User user = (User) session.getAttribute("user");
 		ArrayList<Address> addresses = (ArrayList<Address>) session.getAttribute("addresses");
 		String addressName = request.getParameter("address");
@@ -374,16 +271,17 @@ public class UserController {
 				break;
 			}
 		}
-		if(address == null){
-			ArrayList<Address> shopAddresses = new ArrayList<Address>(AddressDAO.getInstance().shopAddresses().values());
+		if (address == null) {
+			ArrayList<Address> shopAddresses = new ArrayList<Address>(
+					AddressDAO.getInstance().shopAddresses().values());
 			for (Address adr : shopAddresses) {
-				if(adr.getName().equals(addressName)){
+				if (adr.getName().equals(addressName)) {
 					address = adr;
 					break;
 				}
 			}
 		}
-		if(address == null){			
+		if (address == null) {
 			return "error500";
 		}
 		Order order = new Order(user.getUserId(), LocalDateTime.now());
@@ -392,23 +290,20 @@ public class UserController {
 		OrderDAO.getInstance().makeOrder(order, ProductDAO.getInstance().getAllSubproducts());
 		session.setAttribute("productsNumber", 0);
 		session.setAttribute("totalPrice", 0.0);
-		session.setAttribute("products", new ArrayList<OrderObj>());
+		session.setAttribute("products", new ArrayList<OrderObject>());
 		return "order-success";
 	}
+	
+	private boolean validatePassword(String password) {
+		Pattern VALID_PASSWORD_REGEX = Pattern.compile("(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}");
+		// at least one digit,at least one upper case letter, at least 8
+		// characters, no whitespaces
+		Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
+		return matcher.find();
+	}
 
-	// @RequestMapping(value="form", method=RequestMethod.POST)
-	// public String submitForm(@Valid User user, BindingResult result, Model m,
-	// HttpServletRequest req) {
-	// System.out.println(req.getParameter("email"));
-	// if(result.hasErrors()) {
-	// return "index";
-	// }
-	// if(req.getParameter("password").equals(req.getParameter("confirm
-	// password"))) {
-	// System.out.print(user.getFirstName());
-	// return "test";
-	// }
-	// return "index";
-	// }
-	//
+	private boolean nullOrEmpty(String firstName) {
+		return firstName == null || firstName.isEmpty();
+	}
+
 }
