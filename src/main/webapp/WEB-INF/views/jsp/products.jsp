@@ -108,7 +108,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                                     </div>
                                 </div>  
                                 <div class="label-text">
-                                    <h4><a href="products?product=${product.name}&category=${product.category}">${product.name}</a></h4>
+                                    <h4><a href="singleProduct?product=${product.name}&category=${product.category}">${product.name}</a></h4>
                                 </div>
                             </div>          
                         </div>

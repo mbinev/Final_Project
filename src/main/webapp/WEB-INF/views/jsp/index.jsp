@@ -49,13 +49,6 @@
                         </div>
                       <img id="img" src="img/slider2.jpg" alt="" />
                     </li>
-                    <li>
-                        <div class="slider-caption">
-                            <h1>Come order in person</h1>
-                            <a href="contact-us">Get Ready</a>
-                        </div>
-                      <img id="img" src="img/slider3.jpg" alt="" />
-                    </li>
                   </ul>
                 </div>
             </div>

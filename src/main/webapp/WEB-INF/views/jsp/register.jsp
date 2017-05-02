@@ -72,32 +72,32 @@
 								First name
 								 <input type="text" name="name" id="name"
 									min="4" max="20" placeholder="" required />
-								<span id="nameError" class="help-block"></span>
+								<span id="nameError" class="help-block" style="color:red; font-size: 120%;"></span>
 								
 							</div>
 							<div class="last name col-md-4">
 								Last name 
 								<input type="text" name="familyName" id="familyName" 
 								min="4" max="20" required />
-								<span id="familyNameError" class="help-block"></span>
+								<span id="familyNameError" class="help-block" style="color:red; font-size: 120%;"></span>
 							</div>
 							<div class="email col-md-4">
 								Email
 								<input type="email" name="email"
 									id="email"  required />
-								<span id="emailError" class="help-block"></span>
+								<span id="emailError" class="help-block" style="color:red; font-size: 120%;"></span>
 							</div>
 							<div class="password col-md-4">
 								Password(1Aa)
 								<input type="password" name="passwordFirst" id="passwordFirst"
 									min="8" max="20" required />
-								<span id="passwordFirstError" class="help-block"></span>
+								<span id="passwordFirstError" class="help-block" style="color:red; font-size: 120%;"></span>
 							</div>
 							<div class="confirm password col-md-4">
 								Confirm password
 								<input type="password" name="passwordSecond" id="passwordSecond"
 									min="8" max="20" required />
-								<span id="passwordSecondError" class="help-block"></span>
+								<span id="passwordSecondError" class="help-block" style="color:red; font-size: 120%;"></span>
 							</div>
 						</div>
 						<div class="send">

@@ -74,53 +74,7 @@ http://www.templatemo.com/free-website-templates/417-grill
                 </div>
             </div> 
 
-
-
-            <footer>
-                <div class="container">
-                    <div class="top-footer">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="subscribe-form">
-                                    <span>Get in touch with us</span>
-                                    <form method="get" class="subscribeForm">
-                                        <input id="subscribe" type="text" />
-                                        <input type="submit" id="submitButton" />
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="social-bottom">
-                                    <span>Follow us:</span>
-                                    <ul>
-                                        <li><a href="#" class="fa fa-facebook"></a></li>
-                                        <li><a href="#" class="fa fa-twitter"></a></li>
-                                        <li><a href="#" class="fa fa-rss"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="main-footer">
-                        <div class="row">       
-                            <div class="col-md-3">
-                                <div class="more-info">
-                                    <h4 class="footer-title">More info</h4>
-                                    <ul>
-                                        <li><i class="fa fa-phone"></i>010-020-0340</li>
-                                        <li><i class="fa fa-globe"></i>Sofia Bulgaria</li>
-                                        <li><i class="fa fa-envelope"></i><a href="#">dominos.pizza.itt@gmail.com</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bottom-footer">
-                        <p>Copyright © 2084 <a href="#">Your Company Name</a></p>
-                    </div>
-                    
-                </div>
-            </footer>
+        <c:import url="footer.jsp" />
 
         <script src="js/vendor/jquery-1.11.0.min.js"></script>
         <script src="js/vendor/jquery.gmap3.min.js"></script>

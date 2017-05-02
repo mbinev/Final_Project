@@ -12,9 +12,9 @@
 			<img src="img/hackerman.png">
 		</p>
 		<h1>There seems to be a problem.</h1>
-		<h1>
-			Please go back to the<a href="index"> home page</a>
-		</h1>
+		<h2>
+			Please go back to the<a href="index"> home page.</a>
+		</h2>
 	</div>
 </body>
 </html>

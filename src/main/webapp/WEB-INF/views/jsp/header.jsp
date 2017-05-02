@@ -101,7 +101,7 @@
 											<div class="form-group">
 												<button id="loginbtn" class="btn btn-block" type="button">Login</button>
 											</div>
-											<span id="status" class="help-block"></span>
+											<span id="status" class="help-block" style="color:red; font-size: 120%;"></span>
 											<a href="register" title="Fast and free sign up!"
 												id="btnNewUser" data-toggle="collapse"
 												data-target="#formRegister" class="small">New User?
@@ -136,7 +136,7 @@
 							<ul>
 								<li><a href="index">Home</a></li>
 								<li><a href="about-us">About</a></li>
-								<li><a href="catalog">Products</a></li>
+								<li><a href="products">Products</a></li>
 								<li><a href="contact-us">Contact</a></li>
 							</ul>
 						</div>
@@ -168,7 +168,7 @@
   					document.getElementById("status").innerHTML="";
   				  	
   				  if(!responseData.error){
-  						window.location.replace("index");
+  						window.location.replace("${sessionScope.url}");
   				  }
   				  else{
   					  var errors = responseData.errors;

@@ -32,7 +32,7 @@
 			</div>
 			<div class="bottom-footer">
 				<p>
-					Copyright © 2084 <a href="#">ITT Pizza</a>
+					Copyright 2017 <a href="#">ITT Pizza</a>
 				</p>
 			</div>
 
