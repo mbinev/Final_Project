@@ -37,10 +37,7 @@ public class User {
 	} 
 	
 	public User(String firstName, String lastName, String email, String password, LocalDateTime regTime, boolean isVerified) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
+		this(firstName, lastName, email, password);
 		this.registrationTime = regTime;
 		this.isVerified = isVerified;
 	} 

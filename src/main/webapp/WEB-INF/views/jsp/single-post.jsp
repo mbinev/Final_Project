@@ -151,7 +151,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 											</h3>
 										</div>
 										<c:if test="${product.category eq 'Pizzaz'}">
-											<form action="products" method="post" class="form-inline">
+											<form action="buy" method="post" class="form-inline">
 												<table>
 													<tr>
 														<th><div class="form-group">
@@ -220,7 +220,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 										</c:if>
 
 										<c:if test="${product.category ne 'Pizzaz'}">
-											<form action="products" method="post">
+											<form action="buy" method="post">
 												<input id="productPrice" type="hidden" name="productPrice" value="${product.price}">
 												<label class="col-md-12 control-label" for="buttonSelect"></label>
 												  <div class="col-md-8">

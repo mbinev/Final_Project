@@ -25,7 +25,10 @@ public class EmailSender {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.socketFactory.port", "465");
+	    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	    props.put("mail.smtp.socketFactory.fallback", "false");
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -38,6 +41,7 @@ public class EmailSender {
 		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiverEmail));
 		message.setSubject(SUBJECT_TEXT);
 		String code = generateCode();
+		System.out.println(code);
 		String msgText = String.format(
 				"Hi, this is your verification code - %s, please login with it on the following page: %s", code,
 				VERIFY_PAGE);

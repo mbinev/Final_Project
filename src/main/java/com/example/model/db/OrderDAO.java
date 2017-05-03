@@ -88,11 +88,9 @@ public class OrderDAO implements IDao{
 			for (OrderObject obj : order.getProducts()) {
 				if(!obj.getSubproducts().isEmpty()){					
 					for (String subName : obj.getSubproducts()) {
-						System.out.println(obj.getSubproducts());
 						for (HashMap<String, Product> map : products.values()) {
 							if(map.containsKey(subName)){
 								Product p = map.get(subName);
-								System.out.println(generatedKeys.get(0));
 								st3.setLong(1, order.getOrderId());
 								st3.setLong(2, p.getProductId());
 								st3.setLong(3, generatedKeys.get(0));

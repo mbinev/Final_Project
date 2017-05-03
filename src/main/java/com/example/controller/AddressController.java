@@ -45,7 +45,6 @@ public class AddressController {
 
 		// add to data base
 		User user = (User) session.getAttribute("user");
-		long userId = user.getUserId();
 		Address address = new Address(name, street, addressNumber, postcode, phone);
 		address.setFloor(floor);
 		address.setBell(bell);

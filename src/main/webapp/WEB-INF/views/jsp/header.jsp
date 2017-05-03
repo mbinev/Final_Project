@@ -96,10 +96,10 @@
 											<div class="form-group">
 												<input class="form-control" name="password"
 													id="inputpassword" type="password" placeholder="Password"
-													required="">
+													min="8" required="">
 											</div>
 											<div class="form-group">
-												<button id="loginbtn" class="btn btn-block" type="button">Login</button>
+												<button id="loginbtn" class="btn btn-warning" type="button">Login</button>
 											</div>
 											<span id="status" class="help-block" style="color:red; font-size: 120%;"></span>
 											<a href="register" title="Fast and free sign up!"

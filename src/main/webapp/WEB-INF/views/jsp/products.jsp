@@ -18,7 +18,7 @@ http://www.templatemo.com/free-website-templates/417-grill
 -->
     <head>
         <meta charset="utf-8">
-        <title>Products - Grill Template</title>
+        <title>Products</title>
         <meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
