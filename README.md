@@ -1,1 +1,1 @@
-# pizza
+ Final project for IT Tallents. It is a food ordering app, providing registration of users, browsing menu, adding to cart, sending order to address or picking up from a restaurant.You can see images from it [here](https://github.com/mbinev/Pizza/wiki).
